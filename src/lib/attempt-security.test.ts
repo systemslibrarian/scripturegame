@@ -10,6 +10,7 @@ describe("validateAndScoreAttempt", () => {
         reportedTotalBlanks: 3,
         expectedTotalBlanks: 4,
         attemptIndex: 1,
+        elapsedMs: 5000,
       }),
     ).toThrow("Mismatched blank count");
   });
@@ -20,9 +21,34 @@ describe("validateAndScoreAttempt", () => {
       reportedTotalBlanks: 4,
       expectedTotalBlanks: 4,
       attemptIndex: 1,
+      elapsedMs: 5000,
     });
 
     expect(result.correctCount).toBe(4);
     expect(result.points).toBe(10);
+  });
+
+  it("rejects impossible attempt index values", () => {
+    expect(() =>
+      validateAndScoreAttempt({
+        reportedCorrectCount: 1,
+        reportedTotalBlanks: 2,
+        expectedTotalBlanks: 2,
+        attemptIndex: 0,
+        elapsedMs: 1500,
+      }),
+    ).toThrow("Invalid attempt index");
+  });
+
+  it("rejects absurd elapsed durations", () => {
+    expect(() =>
+      validateAndScoreAttempt({
+        reportedCorrectCount: 1,
+        reportedTotalBlanks: 2,
+        expectedTotalBlanks: 2,
+        attemptIndex: 1,
+        elapsedMs: 1000 * 60 * 31,
+      }),
+    ).toThrow("Invalid elapsed time");
   });
 });

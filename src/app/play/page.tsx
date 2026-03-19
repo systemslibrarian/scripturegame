@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { scoreAttempt, sessionPercentage, shuffle } from "@/lib/game";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -34,6 +34,7 @@ export default function PlayPage() {
   const [results, setResults] = useState<AttemptResult[]>([]);
   const [feedback, setFeedback] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const startedAtRef = useRef<number>(0);
 
   useEffect(() => {
     let mounted = true;
@@ -51,6 +52,10 @@ export default function PlayPage() {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    startedAtRef.current = performance.now();
+  }, [current]);
 
   const verse = verses[current];
   const state = verse
@@ -119,12 +124,14 @@ export default function PlayPage() {
     });
   }
 
-  async function submitAttempt() {
+  async function submitAttempt(eventTimestamp: number) {
     const correctCount = activeState.placements.reduce(
       (acc, value, idx) => acc + (value.toUpperCase() === verse.answers[idx] ? 1 : 0),
       0,
     );
     const points = scoreAttempt(correctCount, verse.answers.length, activeState.attemptIndex);
+
+    const elapsedMs = Math.max(0, Math.round(eventTimestamp - startedAtRef.current));
 
     let authHeader: string | undefined;
     let userId = getUserId();
@@ -153,7 +160,7 @@ export default function PlayPage() {
         correctCount,
         totalBlanks: verse.answers.length,
         attemptIndex: activeState.attemptIndex,
-        elapsedMs: 0,
+        elapsedMs,
         points,
       }),
     });
@@ -216,7 +223,7 @@ export default function PlayPage() {
       </section>
 
       <section className="card row">
-        <button className="btn primary" onClick={submitAttempt} type="button">
+        <button className="btn primary" onClick={(e) => submitAttempt(e.timeStamp)} type="button">
           Check answers
         </button>
         <button

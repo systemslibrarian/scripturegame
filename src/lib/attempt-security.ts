@@ -5,6 +5,7 @@ export type AttemptValidationInput = {
   reportedTotalBlanks: number;
   expectedTotalBlanks: number;
   attemptIndex: number;
+  elapsedMs: number;
 };
 
 export function validateAndScoreAttempt(input: AttemptValidationInput): {
@@ -14,6 +15,14 @@ export function validateAndScoreAttempt(input: AttemptValidationInput): {
 } {
   if (input.reportedTotalBlanks !== input.expectedTotalBlanks) {
     throw new Error("Mismatched blank count.");
+  }
+
+  if (input.attemptIndex < 1 || input.attemptIndex > 20) {
+    throw new Error("Invalid attempt index.");
+  }
+
+  if (input.elapsedMs < 0 || input.elapsedMs > 1000 * 60 * 30) {
+    throw new Error("Invalid elapsed time.");
   }
 
   const correctCount = Math.max(0, Math.min(input.reportedCorrectCount, input.expectedTotalBlanks));

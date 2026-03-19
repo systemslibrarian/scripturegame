@@ -8,6 +8,13 @@ import { applyRateLimit, clientAddress } from "@/lib/rate-limit";
 import { authenticatedUserFromRequest } from "@/lib/supabase/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
 
+function dateDiffInDays(currentIso: string | null, nextIso: string): number | null {
+  if (!currentIso) return null;
+  const current = new Date(`${currentIso}T00:00:00.000Z`).getTime();
+  const next = new Date(`${nextIso}T00:00:00.000Z`).getTime();
+  return Math.floor((next - current) / (1000 * 60 * 60 * 24));
+}
+
 const attemptSchema = z.object({
   userId: z.string().min(1),
   verseId: z.string().min(1),
@@ -54,6 +61,7 @@ export async function POST(request: NextRequest) {
       reportedTotalBlanks: payload.totalBlanks,
       expectedTotalBlanks,
       attemptIndex: payload.attemptIndex,
+      elapsedMs: payload.elapsedMs,
     });
 
     return NextResponse.json({ saved: false, mode: "local", points: evaluated.points, remaining: attemptLimit.remaining });
@@ -100,6 +108,7 @@ export async function POST(request: NextRequest) {
       reportedTotalBlanks: payload.totalBlanks,
       expectedTotalBlanks,
       attemptIndex: payload.attemptIndex,
+      elapsedMs: payload.elapsedMs,
     });
 
     const points = evaluated.points;
@@ -134,11 +143,31 @@ export async function POST(request: NextRequest) {
       display_name: displayName,
     });
 
+    const today = new Date().toISOString().slice(0, 10);
+    const { data: streakRow } = await supabase
+      .from("streaks")
+      .select("current_streak, longest_streak, last_played_on")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    const dayDelta = dateDiffInDays(streakRow?.last_played_on ?? null, today);
+    const currentStreak =
+      dayDelta === null ? 1 : dayDelta <= 0 ? streakRow?.current_streak ?? 1 : dayDelta === 1 ? (streakRow?.current_streak ?? 0) + 1 : 1;
+    const longestStreak = Math.max(streakRow?.longest_streak ?? 0, currentStreak);
+
+    await supabase.from("streaks").upsert({
+      user_id: userId,
+      current_streak: currentStreak,
+      longest_streak: longestStreak,
+      last_played_on: today,
+    });
+
     return NextResponse.json({
       saved: true,
       mode: "supabase",
       points,
       remaining: Math.min(attemptLimit.remaining, userLimit.remaining),
+      currentStreak,
     });
   } catch (error) {
     const points = 0;

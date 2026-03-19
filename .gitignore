@@ -2,6 +2,7 @@ node_modules
 .next
 *.tsbuildinfo
 coverage
+.pages
 .env.local
 .env
 npm-debug.log*
