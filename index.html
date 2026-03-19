@@ -109,6 +109,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 .chk-btn{flex:1;padding:.9rem;background:var(--blue-md);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer;}
 .chk-btn:active{opacity:.85;}
 .clr-btn{padding:.9rem 1rem;background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:var(--r);font-size:15px;cursor:pointer;}
+.skip-btn{padding:.9rem 1rem;background:#fff;color:var(--red-dk);border:1px solid #f2c0c0;border-radius:var(--r);font-size:15px;cursor:pointer;}
 .fb{margin-top:.8rem;font-size:15px;font-weight:600;text-align:center;min-height:22px;}
 .fb.good{color:var(--green-dk);}
 .fb.bad{color:var(--red-dk);}
@@ -238,6 +239,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
     <div class="g-acts">
       <button class="chk-btn" onclick="checkAnswers()">Check answers</button>
       <button class="clr-btn" onclick="clearAll()">Clear</button>
+      <button class="skip-btn" onclick="skipVerse()">Skip</button>
     </div>
     <div class="fb" id="fb"></div>
   </div>
@@ -321,6 +323,7 @@ let dragWord=null,touchWord=null,touchClone=null;
 
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
 const $=id=>document.getElementById(id);
+const countWord=(values,word)=>values.reduce((total,value)=>total+(value===word?1:0),0);
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
 function getVerseTheme(id){return THEMES.find(t=>t.verseIds.includes(id))||null;}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
@@ -410,8 +413,14 @@ function renderGame(){
     }
   });
   $('verseCardText').innerHTML=html;
-  const used=new Set(Object.values(placed));
-  $('tilesArea').innerHTML=tiles.map(t=>`<div class="tile${used.has(t)?' used':''}" data-word="${t}" draggable="true">${t}</div>`).join('');
+  const usedWords=Object.values(placed);
+  const seen={};
+  $('tilesArea').innerHTML=tiles.map(t=>{
+    seen[t]=(seen[t]||0)+1;
+    const usedCount=countWord(usedWords,t);
+    const isUsed=seen[t]<=usedCount;
+    return `<div class="tile${isUsed?' used':''}" data-word="${t}" draggable="true">${t}</div>`;
+  }).join('');
   $('fb').textContent='';$('fb').className='fb';
   attachEvents();
 }
@@ -440,6 +449,15 @@ function checkAnswers(){
   }else{
     fb.className='fb bad';fb.textContent=correct+' of '+v.answers.length+' correct \u2014 keep going!';
   }
+}
+
+function skipVerse(){
+  const v=VERSES[queue[qPos]];
+  sessionScores.push({ref:v.ref,pts:0});
+  const fb=$('fb');
+  fb.className='fb bad';
+  fb.textContent='Verse skipped. 0 points awarded.';
+  setTimeout(()=>{qPos++;qPos>=queue.length?showResults():loadVerse();},900);
 }
 
 function showResults(){
