@@ -86,9 +86,25 @@ npm run lint
 npm run typecheck
 npm run test
 npm run build
+npm run preflight
 ```
 
 ## Notes
 
 - If Supabase env vars are missing, the app uses local fallback data for development.
 - Verse text in this repository may require translation licensing review before commercial use.
+
+## Health Endpoint
+
+- `GET /api/health`
+- Returns readiness details, including Supabase connectivity when configured.
+
+## Deploy on Vercel
+
+1. Create a Vercel project connected to this repository.
+2. Add project environment variables from `.env.example`.
+3. Add GitHub repository secrets for workflow deployment:
+	- `VERCEL_TOKEN`
+4. Trigger deployment via push to `main` or manually from Actions.
+
+Workflow file: `.github/workflows/deploy-vercel.yml`
