@@ -237,9 +237,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
     <div class="tiles-lbl">Drag the words into the blanks</div>
     <div class="tiles" id="tilesArea"></div>
     <div class="g-acts">
+      <button class="clr-btn" onclick="goHome()">Back</button>
       <button class="chk-btn" onclick="checkAnswers()">Check answers</button>
       <button class="clr-btn" onclick="clearAll()">Clear</button>
-      <button class="skip-btn" onclick="skipVerse()">Skip</button>
+      <button class="skip-btn" onclick="nextVerse()">Next verse</button>
     </div>
     <div class="fb" id="fb"></div>
   </div>
@@ -451,12 +452,12 @@ function checkAnswers(){
   }
 }
 
-function skipVerse(){
+function nextVerse(){
   const v=VERSES[queue[qPos]];
   sessionScores.push({ref:v.ref,pts:0});
   const fb=$('fb');
   fb.className='fb bad';
-  fb.textContent='Verse skipped. 0 points awarded.';
+  fb.textContent='Moved to next verse. 0 points awarded for this one.';
   setTimeout(()=>{qPos++;qPos>=queue.length?showResults():loadVerse();},900);
 }
 

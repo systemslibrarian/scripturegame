@@ -268,7 +268,7 @@ export default function PlayPage() {
     setCurrent((value) => value + 1);
   }
 
-  function skipVerse() {
+  function goToNextVerse() {
     setFeedback("");
     setDropTarget(null);
     setIsDraggingTile(false);
@@ -367,8 +367,8 @@ export default function PlayPage() {
         <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={() => void revealAnswer()} type="button">
           Show answer
         </button>
-        <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={skipVerse} type="button">
-          Skip verse
+        <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={goToNextVerse} type="button">
+          Next verse
         </button>
         {activeState.answerRevealed ? (
           <button className="btn secondary" disabled={actionPending} onClick={moveToNextVerse} type="button">
