@@ -268,6 +268,13 @@ export default function PlayPage() {
     setCurrent((value) => value + 1);
   }
 
+  function goToPreviousVerse() {
+    setFeedback("");
+    setDropTarget(null);
+    setIsDraggingTile(false);
+    setCurrent((value) => Math.max(0, value - 1));
+  }
+
   function goToNextVerse() {
     setFeedback("");
     setDropTarget(null);
@@ -284,6 +291,29 @@ export default function PlayPage() {
           Verse {current + 1} / {verses.length}
         </div>
         <h2 style={{ marginTop: "0.2rem" }}>{verse.reference}</h2>
+        <div className="row verse-nav-row" role="group" aria-label="Verse navigation">
+          <button className="btn secondary" disabled={current === 0 || actionPending} onClick={goToPreviousVerse} type="button">
+            <span className="btn-chevron" aria-hidden="true">
+              <
+            </span>{" "}
+            Previous verse
+          </button>
+          {activeState.answerRevealed ? (
+            <button className="btn secondary" disabled={actionPending} onClick={moveToNextVerse} type="button">
+              Next verse{" "}
+              <span className="btn-chevron" aria-hidden="true">
+                >
+              </span>
+            </button>
+          ) : (
+            <button className="btn secondary" disabled={actionPending} onClick={goToNextVerse} type="button">
+              Skip to next verse{" "}
+              <span className="btn-chevron" aria-hidden="true">
+                >
+              </span>
+            </button>
+          )}
+        </div>
         <div className="drop-help" role="note">
           Drag each word tile into the dashed blanks in the verse below. Tap a blank to clear it.
         </div>
@@ -367,14 +397,6 @@ export default function PlayPage() {
         <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={() => void revealAnswer()} type="button">
           Show answer
         </button>
-        <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={goToNextVerse} type="button">
-          Next verse
-        </button>
-        {activeState.answerRevealed ? (
-          <button className="btn secondary" disabled={actionPending} onClick={moveToNextVerse} type="button">
-            Next verse
-          </button>
-        ) : null}
         {feedback ? (
           <div className={feedback.startsWith("Correct") ? "good" : "bad"} role="status">
             {feedback}

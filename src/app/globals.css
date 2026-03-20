@@ -204,18 +204,28 @@ a {
 
 .blank {
   align-items: center;
-  background: #fffdf7;
-  border: 2px dashed #d6a24a;
+  background: #fff8eb;
+  border: 2px dashed #b56d08;
   border-radius: 12px;
   color: var(--ink);
   display: inline-flex;
-  min-height: 52px;
-  min-width: 110px;
+  min-height: 56px;
+  min-width: 128px;
   justify-content: center;
   margin: 0.15rem 0.25rem;
   padding: 0.4rem 0.75rem;
   font-weight: 700;
   vertical-align: middle;
+}
+
+.verse-nav-row {
+  margin-bottom: 0.75rem;
+}
+
+.btn-chevron {
+  display: inline-block;
+  font-weight: 800;
+  opacity: 0.75;
 }
 
 .drop-help {
@@ -240,8 +250,11 @@ a {
 }
 
 .blank.empty {
-  background: #ffffff;
-  border-color: #c98a22;
+  background:
+    linear-gradient(180deg, #fffdf8 0%, #fff1d8 100%),
+    repeating-linear-gradient(135deg, rgba(210, 143, 44, 0.08) 0 8px, rgba(181, 109, 8, 0.1) 8px 16px);
+  border-color: #a66100;
+  box-shadow: inset 0 0 0 1px rgba(166, 97, 0, 0.18);
 }
 
 .blank.filled {
@@ -255,9 +268,9 @@ a {
 }
 
 .blank-placeholder {
-  color: var(--muted);
+  color: #7b4a00;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .tile {
@@ -336,8 +349,8 @@ select:focus-visible {
   }
 
   .blank {
-    min-width: 94px;
-    min-height: 48px;
+    min-width: 108px;
+    min-height: 50px;
     padding: 0.35rem 0.55rem;
     margin: 0.12rem 0.18rem;
     font-size: 0.95rem;
