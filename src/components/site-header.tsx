@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     function handleResize() {
@@ -50,7 +52,7 @@ export function SiteHeader() {
         </button>
       </div>
       <nav aria-label="Primary" className={`nav ${menuOpen ? "open" : ""}`} id="primary-navigation">
-        {NAV_LINKS.map((link) => (
+        {NAV_LINKS.filter((link) => !(pathname === "/" && link.href === "/verses")).map((link) => (
           <Link href={link.href} key={link.href} onClick={() => setMenuOpen(false)}>
             {link.label}
           </Link>
