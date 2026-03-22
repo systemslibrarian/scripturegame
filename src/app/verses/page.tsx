@@ -15,8 +15,7 @@ export default function VersesPage() {
       <section aria-label="Verse catalog" className="grid two">
         {LOCAL_VERSES.map((verse) => (
           <article className="card" key={verse.id}>
-            <div className="muted">{verse.translation}</div>
-            <h2 style={{ marginBottom: "0.5rem", marginTop: "0.25rem" }}>{verse.reference}</h2>
+            <h2 style={{ marginBottom: "0.5rem", marginTop: "0.25rem" }}>{verse.reference} <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 400 }}>({verse.translation})</span></h2>
             <p className="muted" style={{ marginTop: 0 }}>
               Theme: {verse.themeId} | Blanks: {verse.answers.length}
             </p>

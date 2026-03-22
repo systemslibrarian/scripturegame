@@ -475,14 +475,14 @@ export default function PlayPage() {
       {/* ------- STEP 1 — TODAY ------- */}
       {step === "today" && !completedToday && (
         <section className="journey-stage" aria-labelledby="today-heading" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
-          <p className="soft-label" style={{ marginBottom: "0.75rem", letterSpacing: "0.12em" }}>A moment with Scripture</p>
+          <p className="soft-label" style={{ marginBottom: "0.75rem" }}>A moment with Scripture</p>
           <h1 id="today-heading" style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", marginBottom: "1.5rem", lineHeight: 1.3 }}>
             Today&rsquo;s Verse
           </h1>
 
           {featuredVerse && (
             <div style={{ marginBottom: "2.5rem" }}>
-              <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.15rem", fontWeight: 600, marginBottom: "0.35rem" }}>{featuredVerse.reference}</p>
+              <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.15rem", fontWeight: 600, marginBottom: "0.35rem" }}>{featuredVerse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
               <p style={{ color: "var(--muted)", fontSize: "0.95rem", marginBottom: 0 }}>{featuredVerse.themeLabel}</p>
             </div>
           )}
@@ -502,9 +502,26 @@ export default function PlayPage() {
       {step === "heartcheck" && (
         <section className="journey-stage" aria-labelledby="heartcheck-heading">
           <h2 id="heartcheck-heading" style={{ textAlign: "center", fontFamily: "'Fraunces', Georgia, serif", marginBottom: "0.5rem" }}>What are you carrying today?</h2>
-          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 2rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
+          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
             Choose what resonates. Let Scripture meet you there.
           </p>
+
+          <div style={{ textAlign: "center", marginBottom: "1.5rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <button
+              className="btn"
+              disabled={heartCheckTags.length === 0}
+              onClick={() => {
+                const primary = heartCheckTags[0] ?? null;
+                setSelectedThemeId(primary);
+                goToRead(primary);
+              }}
+            >
+              Continue
+            </button>
+            <button className="btn btn-ghost" onClick={() => goToRead(null)}>
+              I&rsquo;m not sure &mdash; choose for me
+            </button>
+          </div>
 
           <div className="theme-grid" role="group" aria-label="Select what you are carrying">
             {HEART_CHECK_OPTIONS.map((option) => (
@@ -521,30 +538,13 @@ export default function PlayPage() {
               </button>
             ))}
           </div>
-
-          <div style={{ textAlign: "center", marginTop: "2rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <button
-              className="btn"
-              disabled={heartCheckTags.length === 0}
-              onClick={() => {
-                const primary = heartCheckTags[0] ?? null;
-                setSelectedThemeId(primary);
-                goToRead(primary);
-              }}
-            >
-              Continue
-            </button>
-            <button className="btn btn-ghost" onClick={() => goToRead(null)}>
-              I&rsquo;m not sure &mdash; choose for me
-            </button>
-          </div>
         </section>
       )}
 
       {/* ------- STEP 3 — READ SLOWLY ------- */}
       {step === "read" && verse && (
         <section className="journey-stage" aria-labelledby="read-heading">
-          <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1rem", letterSpacing: "0.12em" }}>
+          <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1rem" }}>
             Read slowly
           </p>
           <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.92rem", marginBottom: "1.5rem" }}>
@@ -600,7 +600,7 @@ export default function PlayPage() {
         <section className="journey-stage">
           <div style={{ marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
-              <p className="soft-label" style={{ margin: 0, letterSpacing: "0.12em" }}>Hide this verse in your heart</p>
+              <p className="soft-label" style={{ margin: 0 }}>Hide this verse in your heart</p>
               <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
             </div>
             <p style={{ margin: "0.35rem 0 0", fontSize: "0.88rem", fontStyle: "italic", color: "var(--muted)" }}>Psalm 119:11</p>
@@ -723,7 +723,7 @@ export default function PlayPage() {
       {/* ------- STEP 5 — APPLY ------- */}
       {step === "apply" && verse && (
         <section className="journey-stage" aria-labelledby="apply-heading" style={{ maxWidth: 560, margin: "0 auto" }}>
-          <p id="apply-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem", letterSpacing: "0.12em" }}>Respond</p>
+          <p id="apply-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem" }}>Respond</p>
 
           {heartCheckTags.length > 0 && (
             <p style={{ fontStyle: "italic", color: "var(--muted)", textAlign: "center", marginBottom: "1.25rem", lineHeight: 1.6 }}>

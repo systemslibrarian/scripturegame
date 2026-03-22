@@ -239,6 +239,28 @@ a {
   margin-top: 1rem;
 }
 
+.hero-signin-nudge {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.hero-signin-nudge .btn.outline {
+  border: 2px solid var(--ink);
+  color: #fff;
+  background: var(--ink);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 0.5rem;
+  min-height: auto;
+}
+
 .btn.large {
   font-size: 1.15rem;
   padding: 0.85rem 2rem;
@@ -326,6 +348,18 @@ a {
   font-style: normal;
 }
 
+.scripture-inline {
+  font-family: var(--scripture-font);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 40rem;
+  margin: 0.25rem auto 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 1;
+}
+
 .grid.three {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
@@ -359,8 +393,7 @@ a {
   color: rgba(35, 49, 58, 0.7);
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .hero .soft-label {

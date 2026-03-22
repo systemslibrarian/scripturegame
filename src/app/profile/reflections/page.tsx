@@ -83,7 +83,7 @@ export default function ReflectionsPage() {
           {reflections.map((r) => (
             <article key={r.id} className="card" style={{ padding: "1.25rem 1.5rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
-                <strong style={{ fontFamily: "var(--scripture-font)", fontSize: "1.08rem" }}>{verseRefMap.get(r.verse_id) ?? r.verse_id}</strong>
+                <strong style={{ fontFamily: "var(--scripture-font)", fontSize: "1.08rem" }}>{verseRefMap.get(r.verse_id) ?? r.verse_id} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.85rem" }}>(NIV)</span></strong>
                 <time dateTime={r.created_at} style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
                   {formatDate(r.created_at)}
                 </time>

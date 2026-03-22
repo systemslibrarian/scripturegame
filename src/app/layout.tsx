@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
           <footer className="site-footer">
             <p className="footer-scripture">
-              &ldquo;Not to us, O Lord, but to Your name give glory.&rdquo; — Psalm 115:1
+              &ldquo;Not to us, O Lord, but to Your name give glory.&rdquo; — Psalm 115:1 (NKJV)
             </p>
             <p className="footer-tagline">Built to draw hearts closer to Christ.</p>
           </footer>

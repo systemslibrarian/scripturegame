@@ -1,27 +1,34 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/lib/translation-context";
+
+const PSALM_119_11 = {
+  niv: "I have hidden your word in my heart, that I might not sin against you.",
+  kjv: "Thy word have I hid in mine heart, that I might not sin against thee.",
+} as const;
 
 export default function HomePage() {
+  const { translationKey } = useTranslation();
+  const label = translationKey.toUpperCase();
+
   return (
     <main className="grid spacious">
       <section className="hero hero-journey">
-        <h1 style={{ marginTop: 0 }}>A calm daily companion<br />to hide God&apos;s Word in your heart.</h1>
-        <p className="hero-subtitle">Rooted in Psalm 119:11.</p>
+        <h1 style={{ marginTop: 0 }}>Hide God&apos;s Word in your heart.</h1>
         <p className="hero-rhythm">Read · Reflect · Memorize · Live</p>
 
-        <blockquote className="scripture-anchor">
-          &ldquo;Your word I have hidden in my heart, that I might not sin against You.&rdquo;
-          <cite>— Psalm 119:11</cite>
-        </blockquote>
+        <p className="scripture-inline">&ldquo;{PSALM_119_11[translationKey]}&rdquo; — Psalm 119:11 ({label})</p>
 
-        <div className="row hero-actions">
+        <div className="row hero-actions" style={{ justifyContent: "center" }}>
           <Link className="btn primary large" href="/play">
             Begin today&apos;s journey
           </Link>
         </div>
-        <div className="row hero-secondary">
-          <Link className="btn hero-link" href="/auth">Sign in to track your walk</Link>
-          <span className="hero-or">or</span>
-          <Link className="btn hero-link" href="/play">Continue as guest</Link>
+
+        <div className="hero-signin-nudge">
+          <Link className="btn outline" href="/auth">Sign in</Link>
+          <span>to save your progress, track your streak, and pick up where you left off.</span>
         </div>
       </section>
 
