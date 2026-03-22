@@ -8,6 +8,14 @@ export type ThemeOption = {
   verseThemeIds?: string[];
 };
 
+export type TranslationKey = "niv" | "kjv";
+
+export type VerseTranslation = {
+  parts: string[];
+  answers: string[];
+  decoys: string[];
+};
+
 export type Verse = {
   id: string;
   reference: string;
@@ -21,6 +29,7 @@ export type Verse = {
   applicationPrompt: string;
   difficulty?: SkillLevel;
   isDailyFeatured?: boolean;
+  kjv?: VerseTranslation;
 };
 
 export type AttemptInput = {

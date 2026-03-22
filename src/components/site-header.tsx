@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useTranslation } from "@/lib/translation-context";
+
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/play", label: "Today's Verse" },
@@ -17,6 +19,7 @@ const NAV_LINKS = [
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { translationKey, switchTranslation } = useTranslation();
 
   useEffect(() => {
     function handleResize() {
@@ -32,24 +35,47 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="topbar">
+    <header className="topbar" role="banner">
       <div className="brand-row">
         <div className="brand">Scripture Journey</div>
-        <button
-          aria-controls="primary-navigation"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          className={`menu-toggle ${menuOpen ? "open" : ""}`}
-          onClick={() => setMenuOpen((open) => !open)}
-          type="button"
-        >
-          <span aria-hidden="true" className="menu-toggle-icon">
-            <span className="menu-toggle-bar" />
-            <span className="menu-toggle-bar" />
-            <span className="menu-toggle-bar" />
-          </span>
-          <span className="menu-toggle-text">Menu</span>
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {/* Translation toggle — always visible */}
+          <div className="translation-toggle" role="radiogroup" aria-label="Bible translation">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={translationKey === "niv"}
+              aria-label="New International Version"
+              onClick={() => switchTranslation("niv")}
+            >
+              NIV
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={translationKey === "kjv"}
+              aria-label="King James Version"
+              onClick={() => switchTranslation("kjv")}
+            >
+              KJV
+            </button>
+          </div>
+          <button
+            aria-controls="primary-navigation"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            className={`menu-toggle ${menuOpen ? "open" : ""}`}
+            onClick={() => setMenuOpen((open) => !open)}
+            type="button"
+          >
+            <span aria-hidden="true" className="menu-toggle-icon">
+              <span className="menu-toggle-bar" />
+              <span className="menu-toggle-bar" />
+              <span className="menu-toggle-bar" />
+            </span>
+            <span className="menu-toggle-text">Menu</span>
+          </button>
+        </div>
       </div>
       <nav aria-label="Primary" className={`nav ${menuOpen ? "open" : ""}`} id="primary-navigation">
         {NAV_LINKS.filter((link) => !(pathname === "/" && link.href === "/verses")).map((link) => (

@@ -109,11 +109,12 @@ a {
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid #d2d8e0;
   border-radius: 999px;
-  min-height: 44px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.9rem;
+  min-height: 48px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hero {
@@ -163,12 +164,15 @@ a {
 .btn {
   border: none;
   border-radius: 999px;
-  min-height: 44px;
-  padding: 0.6rem 1rem;
+  min-height: 48px;
+  padding: 0.65rem 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   background: var(--brand);
   color: #fff;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .btn:hover {
@@ -287,7 +291,10 @@ a {
   margin: 0.18rem 0.32rem;
   padding: 0.5rem 0.8rem;
   font-weight: 700;
+  font-size: 1rem;
   vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .verse-nav-row {
@@ -361,11 +368,15 @@ a {
   border-radius: 10px;
   border: 1px solid #d3dae4;
   background: #fff;
-  min-height: 50px;
+  min-height: 48px;
+  min-width: 48px;
   padding: 0.5rem 0.8rem;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .tile:hover:not(:disabled) {
@@ -392,19 +403,19 @@ a {
 .journey-stage,
 .journey-verse-card,
 .verse-panel {
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(2rem, 5vw, 4rem);
   border-radius: var(--radius);
   background: var(--card);
-  box-shadow: 0 4px 24px rgba(31, 42, 55, 0.07);
+  box-shadow: 0 2px 16px rgba(31, 42, 55, 0.05);
 }
 
 .completion-panel {
-  padding: clamp(2rem, 5vw, 4rem);
+  padding: clamp(3rem, 7vw, 5rem) clamp(2rem, 5vw, 3rem);
   max-width: 560px;
   margin: 0 auto;
   border-radius: var(--radius);
   background: var(--card);
-  box-shadow: 0 4px 24px rgba(31, 42, 55, 0.07);
+  box-shadow: 0 2px 16px rgba(31, 42, 55, 0.05);
 }
 
 .journey-title {
@@ -418,20 +429,20 @@ a {
 .journey-progress {
   display: flex;
   gap: 6px;
-  margin: 0 0 2rem;
+  margin: 0 0 2.5rem;
   padding: 0 clamp(1rem, 3vw, 2rem);
 }
 
 .journey-progress-step {
   flex: 1;
-  height: 4px;
+  height: 3px;
   min-width: 2rem;
   border: none;
   border-radius: 999px;
   padding: 0;
   background: #dde2e9;
   cursor: default;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: background 0.4s ease, box-shadow 0.3s ease;
 }
 
 .journey-progress-step.done {
@@ -466,28 +477,31 @@ a {
 .journey-reading {
   font-family: "Fraunces", Georgia, serif;
   font-size: clamp(1.22rem, 1.9vw, 1.5rem);
-  line-height: 2.1;
+  line-height: 2.2;
   letter-spacing: 0.01em;
 }
 
 .journey-devotional {
-  font-size: 1.08rem;
-  line-height: 1.85;
-  color: rgba(35, 49, 58, 0.88);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: rgba(35, 49, 58, 0.82);
 }
 
 .theme-card,
 .practice-level-card {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem;
   text-align: left;
   width: 100%;
-  border: 1px solid #d7dddc;
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1.15rem 1.25rem;
   color: inherit;
   cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .theme-card span,
@@ -551,34 +565,97 @@ a {
 
 .verse-display {
   font-family: "Fraunces", Georgia, serif;
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-  line-height: 1.75;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  line-height: 1.85;
   font-style: italic;
   text-align: center;
   color: var(--ink);
+  letter-spacing: 0.01em;
 }
 
 .completion-verse-ref {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   color: var(--muted);
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
+/* ---- accessibility: focus styles ---- */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid rgba(14, 76, 146, 0.4);
-  outline-offset: 2px;
+  outline: 3px solid rgba(14, 76, 146, 0.55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- accessibility: skip-to-content ---- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  z-index: 1000;
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ---- translation toggle ---- */
+.translation-toggle {
+  display: inline-flex;
+  gap: 2px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 999px;
+  padding: 2px;
+  background: rgba(255,255,255,0.7);
+}
+
+.translation-toggle button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  min-height: 36px;
+  min-width: 48px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: background 0.2s, color 0.2s;
+}
+
+.translation-toggle button[aria-pressed="true"] {
+  background: var(--brand);
+  color: #fff;
+}
+
+.translation-toggle button:hover:not([aria-pressed="true"]) {
+  background: rgba(0,0,0,0.04);
+}
+
+/* ---- tile pool layout ---- */
+.tile-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 @media (max-width: 720px) {
   .shell {
-    padding: 0.8rem;
+    padding: 0.65rem;
   }
 
   .topbar {
@@ -616,23 +693,37 @@ select:focus-visible {
   }
 
   .blank {
-    min-width: 116px;
-    min-height: 54px;
-    padding: 0.4rem 0.6rem;
-    margin: 0.12rem 0.18rem;
-    font-size: 0.95rem;
+    min-width: 100px;
+    min-height: 48px;
+    padding: 0.4rem 0.55rem;
+    margin: 0.12rem 0.15rem;
+    font-size: 0.92rem;
   }
 
   .revealed-word {
     min-height: 46px;
   }
 
-  .tile-row {
-    gap: 0.45rem;
+  .tile-pool {
+    gap: 0.4rem;
   }
 
   .tile {
-    padding: 0.5rem 0.7rem;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.92rem;
+  }
+
+  .journey-stage {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  .theme-grid,
+  .practice-level-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .completion-panel {
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 3vw, 2rem);
   }
 
   .action-row {
@@ -651,5 +742,33 @@ select:focus-visible {
 
   .practice-meta {
     flex-direction: column;
+  }
+}
+
+/* ---- sacred animations ---- */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.journey-stage {
+  animation: fadeIn 0.5s ease both;
+}
+
+.completion-panel .verse-display {
+  animation: fadeIn 0.8s ease 0.2s both;
+}
+
+.completion-panel .completion-verse-ref {
+  animation: fadeIn 0.8s ease 0.4s both;
+}
+
+/* ---- reduce motion for accessibility ---- */
+@media (prefers-reduced-motion: reduce) {
+  .journey-stage,
+  .completion-panel .verse-display,
+  .completion-panel .completion-verse-ref {
+    animation: none;
   }
 }

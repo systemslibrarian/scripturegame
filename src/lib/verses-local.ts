@@ -18,10 +18,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anxiety",
     themeLabel: "Anxiety",
     devotional:
-      "Jesus does not meet worn-down people with pressure. He meets them with an invitation to come close, bring the weight, and receive rest.",
-    applicationPrompt: "What burden do you need to bring honestly to Jesus instead of carrying alone today?",
+      "You do not have to prove you are tired enough to deserve rest. Jesus sees the weight you carry — the kind no one else notices — and His invitation is not conditional. Come. Not when you are better, not when you have tried harder. Now.",
+    applicationPrompt: "Name the weight you keep picking back up after handing it to God. Why are you afraid to leave it with Him?",
     difficulty: "beginner",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["Come unto me, all ye that ", " and are heavy ", ", and I will give you rest."],
+      answers: ["LABOUR", "LADEN"],
+      decoys: ["WEARY", "BURDENED", "BROKEN"],
+    },
   },
   {
     id: "php46",
@@ -38,9 +43,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anxiety",
     themeLabel: "Anxiety",
     devotional:
-      "Paul does not say stop feeling. He says redirect what you feel into prayer. Thanksgiving is not denial — it is the deliberate act of remembering God's faithfulness while you are still waiting.",
-    applicationPrompt: "What anxious thought needs to be turned into a specific, honest prayer right now?",
+      "Anxiety is a prayer request you have not yet made. Paul does not say feel less — he says take the thing consuming your mind and put it into specific, honest words before God. Thanksgiving is not pretending everything is fine; it is remembering He has been faithful before and choosing to say so out loud.",
+    applicationPrompt: "What are you rehearsing in your mind that you have not yet said out loud to God? Say it now — plainly, without editing it for Him.",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["Be ", " for nothing; but in every thing by ", " and supplication with ", " let your requests be made known unto God."],
+      answers: ["CAREFUL", "PRAYER", "THANKSGIVING"],
+      decoys: ["ANXIOUS", "FAITH", "PRAISE", "HOPE"],
+    },
   },
   {
     id: "1pet57",
@@ -56,9 +66,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anxiety",
     themeLabel: "Anxiety",
     devotional:
-      "Casting is not passive — it is a deliberate heave. God does not ask you to manage your worry better; He asks you to throw it onto Him because His care for you is the heavier reality.",
-    applicationPrompt: "What worry are you still holding that you need to deliberately hand over to God today?",
+      "The Greek word for cast means to hurl — the way a fisherman throws a net. This is not a gentle release; it is the decision to stop white-knuckling what God never asked you to carry. His care for you is not cautious. It is active, constant, and heavier than the thing you are gripping.",
+    applicationPrompt: "What worry do you keep taking back every time you give it to God? What would it cost you to actually let go of it today?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["Casting all your ", " upon him; for he ", " for you."],
+      answers: ["CARE", "CARETH"],
+      decoys: ["BURDEN", "LOVETH", "KEEPETH"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -78,9 +93,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "fear",
     themeLabel: "Fear",
     devotional:
-      "Stillness in Scripture is not passivity. It is a deliberate refusal to let panic speak louder than the presence and rule of God.",
-    applicationPrompt: "Where do you need to become still enough to remember that God is above your fear today?",
+      "This is not a whisper — it is a command spoken over chaos. Be still. Stop striving. The Hebrew carries the force of 'Let go, drop your hands.' When fear makes you want to control, fix, and manage, God says stop. Not because the situation is small, but because He is not.",
+    applicationPrompt: "What are you frantically trying to fix that God is asking you to release your grip on?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["Be ", " and know that I am God: I will be ", " among the heathen, I will be exalted in the earth."],
+      answers: ["STILL,", "EXALTED"],
+      decoys: ["QUIET", "CALM", "PRAISED"],
+    },
   },
   {
     id: "is4110",
@@ -98,10 +118,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "fear",
     themeLabel: "Fear",
     devotional:
-      "God does not merely comfort you about fear — He gives you Himself as the reason not to be afraid. His right hand upholds when your knees buckle. The command not to fear is grounded in His presence, not your courage.",
-    applicationPrompt: "What situation feels bigger than you today, and how does God's presence change the size of it?",
+      "This verse is not a suggestion; it is God speaking directly to someone about to collapse. Do not fear — I am with you. Do not look around — I am your God. The right hand of God that upholds you is not shaking. When your courage runs out, His presence does not.",
+    applicationPrompt: "Name the thing that terrifies you when you are honest. Now read the verse again and let God's 'I will' stand next to it.",
     difficulty: "intermediate",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["", " thou not; for I am with thee: be not ", "; for I am thy God: I will ", " thee; yea, I will help thee; yea, I will ", " thee with the right hand of my righteousness."],
+      answers: ["FEAR", "DISMAYED", "STRENGTHEN", "UPHOLD"],
+      decoys: ["WORRY", "AFRAID", "PROTECT", "CARRY", "GUIDE"],
+    },
   },
   {
     id: "php413",
@@ -113,9 +138,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "fear",
     themeLabel: "Fear",
     devotional:
-      "Strength in Scripture is not loud self-confidence. It is quiet dependence on Christ in the exact work, pressure, or obedience in front of you.",
-    applicationPrompt: "Where do you need to lean on Christ's strength instead of your own resolve today?",
+      "This verse is not about doing spectacular things. Paul wrote it from a prison cell. The strength Christ gives is the power to endure what is in front of you right now — the monotonous, the painful, the impossible obedience — without collapsing or quitting.",
+    applicationPrompt: "Where have you been relying on your own willpower instead of admitting you cannot do this without Christ?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["I can do all things through ", " which ", " me."],
+      answers: ["CHRIST", "STRENGTHENETH"],
+      decoys: ["JESUS", "GOD", "GIVETH"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -136,9 +166,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anger",
     themeLabel: "Anger",
     devotional:
-      "A gentle answer is not weakness; it is strength under control. The proverb teaches that what de-escalates conflict is not silence, but speech shaped by the Spirit instead of by reaction.",
-    applicationPrompt: "Where do you need to choose a gentler word today instead of the sharp one that comes first?",
+      "The gentle answer costs more than the harsh one. It means choosing to absorb the tension instead of escalating it. This proverb is not about being a pushover — it is about having enough self-control to refuse the reaction your flesh craves and offer something that disarms rather than destroys.",
+    applicationPrompt: "Who are you tempted to wound with your words today? What would the gentle answer cost you?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["A ", " answer turneth away ", ": but ", " words stir up anger."],
+      answers: ["SOFT", "WRATH", "GRIEVOUS"],
+      decoys: ["GENTLE", "RAGE", "HARSH", "LOUD"],
+    },
   },
   {
     id: "eph426",
@@ -155,9 +190,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anger",
     themeLabel: "Anger",
     devotional:
-      "Paul does not forbid anger — he forbids letting it stay and fester. The instruction is urgency: resolve it before nightfall, or it becomes a crack where the enemy builds a wall.",
-    applicationPrompt: "Is there unresolved anger you have been carrying past sunset? What would it take to address it before today ends?",
+      "You are allowed to be angry. You are not allowed to let anger set up residence. Paul gives a deadline — before sundown — because bitterness grows in the dark, in the silence, in the conversations you keep replaying. Every day you keep it, the foothold widens.",
+    applicationPrompt: "Who have you been silently angry at? How many sunsets have passed since that anger moved in?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["Be ye angry, and ", " not: let not the sun go ", " upon your wrath: Neither give place to the ", "."],
+      answers: ["SIN", "DOWN", "DEVIL"],
+      decoys: ["RAGE", "SET", "ENEMY", "DARK"],
+    },
   },
   {
     id: "jas119",
@@ -175,9 +215,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "anger",
     themeLabel: "Anger",
     devotional:
-      "James gives three speeds: fast ears, slow mouth, slow temper. Anger feels productive, but James says it cannot produce the righteousness God is after. Only listening — to God and to others — opens that door.",
-    applicationPrompt: "In what relationship do you need to listen longer before you respond today?",
+      "James knows what you do with anger: you talk faster, louder, and with less care. He reverses the order your flesh demands. Your mouth wants to go first. God says your ears go first. Your anger wants to feel righteous. God says it cannot produce what He is after.",
+    applicationPrompt: "In the relationship where you are most angry right now — what have you not yet been willing to hear from the other side?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["Wherefore, my beloved brethren, let every man be swift to ", ", slow to ", ", slow to ", ": For the wrath of man worketh not the ", " of God."],
+      answers: ["HEAR", "SPEAK", "WRATH", "RIGHTEOUSNESS"],
+      decoys: ["LISTEN", "TALK", "ANGRY", "HOLINESS", "PEACE"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -193,9 +238,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "doubt",
     themeLabel: "Doubt",
     devotional:
-      "The first movement of grace is honesty. Scripture does not invite you to pretend that you are whole on your own; it invites you to come as someone who needs God. Doubt often begins when we measure ourselves and come up short — but this verse says everyone does.",
-    applicationPrompt: "Where do you need to stop hiding weakness and ask God for mercy today?",
+      "Before grace can reach you, honesty has to come first. This verse levels every person — no one gets a pass, no one is further from God than anyone else. If doubt tells you that you have failed too many times to come back, this verse says you are standing in the same line as everyone who has ever lived.",
+    applicationPrompt: "What failure are you still ashamed of that you have not brought into the open before God?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["For all have ", ", and come ", " of the glory of God."],
+      answers: ["SINNED", "SHORT"],
+      decoys: ["FAILED", "AWAY", "FAR"],
+    },
   },
   {
     id: "heb111",
@@ -212,10 +262,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "doubt",
     themeLabel: "Doubt",
     devotional:
-      "Faith is not the absence of doubt; it is choosing to trust what God has promised when the evidence is not yet visible. The writer of Hebrews defines faith as substance and conviction — it has weight even when sight does not.",
-    applicationPrompt: "What promise from God are you struggling to trust because you cannot see it yet?",
+      "Faith is not a feeling. It is weight-bearing trust in what God has said when nothing around you confirms it yet. The writer of Hebrews defines it as substance — something real you can lean your whole life on — and conviction about what remains invisible. Doubt is not the opposite of faith; refusing to trust is.",
+    applicationPrompt: "What promise from God feels impossible right now? Are you willing to live as though it is true before you see the proof?",
     difficulty: "intermediate",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["Now ", " is the substance of things ", " for, the evidence of things not ", "."],
+      answers: ["FAITH", "HOPED", "SEEN"],
+      decoys: ["TRUST", "PRAYED", "KNOWN", "FELT"],
+    },
   },
   {
     id: "mk924",
@@ -231,9 +286,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "doubt",
     themeLabel: "Doubt",
     devotional:
-      "This father does not pretend his faith is complete. He brings both his belief and his unbelief to Jesus at the same time. Jesus does not turn him away for the honesty — He heals the boy. Doubt brought to Christ is not disqualifying; it is the beginning of deeper faith.",
-    applicationPrompt: "Where can you be honest with Jesus about the places where your belief and your doubt live side by side?",
+      "This is the most honest prayer in the Gospels. A father with a dying child does not clean up his faith before he comes to Jesus — he brings both halves at the same time: I do believe, and I am full of doubt. Jesus does not reject him for the contradiction. He heals the boy anyway. Your doubt does not disqualify you. It may be the truest prayer you have.",
+    applicationPrompt: "What if you stopped pretending your faith was stronger than it is and told Jesus the truth? What would that prayer sound like?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["And straightway the father of the child cried out, and said with tears, Lord, I ", "; help thou mine ", "."],
+      answers: ["BELIEVE", "UNBELIEF"],
+      decoys: ["TRUST", "DOUBT", "FEAR"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -255,9 +315,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "temptation",
     themeLabel: "Temptation",
     devotional:
-      "Confession is not a defeat. It is the place where God meets you with cleansing, truth, and a way back into the light. His faithfulness to forgive is not conditional on the size of the sin — it rests on His character.",
-    applicationPrompt: "What temptation or compromise do you need to confess plainly before God today?",
+      "The thing you are hiding from God — He already sees it. Confession is not giving God information He did not have; it is breaking the silence between you and Him. The moment you name it, His faithfulness meets you. Not with a lecture. With forgiveness and a way back into the light.",
+    applicationPrompt: "What are you hiding? Name it. Not the category — the specific thing. God's faithfulness is waiting on the other side of your honesty.",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["If we ", " our sins, he is ", " and just to ", " us our sins, and to ", " us from all unrighteousness."],
+      answers: ["CONFESS", "FAITHFUL", "FORGIVE", "CLEANSE"],
+      decoys: ["HIDE", "PURIFY", "FREE", "HOLY"],
+    },
   },
   {
     id: "1cor1013",
@@ -274,9 +339,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "temptation",
     themeLabel: "Temptation",
     devotional:
-      "Paul reminds the Corinthians that temptation is not unique to them, and God sets a limit on it. The way out is always there — not because you are strong enough, but because God is faithful enough to provide it.",
-    applicationPrompt: "What is the way of escape God has provided for the temptation you face most often?",
+      "The lie temptation tells is 'you are the only one' and 'there is no way out.' Paul dismantles both. Every temptation is common to the human experience, and God — who is faithful — has placed an exit in every one. The question is not whether the way out exists; it is whether you are willing to take it.",
+    applicationPrompt: "You know the exit God has provided for the temptation you keep returning to. Why have you not taken it?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["There hath no temptation ", " you but such as is common to man: but God is ", "; who will not suffer you to be ", " above that ye are able."],
+      answers: ["TAKEN", "FAITHFUL", "TEMPTED"],
+      decoys: ["SEIZED", "JUST", "TESTED", "TRIED"],
+    },
   },
   {
     id: "rom623",
@@ -293,9 +363,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "temptation",
     themeLabel: "Temptation",
     devotional:
-      "This verse names the seriousness of sin plainly, but it does not end there. God meets what kills with a gift you could never earn: eternal life in Christ. Temptation loses its pull when you see the wages clearly and the gift even more clearly.",
-    applicationPrompt: "How does remembering the real cost of sin and the real gift of grace change your response to what tempts you today?",
+      "Paul is blunt: sin pays wages, and those wages are death. But the sentence does not end there — it pivots to a gift no one can earn. Temptation shows you only the pleasure and hides the invoice. This verse rips the invoice open and then sets a gift beside it so massive it changes the math entirely.",
+    applicationPrompt: "What is the real cost of the thing you keep reaching for? Has the gift of God in Christ become more real to you than what temptation promises?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["For the wages of ", " is death; but the ", " of God is eternal ", " through Jesus Christ our Lord."],
+      answers: ["SIN", "GIFT", "LIFE"],
+      decoys: ["DEATH", "PEACE", "EVIL", "GRACE"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -316,10 +391,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "waiting",
     themeLabel: "Waiting",
     devotional:
-      "Waiting can feel like silence, but God is not absent in it. His promises keep shaping a future even when you cannot yet see the whole path. Jeremiah spoke these words to exiles — people who had to wait decades before the promise came true.",
-    applicationPrompt: "What are you still waiting for, and how can you wait with faithful hope today?",
+      "Jeremiah wrote this to people in exile — not people having a bad week. They were told to wait seventy years. God's promise of a future and a hope was spoken into a generation that would not live to see it fulfilled. If you are in a season of waiting, this verse does not promise speed. It promises that God's intention toward you is good, even when the timeline is not yours.",
+    applicationPrompt: "What if the wait is not a delay but the exact place where God is forming something in you? What is He building that could not be built any faster?",
     difficulty: "beginner",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["For I know the ", " that I think toward you, saith the LORD, thoughts of ", ", and not of evil, to give you an expected ", "."],
+      answers: ["THOUGHTS", "PEACE", "END"],
+      decoys: ["PLANS", "HOPE", "FUTURE"],
+    },
   },
   {
     id: "lam323",
@@ -336,9 +416,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "waiting",
     themeLabel: "Waiting",
     devotional:
-      "Jeremiah wrote Lamentations in the rubble of Jerusalem. Even there he could say the Lord is good to those who wait. The goodness is not in the speed of the answer but in the character of the One you are waiting on.",
-    applicationPrompt: "How can you actively seek God in the middle of a season where the answer has not yet come?",
+      "Jeremiah is sitting in literal ruins when he writes this. The city is destroyed. The temple is gone. And from that wreckage he says: the Lord is good to those who wait for Him. The goodness of God is not measured by the speed of the rescue. It is measured by the character of the One doing the rescuing.",
+    applicationPrompt: "What rubble in your life is making it hard to believe that God is good? Can you say it to Him honestly and ask Him to meet you there?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["The LORD is ", " unto them that ", " for him, to the soul that ", " him."],
+      answers: ["GOOD", "WAIT", "SEEKETH"],
+      decoys: ["KIND", "TRUST", "FINDETH", "LOVETH"],
+    },
   },
   {
     id: "is4031",
@@ -355,9 +440,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "waiting",
     themeLabel: "Waiting",
     devotional:
-      "The Hebrew word for hope here carries the sense of waiting with expectation, like a rope pulled taut. Renewed strength comes not from working harder but from anchoring yourself in God while you wait.",
-    applicationPrompt: "Where do you feel spiritually faint, and what would it look like to wait on the Lord for new strength instead of pushing through on your own?",
+      "The Hebrew word for hope here is qavah — to wait with tension, like a cord stretched between two points. It is not passive or listless. It is active trust, held taut by the expectation that God will come through. Renewed strength is not the reward for trying harder. It is what God gives to the person who stops running on their own fuel and waits for His.",
+    applicationPrompt: "Are you running on adrenaline and willpower, or are you actually waiting on God? What would it look like to stop and let Him renew you?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["But they that ", " upon the LORD shall renew their ", "; they shall mount up with wings as ", "; they shall run, and not be weary; and they shall walk, and not faint."],
+      answers: ["WAIT", "STRENGTH", "EAGLES"],
+      decoys: ["TRUST", "POWER", "DOVES", "FAITH"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -380,10 +470,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "guidance",
     themeLabel: "Guidance",
     devotional:
-      "Guidance often begins with surrender before it becomes clarity. The way forward is shaped by trust, not by controlling every outcome. Submitting to God does not mean you stop thinking — it means you stop demanding to see the whole road before you take the next step.",
-    applicationPrompt: "What decision needs trust and submission before it needs another plan?",
+      "The hardest part of this verse is not trusting God — it is letting go of your own understanding. You want to see the whole map before you commit. God says commit first. Submit in the decision before you demand clarity about the outcome. The straight path is not one you figure out; it is one He makes when you stop insisting on doing the navigation yourself.",
+    applicationPrompt: "What decision are you refusing to move on because you want certainty God has not given you? What would surrender look like today?",
     difficulty: "expert",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["", " in the LORD with all thine ", "; and lean not unto thine own ", ". In all thy ways ", " him, and he shall direct thy ", "."],
+      answers: ["TRUST", "HEART", "UNDERSTANDING", "ACKNOWLEDGE", "PATHS"],
+      decoys: ["BELIEVE", "SOUL", "WISDOM", "WAYS"],
+    },
   },
   {
     id: "ps11905",
@@ -400,9 +495,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "guidance",
     themeLabel: "Guidance",
     devotional:
-      "A lamp does not illuminate the whole horizon — it shows the next few steps. God's Word does the same. If you are waiting for floodlight clarity, the psalmist says the lamp you already have is enough for the ground in front of you.",
-    applicationPrompt: "What is the next faithful step you already know to take, even if you cannot see further than that?",
+      "A lamp only shows the next few steps — not the horizon. If you are asking God for floodlight clarity and getting lamp-level guidance, that is not a failure. That is how He works. He gives you enough light for the ground under your feet. The next step is all you need to see.",
+    applicationPrompt: "What is the next faithful step you already know you should take? Stop waiting for more light and take it.",
     difficulty: "beginner",
+    kjv: {
+      parts: ["Thy ", " is a lamp unto my ", " and a light unto my ", "."],
+      answers: ["WORD", "FEET,", "PATH"],
+      decoys: ["LAW", "STEPS,", "WAY", "ROAD"],
+    },
   },
   {
     id: "jas15",
@@ -419,9 +519,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "guidance",
     themeLabel: "Guidance",
     devotional:
-      "James does not say, \"If you lack wisdom, try harder.\" He says ask. And the God you ask does not shame you for not knowing — He gives generously. The door to wisdom is humility, not intelligence.",
-    applicationPrompt: "What decision are you facing where you need to stop analyzing and simply ask God for wisdom?",
+      "You do not need more information. You need wisdom — and the only place to get it is asking God. James says He gives generously and without making you feel stupid for not already knowing. The door to wisdom is not intelligence or experience. It is humility — the willingness to say 'I do not know' and mean it.",
+    applicationPrompt: "Where have you substituted research, opinions, and overthinking for actually asking God? Ask Him now.",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["If any of you lack ", ", let him ask of ", ", that giveth to all men ", ", and upbraideth not; and it shall be given him."],
+      answers: ["WISDOM", "GOD", "LIBERALLY"],
+      decoys: ["KNOWLEDGE", "CHRIST", "FREELY", "JUSTLY"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -443,9 +548,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "hope",
     themeLabel: "Hope",
     devotional:
-      "When your heart needs steady ground, begin with God's love. His gift in Christ is not thin encouragement — it is the deep assurance of salvation and life. The scope is the whole world; the means is His Son; the offer is to whoever believes.",
-    applicationPrompt: "What would it look like to live from God's love instead of from fear or scarcity today?",
+      "This verse is not a bumper sticker. It is the deepest summary of reality: God loved a world that rejected Him enough to give the most costly thing He had. The offer is broad — whoever believes — but the cost was specific and personal: His Son. When hope runs thin, come back to the scope of this love. It was not earned, and it cannot be lost by anyone who believes.",
+    applicationPrompt: "Are you living from the reality that God gave His Son for you — or are you still trying to earn what has already been given?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["For God so ", " the world, that he ", " his only begotten ", ", that whosoever ", " in him should not perish, but have everlasting life."],
+      answers: ["LOVED", "GAVE", "SON", "BELIEVETH"],
+      decoys: ["SENT", "CHILD", "TRUSTETH", "SAVED"],
+    },
   },
   {
     id: "rom828",
@@ -462,9 +572,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "hope",
     themeLabel: "Hope",
     devotional:
-      "You may not see how every thread is being woven, but God is not absent from the unfinished places. Hope grows by remembering that His purpose is still at work — even in what feels like waste or loss.",
-    applicationPrompt: "What unfinished situation do you need to entrust to God's good purpose today?",
+      "This verse is not a promise that everything will feel good; it is a promise that God is weaving even the painful threads into something purposeful. The 'good' Paul describes is not comfort — it is being shaped into the likeness of Christ. If you are in a season that feels like waste, God has not left the loom. He is still working.",
+    applicationPrompt: "What painful situation are you struggling to believe God could use for good? Tell Him honestly and ask Him to show you what He is building.",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["And we know that all things work together for ", " to them that ", " God, to them who are the ", " according to his purpose."],
+      answers: ["GOOD", "LOVE", "CALLED"],
+      decoys: ["GRACE", "SEEK", "CHOSEN", "BEST"],
+    },
   },
   {
     id: "rom158",
@@ -481,10 +596,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "hope",
     themeLabel: "Hope",
     devotional:
-      "Paul prays that hope would not be a trickle but an overflow. The source is not willpower; it is the Holy Spirit. Joy and peace are not products of effort — they are what God fills you with as you trust.",
-    applicationPrompt: "Where does your hope feel thin, and can you ask the Holy Spirit to fill that exact place today?",
+      "Paul does not pray for a trickle of hope — he prays for an overflow. And the power source is not your gratitude journal or positive thinking. It is the Holy Spirit. Joy, peace, and hope are not products of effort. They are what fill you when you move from striving to trusting. The verb is passive — may God fill you — because you cannot manufacture this on your own.",
+    applicationPrompt: "Where is your hope running on fumes? Stop trying to generate it and ask the Holy Spirit to fill you right now.",
     difficulty: "intermediate",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["Now the God of ", " fill you with all ", " and peace in believing, that ye may abound in hope, through the power of the Holy ", "."],
+      answers: ["HOPE", "JOY", "GHOST"],
+      decoys: ["PEACE", "LOVE", "SPIRIT", "FAITH"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -505,9 +625,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "peace",
     themeLabel: "Peace",
     devotional:
-      "Perfect peace in Hebrew is shalom shalom — a doubling for emphasis. It is not the absence of trouble but the presence of God holding your mind steady. The condition is not perfection; it is a mind that keeps returning to trust.",
-    applicationPrompt: "What is your mind circling around today, and what would it look like to fix it on God instead?",
+      "Shalom shalom — Isaiah uses the word twice because once is not enough. Perfect peace is not the absence of conflict. It is a mind that has been steadied because it is fixed on God rather than on the storm. The condition is not perfection. It is direction: your mind keeps turning back to trust, even when worry tries to pull it away.",
+    applicationPrompt: "What is your mind fixed on right now — the problem or the God who is above it? Redirect it.",
     difficulty: "beginner",
+    kjv: {
+      parts: ["Thou wilt keep him in perfect ", ", whose ", " is stayed on thee: because he ", " in thee."],
+      answers: ["PEACE", "MIND", "TRUSTETH"],
+      decoys: ["REST", "HEART", "BELIEVETH", "HOPETH"],
+    },
   },
   {
     id: "jn1427",
@@ -524,9 +649,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "peace",
     themeLabel: "Peace",
     devotional:
-      "Jesus distinguishes His peace from anything the world offers. The world's peace depends on circumstances; Christ's peace is a gift He leaves behind like an inheritance. It is yours even when the room is full of trouble.",
-    applicationPrompt: "Where are you looking for peace from circumstances instead of receiving it from Christ?",
+      "Jesus says this in the upper room on the night before He dies. He knows what is coming, and His parting gift is not escape — it is peace. Not the world's version, which depends on everything going well. His peace holds when everything falls apart. He leaves it with you the way someone leaves an inheritance: it is already yours.",
+    applicationPrompt: "Where are you chasing peace from the world — from outcomes, approval, control — instead of receiving the peace Christ already left for you?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["Peace I leave with you, my ", " I give unto you: not as the ", " giveth, give I unto you. Let not your heart be ", ", neither let it be afraid."],
+      answers: ["PEACE", "WORLD", "TROUBLED"],
+      decoys: ["LOVE", "FLESH", "SHAKEN", "ANXIOUS"],
+    },
   },
   {
     id: "php47",
@@ -543,10 +673,15 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "peace",
     themeLabel: "Peace",
     devotional:
-      "This peace does not make logical sense — Paul says it surpasses understanding on purpose. It is a garrison around your heart and mind, standing guard when your own reasoning cannot explain why you are at rest.",
-    applicationPrompt: "What situation in your life right now defies understanding, and can you let God's peace guard your heart in it anyway?",
+      "This peace defies logic. Paul says it transcends understanding for a reason — you will not be able to explain why you are okay when nothing around you says you should be. It stands guard like a soldier at the gate of your heart and mind, blocking the anxiety that tries to barge in. You do not produce it. You pray, and God posts the guard.",
+    applicationPrompt: "What situation in your life makes no logical sense right now? Are you willing to let a peace that also makes no sense guard your heart in it?",
     difficulty: "intermediate",
     isDailyFeatured: true,
+    kjv: {
+      parts: ["And the ", " of God, which passeth all ", ", shall keep your ", " and minds through Christ Jesus."],
+      answers: ["PEACE", "UNDERSTANDING", "HEARTS"],
+      decoys: ["LOVE", "KNOWLEDGE", "SOULS", "SPIRIT"],
+    },
   },
 
   /* ------------------------------------------------------------------ */
@@ -567,9 +702,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "rest",
     themeLabel: "Rest",
     devotional:
-      "A yoke is a shared burden. Jesus does not remove the load entirely — He invites you into partnership where He carries the weight. Rest comes not from doing nothing but from working alongside a gentle, humble Savior.",
-    applicationPrompt: "What are you straining under alone that needs to come under Christ's yoke today?",
+      "A yoke is built for two. The weight does not disappear — but you are no longer pulling alone. Jesus says come alongside me and learn. Learn what? That gentleness is not weakness. That humility is not defeat. That rest is found not in the absence of work but in the partnership of a Savior who will never burn out, tire, or drop His side of the load.",
+    applicationPrompt: "Where are you pulling the weight by yourself because you are afraid to let someone — anyone, including God — share it?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["Take my ", " upon you, and ", " of me; for I am meek and ", " in heart: and ye shall find rest unto your souls."],
+      answers: ["YOKE", "LEARN", "LOWLY"],
+      decoys: ["CROSS", "HEAR", "HUMBLE", "MEEK"],
+    },
   },
   {
     id: "ps23",
@@ -586,9 +726,14 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "rest",
     themeLabel: "Rest",
     devotional:
-      "David pictures God as a shepherd who makes the sheep lie down — because sheep will not rest on their own when they are anxious. Sometimes God brings you to a stop not as punishment but as provision. The green pasture is His idea, not yours.",
-    applicationPrompt: "Is God making you lie down in a season of rest that you have been resisting? What would it look like to receive it?",
+      "Sheep do not lie down unless they feel safe, satisfied, and free from fear. When God makes you lie down, it is not punishment — it is provision. He knows you will not stop on your own. The green pasture and quiet water are not the reward for getting it right; they are the gift of a Shepherd who knows what you need before you ask.",
+    applicationPrompt: "Is God pressing pause on your life right now? What if the rest you are resisting is the provision you have been praying for?",
     difficulty: "beginner",
+    kjv: {
+      parts: ["The LORD is my ", "; I shall not want. He maketh me to lie down in green ", ": he leadeth me beside the still ", "."],
+      answers: ["SHEPHERD", "PASTURES", "WATERS"],
+      decoys: ["KEEPER", "FIELDS", "STREAMS", "RIVERS"],
+    },
   },
   {
     id: "heb49",
@@ -605,8 +750,13 @@ export const LOCAL_VERSES: Verse[] = [
     themeId: "rest",
     themeLabel: "Rest",
     devotional:
-      "The Sabbath-rest is not just a day off — it is a posture of ceasing from self-effort and entering God's finished work. The writer of Hebrews says this rest still remains. You do not have to earn your standing; you can rest in what Christ has already accomplished.",
-    applicationPrompt: "Where are you still striving to earn what God has already given you in Christ?",
+      "The Sabbath-rest the writer describes is not a day off — it is a permanent posture of ceasing from self-effort and trusting God's finished work in Christ. You stop performing. You stop earning. You stop building your case for why God should accept you. You rest in what has already been done. And that rest is still available to you — right now.",
+    applicationPrompt: "Where are you still striving to prove yourself before God instead of resting in what Christ has already accomplished for you?",
     difficulty: "intermediate",
+    kjv: {
+      parts: ["There remaineth therefore a ", " to the people of God. For he that is entered into his rest, he also hath ", " from his own works, as God did from ", "."],
+      answers: ["REST", "CEASED", "HIS"],
+      decoys: ["DAY", "RESTED", "THEIR", "WORK"],
+    },
   },
 ];

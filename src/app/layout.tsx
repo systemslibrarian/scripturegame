@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { SiteHeader } from "@/components/site-header";
+import { TranslationProvider } from "@/lib/translation-context";
 
 import "./globals.css";
 
@@ -28,10 +29,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="shell">
-          <SiteHeader />
-          {children}
-        </div>
+        <TranslationProvider>
+          <a className="skip-link" href="#main-content">
+            Skip to content
+          </a>
+          <div className="shell">
+            <SiteHeader />
+            <div id="main-content">
+              {children}
+            </div>
+          </div>
+        </TranslationProvider>
       </body>
     </html>
   );

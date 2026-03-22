@@ -16,9 +16,11 @@ import {
   buildFullVerseText,
   buildPracticeSet,
   getPracticeLevelMeta,
+  getVerseTranslation,
   pickDailyFeaturedVerse,
   pickJourneyVerse,
 } from "@/lib/journey";
+import { useTranslation } from "@/lib/translation-context";
 import type { SkillLevel, Verse } from "@/types/domain";
 
 /* ------------------------------------------------------------------ */
@@ -39,10 +41,10 @@ type AttemptResponse = {
 
 const STEP_LABELS: Record<JourneyStep, string> = {
   today: "Today",
-  heartcheck: "Heart Check",
-  read: "Read Slowly",
+  heartcheck: "Prepare",
+  read: "Read",
   practice: "Practice",
-  apply: "Apply",
+  apply: "Respond",
   complete: "Amen",
 };
 
@@ -98,6 +100,7 @@ export default function PlayPage() {
   const [selectedTile, setSelectedTile] = useState<number | null>(null);
   const [attemptIndex, setAttemptIndex] = useState(1);
   const [practiceResult, setPracticeResult] = useState<PracticeResult | null>(null);
+  const [answerRevealed, setAnswerRevealed] = useState(false);
   const [startTime, setStartTime] = useState(0);
 
   /* ---- reflection state ---- */
@@ -108,6 +111,9 @@ export default function PlayPage() {
   /* ---- overall stats ---- */
   const [streak, setStreak] = useState(0);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  /* ---- translation preference (shared context) ---- */
+  const { translationKey } = useTranslation();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -155,21 +161,23 @@ export default function PlayPage() {
       if (!verse) return;
       setSelectedLevel(level);
 
+      const t = getVerseTranslation(verse, translationKey);
       const { blankIndices: bi, blankIndexLookup: lookup, practiceAnswers: pa } =
-        buildPracticeSet(verse, level);
+        buildPracticeSet(verse, level, translationKey);
 
       setBlankIndices(bi);
       setBlankIndexLookup(lookup);
       setPracticeAnswers(pa);
       setPlacements(new Array(bi.length).fill(""));
-      setTilePool(shuffle([...pa, ...verse.decoys.map(normalizeWord)]));
+      setTilePool(shuffle([...pa, ...t.decoys.map(normalizeWord)]));
       setSelectedTile(null);
       setAttemptIndex(1);
       setPracticeResult(null);
+      setAnswerRevealed(false);
       setStartTime(Date.now());
       setStep("practice");
     },
-    [verse],
+    [verse, translationKey],
   );
 
   const goToApply = useCallback(() => {
@@ -220,6 +228,7 @@ export default function PlayPage() {
     setHeartCheckTags([]);
     setVerse(null);
     setPracticeResult(null);
+    setAnswerRevealed(false);
     setReflectionText("");
     setReflectionSaved(false);
     setServerError(null);
@@ -305,13 +314,22 @@ export default function PlayPage() {
 
   const handleRetry = useCallback(() => {
     if (!verse) return;
+    const t = getVerseTranslation(verse, translationKey);
     setPlacements(new Array(blankIndices.length).fill(""));
     setSelectedTile(null);
     setPracticeResult(null);
+    setAnswerRevealed(false);
     setAttemptIndex((prev) => prev + 1);
     setStartTime(Date.now());
-    setTilePool(shuffle([...practiceAnswers, ...verse.decoys.map(normalizeWord)]));
-  }, [verse, blankIndices.length, practiceAnswers]);
+    setTilePool(shuffle([...practiceAnswers, ...t.decoys.map(normalizeWord)]));
+  }, [verse, translationKey, blankIndices.length, practiceAnswers]);
+
+  const handleShowAnswer = useCallback(() => {
+    if (!verse || practiceResult) return;
+    setPlacements([...practiceAnswers]);
+    setPracticeResult({ correct: practiceAnswers.length, total: practiceAnswers.length });
+    setAnswerRevealed(true);
+  }, [verse, practiceResult, practiceAnswers]);
 
   /* ---- reflection save ---- */
   const handleSaveReflection = useCallback(async () => {
@@ -344,7 +362,7 @@ export default function PlayPage() {
   if (loading) {
     return (
       <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
-        <p className="soft-label">Preparing your journey…</p>
+        <p className="soft-label" role="status" aria-live="polite">Preparing your journey…</p>
       </main>
     );
   }
@@ -352,7 +370,7 @@ export default function PlayPage() {
   if (!loading && verses.length === 0) {
     return (
       <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
-        <p>No verses available. Please try again later.</p>
+        <p role="alert">No verses available. Please try again later.</p>
       </main>
     );
   }
@@ -364,7 +382,12 @@ export default function PlayPage() {
   const levelMeta = getPracticeLevelMeta(selectedLevel);
 
   return (
-    <main className="shell">
+    <main className="shell" aria-label="Scripture journey">
+      {/* step announcer for screen readers */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {STEP_LABELS[step]}
+      </div>
+
       {/* progress bar */}
       {step !== "today" && (
         <nav className="journey-progress" aria-label="Journey steps">
@@ -392,49 +415,45 @@ export default function PlayPage() {
 
       {/* ------- STEP 1 — TODAY ------- */}
       {step === "today" && (
-        <section className="journey-stage" style={{ textAlign: "center" }}>
-          <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.8rem", marginBottom: "0.5rem" }}>
-            Today&rsquo;s Journey
+        <section className="journey-stage" aria-labelledby="today-heading" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
+          <p className="soft-label" style={{ marginBottom: "0.75rem", letterSpacing: "0.12em" }}>A moment with Scripture</p>
+          <h1 id="today-heading" style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", marginBottom: "1.5rem", lineHeight: 1.3 }}>
+            Today&rsquo;s Verse
           </h1>
 
           {featuredVerse && (
-            <div className="journey-verse-card" style={{ marginBottom: "2rem" }}>
-              <p style={{ fontWeight: 600, marginBottom: "0.25rem" }}>{featuredVerse.reference}</p>
-              <p className="soft-label" style={{ marginBottom: 0 }}>{featuredVerse.themeLabel}</p>
-              <p className="soft-label" style={{ maxWidth: 480, margin: "0.75rem auto 0" }}>
-                Read a verse slowly, practice placing its words, and take one thought
-                with you into your day.
-              </p>
+            <div style={{ marginBottom: "2.5rem" }}>
+              <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.15rem", fontWeight: 600, marginBottom: "0.35rem" }}>{featuredVerse.reference}</p>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", marginBottom: 0 }}>{featuredVerse.themeLabel}</p>
             </div>
           )}
 
-          {!featuredVerse && (
-            <p className="soft-label" style={{ maxWidth: 480, margin: "0 auto 2rem" }}>
-              Read a verse slowly, practice placing its words, and take one thought
-              with you into your day.
-            </p>
-          )}
+          <p style={{ maxWidth: 420, margin: "0 auto 2.5rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7, fontSize: "1.05rem" }}>
+            Read a passage slowly, sit with it, practice its words,
+            and carry one thought into the rest of your day.
+          </p>
 
-          <button className="btn" onClick={goToHeartCheck}>
-            Begin today&rsquo;s journey
+          <button className="btn" onClick={goToHeartCheck} style={{ fontSize: "1.05rem", padding: "0.7rem 1.6rem" }}>
+            Begin
           </button>
         </section>
       )}
 
       {/* ------- STEP 2 — HEART CHECK ------- */}
       {step === "heartcheck" && (
-        <section className="journey-stage">
-          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Heart Check</h2>
-          <p className="soft-label" style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1.5rem" }}>
-            What are you carrying today? Choose what resonates, and let Scripture meet you there.
+        <section className="journey-stage" aria-labelledby="heartcheck-heading">
+          <h2 id="heartcheck-heading" style={{ textAlign: "center", fontFamily: "'Fraunces', Georgia, serif", marginBottom: "0.5rem" }}>What are you carrying today?</h2>
+          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 2rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
+            Choose what resonates. Let Scripture meet you there.
           </p>
 
-          <div className="theme-grid">
+          <div className="theme-grid" role="group" aria-label="Select what you are carrying">
             {HEART_CHECK_OPTIONS.map((option) => (
               <button
                 key={option.id}
                 className={classNames("theme-card", heartCheckTags.includes(option.id) && "selected")}
                 onClick={() => toggleHeartCheckTag(option.id)}
+                aria-pressed={heartCheckTags.includes(option.id)}
               >
                 <strong>{option.label}</strong>
                 <span className="soft-label" style={{ fontSize: "0.85rem" }}>
@@ -444,7 +463,7 @@ export default function PlayPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "1.5rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ textAlign: "center", marginTop: "2rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <button
               className="btn"
               disabled={heartCheckTags.length === 0}
@@ -457,7 +476,7 @@ export default function PlayPage() {
               Continue
             </button>
             <button className="btn btn-ghost" onClick={() => goToRead(null)}>
-              Skip
+              I&rsquo;m not sure &mdash; choose for me
             </button>
           </div>
         </section>
@@ -465,36 +484,35 @@ export default function PlayPage() {
 
       {/* ------- STEP 3 — READ SLOWLY ------- */}
       {step === "read" && verse && (
-        <section className="journey-stage">
-          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Read Slowly</h2>
-          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            Let this passage wash over you before you practice it.
+        <section className="journey-stage" aria-labelledby="read-heading">
+          <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1rem", letterSpacing: "0.12em" }}>
+            Read slowly
           </p>
 
-          <div className="journey-reading">
-            <p className="journey-devotional" style={{ fontSize: "1.25rem", lineHeight: 1.8 }}>
-              &ldquo;{buildFullVerseText(verse)}&rdquo;
+          <div className="journey-reading" style={{ padding: "1.5rem 0" }}>
+            <p className="journey-devotional" style={{ fontSize: "clamp(1.2rem, 2vw, 1.4rem)", lineHeight: 2, textAlign: "center" }}>
+              &ldquo;{buildFullVerseText(verse, translationKey)}&rdquo;
             </p>
-            <p style={{ fontWeight: 600, textAlign: "center" }}>{verse.reference}</p>
+            <p style={{ fontWeight: 600, textAlign: "center", marginTop: "0.75rem" }}>{verse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
 
             {verse.devotional && (
-              <div style={{ marginTop: "1.25rem", padding: "1rem", background: "rgba(49,95,114,0.06)", borderRadius: "var(--radius)" }}>
-                <p style={{ lineHeight: 1.7 }}>{verse.devotional}</p>
+              <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", background: "rgba(49,95,114,0.05)", borderRadius: "var(--radius)", borderLeft: "3px solid rgba(49,95,114,0.2)" }}>
+                <p style={{ lineHeight: 1.8, fontSize: "1.02rem", color: "rgba(35,49,58,0.85)" }}>{verse.devotional}</p>
               </div>
             )}
           </div>
 
-          <h3 style={{ textAlign: "center", marginTop: "2rem", marginBottom: "0.25rem" }}>
-            Choose your practice depth
-          </h3>
-          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1rem" }}>
-            How many words would you like to place?
-          </p>
+          <div style={{ marginTop: "2.5rem", borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "2rem" }}>
+            <p style={{ textAlign: "center", color: "rgba(35,49,58,0.7)", marginBottom: "1rem", fontSize: "1.02rem" }}>
+              When you are ready, choose how deeply you want to practice.
+            </p>
 
-          <div className="practice-level-grid">
+          <div className="practice-level-grid" role="radiogroup" aria-label="Practice depth">
             {PRACTICE_LEVELS.map((level) => (
               <button
                 key={level.id}
+                role="radio"
+                aria-checked={selectedLevel === level.id}
                 className={classNames("practice-level-card", selectedLevel === level.id && "selected")}
                 onClick={() => setSelectedLevel(level.id)}
               >
@@ -506,31 +524,34 @@ export default function PlayPage() {
 
           <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
             <button className="btn" onClick={() => initPractice(selectedLevel)}>
-              I&rsquo;ve read this
+              I&rsquo;m ready to practice
             </button>
+          </div>
           </div>
         </section>
       )}
 
       {/* ------- STEP 4 — PRACTICE (drag-and-drop preserved) ------- */}
-      {step === "practice" && verse && (
+      {step === "practice" && verse && (() => {
+        const t = getVerseTranslation(verse, translationKey);
+        return (
         <section className="journey-stage">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
-            <h2 style={{ margin: 0 }}>Place the Missing Words</h2>
-            <span className="soft-label">{levelMeta.label} &middot; {verse.reference}</span>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            <p className="soft-label" style={{ margin: 0, letterSpacing: "0.12em" }}>Settle into the passage</p>
+            <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
           </div>
 
           {/* verse with blanks */}
-          <div className="verse-area" style={{ lineHeight: 2.15, fontSize: "1.15rem" }}>
-            {verse.parts.map((part, answerIndex) => {
+          <div className="verse-area" role="group" aria-label="Verse with blanks to fill" style={{ lineHeight: 2.15, fontSize: "1.15rem" }}>
+            {t.parts.map((part, answerIndex) => {
               const slotIndex = blankIndexLookup.get(answerIndex);
               const isBlank = slotIndex !== undefined;
-              const answer = verse.answers[answerIndex];
+              const answer = t.answers[answerIndex];
 
               return (
                 <span key={answerIndex}>
                   {part}
-                  {answerIndex < verse.answers.length && (
+                  {answerIndex < t.answers.length && (
                     isBlank ? (
                       <button
                         className={classNames(
@@ -543,7 +564,8 @@ export default function PlayPage() {
                         )}
                         onClick={() => handleBlankClick(slotIndex)}
                         disabled={!!practiceResult}
-                        style={{ minWidth: 100, minHeight: 44 }}
+                        aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${placements[slotIndex]}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
+                        style={{ minWidth: 100, minHeight: 48 }}
                       >
                         {placements[slotIndex] || "\u00A0"}
                       </button>
@@ -558,7 +580,7 @@ export default function PlayPage() {
 
           {/* tile pool */}
           {!practiceResult && (
-            <div className="tile-pool" style={{ marginTop: "1.5rem" }}>
+            <div className="tile-pool" role="group" aria-label="Word tiles" style={{ marginTop: "1.5rem" }}>
               {tilePool.map((tile, tileIndex) => {
                 const norm = normalizeWord(tile);
                 const usedCount = countWords(placements)[norm] ?? 0;
@@ -574,6 +596,8 @@ export default function PlayPage() {
                     )}
                     onClick={() => handleTileClick(tileIndex)}
                     disabled={isUsed}
+                    aria-pressed={selectedTile === tileIndex}
+                    aria-label={isUsed ? `${tile} (already placed)` : tile}
                   >
                     {tile}
                   </button>
@@ -582,22 +606,27 @@ export default function PlayPage() {
             </div>
           )}
 
-          {/* submit */}
+          {/* submit + show answer */}
           {!practiceResult && (
-            <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+            <div style={{ textAlign: "center", marginTop: "1.5rem", display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
               <button className="btn" disabled={!allFilled} onClick={handleSubmit}>
                 Check my words
+              </button>
+              <button className="btn btn-ghost" onClick={handleShowAnswer}>
+                Show answer
               </button>
             </div>
           )}
 
           {/* result */}
           {practiceResult && (
-            <div className="journey-verse-card" style={{ marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontSize: "1.15rem", fontWeight: 600, marginBottom: "0.5rem", color: "var(--ink)" }}>
-                {practiceResult.correct === practiceResult.total
-                  ? "Well done. The Word is taking root."
-                  : `${practiceResult.correct} of ${practiceResult.total} words placed correctly.`}
+            <div className="journey-verse-card" role="status" aria-live="polite" style={{ marginTop: "2rem", textAlign: "center", padding: "1.5rem" }}>
+              <p style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.75rem", color: "var(--ink)" }}>
+                {answerRevealed
+                  ? "Here is the complete verse. Read it slowly."
+                  : practiceResult.correct === practiceResult.total
+                    ? "The Word is taking root."
+                    : `${practiceResult.correct} of ${practiceResult.total} placed correctly.`}
               </p>
 
               {serverError && (
@@ -608,7 +637,7 @@ export default function PlayPage() {
 
               <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
                 <button className="btn btn-ghost" onClick={handleRetry}>
-                  Practice once more
+                  Practice again
                 </button>
                 <button className="btn" onClick={goToApply}>
                   Continue
@@ -617,53 +646,51 @@ export default function PlayPage() {
             </div>
           )}
         </section>
-      )}
+        );
+      })()}
 
       {/* ------- STEP 5 — APPLY ------- */}
       {step === "apply" && verse && (
-        <section className="journey-stage" style={{ maxWidth: 560, margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Apply</h2>
-          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            Take one truth from this passage into the rest of your day.
-          </p>
+        <section className="journey-stage" aria-labelledby="apply-heading" style={{ maxWidth: 560, margin: "0 auto" }}>
+          <p id="apply-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem", letterSpacing: "0.12em" }}>Respond</p>
 
           {heartCheckTags.length > 0 && (
-            <p style={{ fontStyle: "italic", color: "var(--muted)", textAlign: "center", marginBottom: "1rem" }}>
-              You mentioned you&rsquo;re dealing with {heartCheckTags.map((t) => t.toLowerCase()).join(", ")}…
+            <p style={{ fontStyle: "italic", color: "var(--muted)", textAlign: "center", marginBottom: "1.25rem", lineHeight: 1.6 }}>
+              You said you are carrying {heartCheckTags.map((t) => t.toLowerCase()).join(" and ")}…
             </p>
           )}
 
           {verse.applicationPrompt && (
-            <div className="journey-verse-card" style={{ marginBottom: "1.5rem" }}>
-              <p style={{ lineHeight: 1.6 }}>{verse.applicationPrompt}</p>
+            <div style={{ marginBottom: "2rem", padding: "1.25rem 1.5rem", background: "rgba(49,95,114,0.05)", borderRadius: "var(--radius)", borderLeft: "3px solid rgba(49,95,114,0.2)" }}>
+              <p style={{ lineHeight: 1.7, fontSize: "1.05rem", fontFamily: "'Fraunces', Georgia, serif" }}>{verse.applicationPrompt}</p>
             </div>
           )}
 
           {!reflectionSaved && (
             <div>
-              <label className="soft-label" htmlFor="reflection-textarea" style={{ display: "block", marginBottom: "0.5rem" }}>
-                Your reflection (optional)
-              </label>
+              <label htmlFor="reflection-textarea" className="sr-only">Your reflection</label>
               <textarea
                 id="reflection-textarea"
                 ref={textareaRef}
                 className="reflection-textarea"
-                rows={4}
+                rows={5}
                 maxLength={2000}
-                placeholder="What is one way you can live this verse today?"
+                placeholder="Write what comes to mind…"
                 value={reflectionText}
                 onChange={(event) => setReflectionText(event.target.value)}
                 style={{
                   width: "100%",
-                  padding: "0.75rem",
+                  padding: "1rem",
                   borderRadius: "var(--radius)",
-                  border: "1px solid rgba(0,0,0,0.12)",
+                  border: "1px solid rgba(0,0,0,0.08)",
                   fontSize: "1rem",
                   fontFamily: "inherit",
                   resize: "vertical",
+                  lineHeight: 1.7,
+                  background: "rgba(255,255,255,0.7)",
                 }}
               />
-              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "0.75rem" }}>
+              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "1rem" }}>
                 <button
                   className="btn"
                   disabled={!reflectionText.trim()}
@@ -672,7 +699,7 @@ export default function PlayPage() {
                   Save and finish
                 </button>
                 <button className="btn btn-ghost" onClick={goToComplete}>
-                  Skip
+                  Continue without writing
                 </button>
               </div>
               {reflectionError && (
@@ -698,23 +725,28 @@ export default function PlayPage() {
 
       {/* ------- STEP 6 — COMPLETION ------- */}
       {step === "complete" && (
-        <section className="journey-stage completion-panel" style={{ textAlign: "center" }}>
+        <section className="journey-stage completion-panel" aria-labelledby="completion-heading" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
           {verse && (
             <>
-              <p className="completion-verse-ref" style={{ fontWeight: 600, marginBottom: "0.5rem" }}>{verse.reference}</p>
+              <p className="verse-display" style={{ marginBottom: "1rem" }}>
+                &ldquo;{buildFullVerseText(verse, translationKey)}&rdquo;
+              </p>
+              <p className="completion-verse-ref">{verse.reference} ({translationKey.toUpperCase()})</p>
             </>
           )}
 
-          <p style={{ fontSize: "1.1rem", marginTop: "1rem" }}>
-            You spent time with this verse today.
-          </p>
-          <p className="soft-label" style={{ marginTop: "0.5rem" }}>
-            Carry it with you.
-          </p>
+          <div style={{ margin: "2.5rem auto 0", maxWidth: 400, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "2rem" }}>
+            <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.15rem", lineHeight: 1.6, color: "var(--ink)" }}>
+              This stays with you.
+            </p>
+            <p id="completion-heading" style={{ color: "var(--muted)", fontSize: "0.95rem", marginTop: "0.75rem", lineHeight: 1.6 }}>
+              You gave this verse your time and attention today. Let it continue to work in the quiet.
+            </p>
+          </div>
 
           {streak > 0 && (
-            <p style={{ fontSize: "0.85rem", color: "var(--muted)", marginTop: "1rem" }}>
-              Day {streak} in a row
+            <p style={{ fontSize: "0.85rem", color: "var(--muted)", marginTop: "1.5rem" }}>
+              {streak} {streak === 1 ? "day" : "days"} in a row
             </p>
           )}
 
@@ -724,9 +756,9 @@ export default function PlayPage() {
             </p>
           )}
 
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "1.5rem" }}>
-            <button className="btn" onClick={startOver}>
-              Begin another journey
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem" }}>
+            <button className="btn btn-ghost" onClick={startOver}>
+              Start again with a new verse
             </button>
             <Link href="/" className="btn btn-ghost">
               Return home
