@@ -1067,4 +1067,80 @@ export const LOCAL_VERSES: Verse[] = [
       decoys: ["CREATION", "MASTERPIECE", "DEEDS", "THINGS"],
     },
   },
+
+  /* ------------------------------------------------------------------ */
+  /*  FATHER OF LIGHTS                                                  */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "jas117",
+    reference: "James 1:17",
+    translation: "NIV",
+    parts: [
+      "Every good and ",
+      " gift is from above, coming down from the Father of the heavenly ",
+      ", who does not change like shifting ",
+      ".",
+    ],
+    answers: ["PERFECT", "LIGHTS", "SHADOWS"],
+    decoys: ["PURE", "STARS", "DARKNESS", "CLOUDS"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "James doesn't just say good things happen. He says every good gift has an origin — the Father of the heavenly lights, who does not shift or shadow. When something genuinely good comes into your life, it did not arrive by accident or by your own cleverness. It came down. This changes gratitude from a feeling into a direction.",
+    applicationPrompt: "What good thing in your life have you been crediting to yourself, luck, or circumstances that actually came down from the Father of lights?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
+    kjv: {
+      parts: ["Every good gift and every ", " gift is from above, and cometh down from the Father of ", ", with whom is no variableness, neither shadow of ", "."],
+      answers: ["PERFECT", "LIGHTS", "TURNING"],
+      decoys: ["PURE", "STARS", "DARKNESS", "CHANGING"],
+    },
+  },
+  {
+    id: "1jn15",
+    reference: "1 John 1:5",
+    translation: "NIV",
+    parts: [
+      "God is ",
+      "; in him there is no ",
+      " at all.",
+    ],
+    answers: ["LIGHT", "DARKNESS"],
+    decoys: ["LOVE", "TRUTH", "SHADOW", "EVIL"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "No darkness at all. Not mostly light. Not light with a shadow side. John makes the claim absolute. This is the nature of the God you are trusting — not one who operates in mixed motives or hidden agendas. Whatever is dark is not from Him. Whatever is confusing or heavy or cruel does not originate in the One who is light.",
+    applicationPrompt: "What are you currently attributing to God that is actually darkness — confusion, condemnation, shame? What would it change to believe He carries none of that?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["God is ", ", and in him is no ", " at all."],
+      answers: ["LIGHT", "DARKNESS"],
+      decoys: ["LOVE", "TRUTH", "SHADOW", "EVIL"],
+    },
+  },
+  {
+    id: "jn145",
+    reference: "John 1:4-5",
+    translation: "NIV",
+    parts: [
+      "In him was ",
+      ", and that life was the ",
+      " of all mankind. The ",
+      " shines in the darkness, and the darkness has not overcome it.",
+    ],
+    answers: ["LIFE", "LIGHT", "LIGHT"],
+    decoys: ["LOVE", "TRUTH", "HOPE", "WORD"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "The darkness has not overcome it. This is spoken over real darkness — the darkness of a broken world, of suffering and silence and death. And the claim is not that light wins eventually if you hold on. It is that the darkness does not have that power. The light is still shining. It never stopped.",
+    applicationPrompt: "What feels like darkness winning in your life right now, and what would it mean to believe the light is still shining in it?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["In him was ", "; and the life was the ", " of men. And the light ", " in darkness; and the darkness ", " it not."],
+      answers: ["LIFE", "LIGHT", "SHINETH", "COMPREHENDED"],
+      decoys: ["LOVE", "TRUTH", "DWELLETH", "OVERCAME"],
+    },
+  },
 ];

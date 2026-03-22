@@ -95,6 +95,12 @@ export const HEART_CHECK_OPTIONS: ThemeOption[] = [
     description: "You've been living from an old story. Step into who God says you actually are.",
     prompt: "What old story about yourself are you still living from that Christ has already declared finished?",
   },
+  {
+    id: "father-of-lights",
+    label: "Father of Lights",
+    description: "Every good thing in your life traces back to Him. He does not shift, shadow, or change. He is the source.",
+    prompt: "What good gift have you been crediting to yourself or circumstances that actually came down from above?",
+  },
 ];
 
 export const PRACTICE_LEVELS: Array<{
