@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { href: "/play", label: "Today's Verse" },
   { href: "/verses", label: "Verse Library" },
   { href: "/profile", label: "Profile" },
-  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/auth", label: "Sign In" },
   { href: "/admin", label: "Admin" },
 ];

@@ -254,15 +254,29 @@ export default function PlayPage() {
   const handleTileClick = useCallback(
     (tileIndex: number) => {
       if (practiceResult) return;
-      setSelectedTile((prev) => (prev === tileIndex ? null : tileIndex));
+      const word = tilePool[tileIndex];
+      // Auto-place into first empty blank
+      const emptySlot = placements.findIndex((p) => !p);
+      if (emptySlot !== -1 && canPlaceWord(word, placements, tilePool, emptySlot)) {
+        setPlacements((prev) => {
+          const next = [...prev];
+          next[emptySlot] = word;
+          return next;
+        });
+        setSelectedTile(null);
+      } else {
+        // Fall back to select/deselect if no valid slot
+        setSelectedTile((prev) => (prev === tileIndex ? null : tileIndex));
+      }
     },
-    [practiceResult],
+    [practiceResult, tilePool, placements],
   );
 
   const handleBlankClick = useCallback(
     (slotIndex: number) => {
       if (practiceResult) return;
 
+      // Tap filled blank to remove the word
       if (placements[slotIndex]) {
         setPlacements((prev) => {
           const next = [...prev];
@@ -272,6 +286,7 @@ export default function PlayPage() {
         return;
       }
 
+      // If a tile is selected, place it here
       if (selectedTile === null) return;
       const word = tilePool[selectedTile];
       if (!canPlaceWord(word, placements, tilePool, slotIndex)) return;
@@ -602,6 +617,7 @@ export default function PlayPage() {
                         className={classNames(
                           "blank",
                           placements[slotIndex] && "filled",
+                          !placements[slotIndex] && selectedTile !== null && "awaiting",
                           practiceResult &&
                             (normalizeWord(placements[slotIndex]) === practiceAnswers[slotIndex]
                               ? "correct"
@@ -625,7 +641,11 @@ export default function PlayPage() {
 
           {/* tile pool */}
           {!practiceResult && (
-            <div className="tile-pool" role="group" aria-label="Word tiles" style={{ marginTop: "1.5rem" }}>
+            <>
+              <p style={{ textAlign: "center", margin: "1.5rem 0 0.5rem", fontSize: "0.88rem", color: "var(--muted)" }}>
+                Tap a word to place it in the next blank &middot; tap a filled blank to remove it
+              </p>
+              <div className="tile-pool" role="group" aria-label="Word tiles" style={{ marginTop: "0" }}>
               {tilePool.map((tile, tileIndex) => {
                 const norm = normalizeWord(tile);
                 const usedCount = countWords(placements)[norm] ?? 0;
@@ -649,6 +669,7 @@ export default function PlayPage() {
                 );
               })}
             </div>
+            </>
           )}
 
           {/* submit + show answer */}

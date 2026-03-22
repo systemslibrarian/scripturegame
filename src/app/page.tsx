@@ -18,9 +18,9 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="row hero-secondary">
-          <Link className="btn text" href="/auth">Sign in</Link>
-          <span className="muted">or</span>
-          <Link className="btn text" href="/play">Continue as guest</Link>
+          <Link className="btn hero-link" href="/auth">Sign in</Link>
+          <span className="hero-or">or</span>
+          <Link className="btn hero-link" href="/play">Continue as guest</Link>
         </div>
       </section>
 

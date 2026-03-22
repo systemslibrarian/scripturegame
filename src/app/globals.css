@@ -262,7 +262,7 @@ a {
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   font-size: 1.15rem;
   letter-spacing: 0.12em;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.8);
   margin: 0.25rem 0 1.25rem;
 }
 
@@ -273,6 +273,25 @@ a {
   font-size: 0.95rem;
 }
 
+.hero-or {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.btn.hero-link {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 0.6rem;
+  font-weight: 600;
+  min-height: auto;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn.hero-link:hover {
+  color: #fff;
+  opacity: 1;
+}
+
 .scripture-anchor {
   font-family: var(--scripture-font);
   font-size: clamp(1.1rem, 2.2vw, 1.35rem);
@@ -281,9 +300,10 @@ a {
   max-width: 38rem;
   margin: 0.5rem auto 1.5rem;
   padding: 1.2rem 1.5rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: var(--radius);
   border: none;
+  color: rgba(255, 255, 255, 0.95);
   position: relative;
   z-index: 1;
 }
@@ -292,7 +312,7 @@ a {
   display: block;
   margin-top: 0.4rem;
   font-size: 0.88rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.7);
   font-style: normal;
 }
 
@@ -411,6 +431,17 @@ a {
 
 .blank.filled {
   background: #fff4dd;
+}
+
+.blank.awaiting {
+  border-color: var(--brand);
+  background: rgba(49, 95, 114, 0.06);
+  animation: blank-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes blank-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(49, 95, 114, 0.15); }
+  50% { box-shadow: 0 0 0 4px rgba(49, 95, 114, 0.12); }
 }
 
 .blank.drag-over {
