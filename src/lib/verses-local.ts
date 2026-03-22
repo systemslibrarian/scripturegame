@@ -1143,4 +1143,372 @@ export const LOCAL_VERSES: Verse[] = [
       decoys: ["LOVE", "TRUTH", "DWELLETH", "OVERCAME"],
     },
   },
+
+  /* ------------------------------------------------------------------ */
+  /*  GOD'S LIGHT (additional)                                          */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "2sam2229",
+    reference: "2 Samuel 22:29",
+    translation: "NIV",
+    parts: [
+      "You are my ",
+      ", LORD; the LORD turns my darkness into ",
+      ".",
+    ],
+    answers: ["LAMP", "LIGHT"],
+    decoys: ["LIGHT", "SHIELD", "HOPE", "STRENGTH"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "David calls God his lamp — not a floodlight, not a spotlight, but a lamp. The kind you carry close. The kind that goes where you go. And this same God turns darkness into light, not by removing the darkness but by being present in it. Wherever He goes, darkness does not remain.",
+    applicationPrompt: "Where has God been your lamp in past seasons of darkness? What would it take to trust Him to light the way through what you are facing now?",
+    difficulty: "beginner",
+    kjv: {
+      parts: [
+        "For thou art my ",
+        ", O LORD: and the LORD will ",
+        " my darkness.",
+      ],
+      answers: ["LAMP", "LIGHTEN"],
+      decoys: ["LIGHT", "SHIELD", "BRIGHTEN", "DISPEL"],
+    },
+  },
+  {
+    id: "ps1828",
+    reference: "Psalm 18:28",
+    translation: "NIV",
+    parts: [
+      "You, LORD, keep my lamp ",
+      "; my God turns my ",
+      " into light.",
+    ],
+    answers: ["BURNING", "DARKNESS"],
+    decoys: ["SHINING", "BRIGHT", "SHADOW", "NIGHT"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "You don't keep the lamp burning — God does. When your faith flickers, when your strength runs out, when the darkness presses in, this is the promise: He keeps the lamp going. You are not responsible for staying lit on your own. You are responsible for remaining in His hands.",
+    applicationPrompt: "Where are you straining to keep your own flame alive? What would it look like to let God be the one who keeps it burning?",
+    difficulty: "beginner",
+    kjv: {
+      parts: [
+        "For thou wilt light my ",
+        ": the LORD my God will ",
+        " my darkness.",
+      ],
+      answers: ["CANDLE", "ENLIGHTEN"],
+      decoys: ["LAMP", "TORCH", "LIGHTEN", "DISPEL"],
+    },
+  },
+  {
+    id: "ps119130",
+    reference: "Psalm 119:130",
+    translation: "NIV",
+    parts: [
+      "The ",
+      " of your words gives light; it gives ",
+      " to the simple.",
+    ],
+    answers: ["UNFOLDING", "UNDERSTANDING"],
+    decoys: ["READING", "TEACHING", "WISDOM", "KNOWLEDGE"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "The simple — those without credentials, without theological training, without status — receive light from God's word. Not just the brilliant. Not just the learned. The opening of Scripture gives understanding to anyone who comes to it honestly. God does not bar access to His light. He offers it freely to the simple.",
+    applicationPrompt: "What part of God's Word have you been avoiding or rushing past? What would unhurried, receptive reading look like for you today?",
+    difficulty: "beginner",
+    kjv: {
+      parts: [
+        "The ",
+        " of thy words giveth light; it giveth ",
+        " unto the simple.",
+      ],
+      answers: ["ENTRANCE", "UNDERSTANDING"],
+      decoys: ["UNFOLDING", "TEACHING", "WISDOM", "KNOWLEDGE"],
+    },
+  },
+  {
+    id: "mic78",
+    reference: "Micah 7:8",
+    translation: "NIV",
+    parts: [
+      "Do not ",
+      " over me, my enemy! Though I have fallen, I will ",
+      ". Though I sit in darkness, the LORD will be my ",
+      ".",
+    ],
+    answers: ["GLOAT", "RISE", "LIGHT"],
+    decoys: ["TRIUMPH", "REJOICE", "STAND", "SHINE", "HOPE"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "Micah does not deny the fall. He says though I have fallen. He does not deny the darkness. He says though I sit in it. The confidence is not in his circumstances — it is in the LORD who will be his light even there. You do not have to pretend you haven\u2019t fallen. You just cannot stay on the ground.",
+    applicationPrompt: "Where have you fallen and stayed down, waiting until things improve before you rise? What would it mean to rise right now, even in the dark, trusting the LORD as your light?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: [
+        "Rejoice not against me, O mine enemy: when I fall, I shall ",
+        "; when I sit in darkness, the LORD shall be a ",
+        " unto me.",
+      ],
+      answers: ["ARISE", "LIGHT"],
+      decoys: ["RISE", "STAND", "SHINE", "HOPE"],
+    },
+  },
+  {
+    id: "matt416",
+    reference: "Matthew 4:16",
+    translation: "NIV",
+    parts: [
+      "the people living in ",
+      " have seen a great ",
+      "; on those living in the land of the shadow of ",
+      " a light has ",
+      ".",
+    ],
+    answers: ["DARKNESS", "LIGHT", "DEATH", "DAWNED"],
+    decoys: ["SHADOW", "NIGHT", "FALLEN", "RISEN", "SHONE"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "Isaiah prophesied it centuries before. Matthew records the fulfillment: the people sitting in the deepest darkness, in the land of death\u2019s shadow, have seen a great light. This is what Jesus\u2019 arrival means. Not a flicker. Not a candle. A great light. He came not to the places that were already bright but specifically to the darkest corners.",
+    applicationPrompt: "What corner of your life or your world feels most like the shadow of death right now? This is precisely where the great light dawns.",
+    difficulty: "intermediate",
+    kjv: {
+      parts: [
+        "The people which sat in ",
+        " saw great ",
+        "; and to them which sat in the region and shadow of death light is ",
+        " up.",
+      ],
+      answers: ["DARKNESS", "LIGHT", "SPRUNG"],
+      decoys: ["SHADOW", "SHINING", "RISEN", "COME"],
+    },
+  },
+  {
+    id: "jn1236",
+    reference: "John 12:36",
+    translation: "NIV",
+    parts: [
+      "",
+      " in the light while you have the light, so that you may ",
+      " children of light.",
+    ],
+    answers: ["BELIEVE", "BECOME"],
+    decoys: ["WALK", "TRUST", "ABIDE", "REMAIN"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "Believe while you have the light. Jesus is speaking urgently — there is a window, a moment, and it will not last forever. To believe in the light is to entrust yourself to the One who is light. And the result is transformation: you become a child of light. Not just someone near the light — someone who carries it.",
+    applicationPrompt: "Are you believing in the light, or are you looking for more proof before you trust? What would it mean to step into the light you already have?",
+    difficulty: "beginner",
+    kjv: {
+      parts: [
+        "While ye have light, ",
+        " in the light, that ye may be the children of ",
+        ".",
+      ],
+      answers: ["BELIEVE", "LIGHT"],
+      decoys: ["WALK", "TRUST", "DARKNESS", "TRUTH"],
+    },
+  },
+  {
+    id: "matt516",
+    reference: "Matthew 5:16",
+    translation: "NIV",
+    parts: [
+      "In the same way, let your light ",
+      " before others, that they may see your good ",
+      " and ",
+      " your Father in heaven.",
+    ],
+    answers: ["SHINE", "DEEDS", "GLORIFY"],
+    decoys: ["GLOW", "BURN", "WORKS", "ACTS", "PRAISE", "HONOUR"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "You are not the source of the light \u2014 but you are the carrier. Jesus does not say manufacture light. He says let it shine. The light in you is meant to be seen, not hoarded. And the point of the shining is not your reputation but your Father\u2019s glory. Your good deeds are a window, not a mirror.",
+    applicationPrompt: "Where are you hiding the light God has placed in you? What step of obedience, generosity, or honesty would let it shine before others today?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: [
+        "Let your light so ",
+        " before men, that they may see your good ",
+        ", and ",
+        " your Father which is in heaven.",
+      ],
+      answers: ["SHINE", "WORKS", "GLORIFY"],
+      decoys: ["GLOW", "BURN", "DEEDS", "ACTS", "PRAISE", "HONOUR"],
+    },
+  },
+  {
+    id: "1jn17",
+    reference: "1 John 1:7",
+    translation: "NIV",
+    parts: [
+      "But if we ",
+      " in the light, as he is in the light, we have ",
+      " with one another, and the blood of Jesus, his Son, ",
+      " us from all sin.",
+    ],
+    answers: ["WALK", "FELLOWSHIP", "PURIFIES"],
+    decoys: ["LIVE", "STAND", "ABIDE", "COMMUNION", "CLEANSES", "FREES"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "Walking in the light does not mean being perfect. It means living without concealment before God and others \u2014 honest about what you are, honest about where you struggle, open to being known. And in that openness, two things happen: genuine fellowship and the constant cleansing of Jesus\u2019 blood. Darkness isolates. Light connects.",
+    applicationPrompt: "Where are you walking in darkness by hiding something from God or others? What would one honest step into the light look like today?",
+    difficulty: "expert",
+    kjv: {
+      parts: [
+        "But if we walk in the ",
+        ", as he is in the light, we have ",
+        " one with another, and the blood of Jesus Christ his Son ",
+        " us from all sin.",
+      ],
+      answers: ["LIGHT", "FELLOWSHIP", "CLEANSETH"],
+      decoys: ["TRUTH", "DARKNESS", "COMMUNION", "PURIFIETH"],
+    },
+  },
+  {
+    id: "is601",
+    reference: "Isaiah 60:1",
+    translation: "NIV",
+    parts: [
+      "",
+      ", ",
+      ", for your light has come, and the glory of the LORD rises upon you.",
+    ],
+    answers: ["ARISE", "SHINE"],
+    decoys: ["STAND", "GLOW", "BURN", "COME", "WAKE"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "The imperative is not \u2018wait\u2019 or \u2018hope\u2019 or \u2018pray for the light to come one day.\u2019 It is Arise. Shine. The light has already come. The glory of the LORD is already rising upon you. The call is to respond to what is already true. You are not waiting for permission. You are being commanded to stand up into what God has already given.",
+    applicationPrompt: "What are you still sitting down in, waiting for conditions to improve, when the light has already come? What would it look like to arise?",
+    difficulty: "beginner",
+    isDailyFeatured: true,
+    kjv: {
+      parts: [
+        "",
+        ", shine; for thy light is come, and the glory of the LORD is risen upon thee.",
+      ],
+      answers: ["ARISE"],
+      decoys: ["STAND", "RISE", "COME", "WAKE"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  FATHER OF LIGHTS (additional)                                     */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "gen13",
+    reference: "Genesis 1:3",
+    translation: "NIV",
+    parts: [
+      "And God said, \u201cLet there be ",
+      ",\u201d and there was ",
+      ".",
+    ],
+    answers: ["LIGHT", "LIGHT"],
+    decoys: ["DARKNESS", "DAY", "FIRE", "LIFE", "WATER"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "Before anything else existed, there was a word and there was light. God did not struggle to produce it \u2014 He spoke, and it was. This is the God you bring your darkness to: the One whose word carries the power to create what was not there before. Light is not something He gives reluctantly. It is the first thing He said.",
+    applicationPrompt: "What area of your life still feels like formless darkness? What would it mean to believe God can speak light into it right now?",
+    difficulty: "beginner",
+    kjv: {
+      parts: [
+        "And God said, Let there be ",
+        ": and there was ",
+        ".",
+      ],
+      answers: ["LIGHT", "LIGHT"],
+      decoys: ["DARKNESS", "DAY", "FIRE", "LIFE", "WATER"],
+    },
+  },
+  {
+    id: "dan222",
+    reference: "Daniel 2:22",
+    translation: "NIV",
+    parts: [
+      "He ",
+      " deep and hidden things; he knows what lies in ",
+      ", and light dwells with him.",
+    ],
+    answers: ["REVEALS", "DARKNESS"],
+    decoys: ["KNOWS", "EXPOSES", "SEES", "SHADOW", "NIGHT"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "There is nothing hidden from God \u2014 no secret, no shadow, no thing buried so deep that He cannot see it. But notice the second half: light dwells with Him. He is not just a revealer of darkness. He is the place where light lives. You do not have to be afraid of what He sees in you. You are coming to the One in whom light dwells.",
+    applicationPrompt: "What are you hiding that you fear God seeing? What would it mean to bring it into the presence of the One in whom light dwells?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: [
+        "He ",
+        " the deep and secret things: he knoweth what is in the darkness, and the light ",
+        " with him.",
+      ],
+      answers: ["REVEALETH", "DWELLETH"],
+      decoys: ["KNOWETH", "SEETH", "DECLARETH", "ABIDETH"],
+    },
+  },
+  {
+    id: "is6019",
+    reference: "Isaiah 60:19",
+    translation: "NIV",
+    parts: [
+      "The sun will no more be your light by day, nor will the brightness of the moon shine on you, for the LORD will be your ",
+      " light, and your God will be your ",
+      ".",
+    ],
+    answers: ["EVERLASTING", "GLORY"],
+    decoys: ["ETERNAL", "ENDURING", "PRAISE", "STRENGTH", "HONOUR"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "Isaiah describes a day when God Himself will be the only light you need \u2014 not sun, not moon, not anything made. The light you have now is temporary and borrowed. The light God promises is everlasting and flows from who He is. He is not a light switch. He is the source. One day, that will be the only light there is.",
+    applicationPrompt: "What temporary light are you depending on more than God Himself? What would it look like to let Him be your everlasting source?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
+    kjv: {
+      parts: [
+        "The sun shall be no more thy light by day; neither for brightness shall the moon give light unto thee: but the LORD shall be unto thee an ",
+        " light, and thy God thy ",
+        ".",
+      ],
+      answers: ["EVERLASTING", "GLORY"],
+      decoys: ["ETERNAL", "ENDURING", "PRAISE", "STRENGTH"],
+    },
+  },
+  {
+    id: "rev2123",
+    reference: "Revelation 21:23",
+    translation: "NIV",
+    parts: [
+      "The city does not need the sun or the moon to shine on it, for the ",
+      " of God gives it light, and the ",
+      " is its lamp.",
+    ],
+    answers: ["GLORY", "LAMB"],
+    decoys: ["POWER", "LIGHT", "PRESENCE", "LORD", "SON"],
+    themeId: "father-of-lights",
+    themeLabel: "Father of Lights",
+    devotional:
+      "The final city has no need for the sun. The light there is the glory of God Himself \u2014 not reflected, not created, but the radiance of who He is. And the lamp is the Lamb. This is where history ends: in the unmediated presence of pure light. Every shadow you are walking through right now has this as its destination.",
+    applicationPrompt: "What would change in how you endure today\u2019s darkness if you kept the final picture in view \u2014 an eternal city lit by the glory of God and the Lamb?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: [
+        "And the city had no need of the sun, neither of the moon, to shine in it: for the ",
+        " of God did lighten it, and the Lamb is the ",
+        " thereof.",
+      ],
+      answers: ["GLORY", "LIGHT"],
+      decoys: ["POWER", "PRESENCE", "LORD", "LAMP", "SON"],
+    },
+  },
 ];
