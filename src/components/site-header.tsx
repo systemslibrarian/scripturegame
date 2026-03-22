@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/play", label: "Play" },
-  { href: "/verses", label: "Browse Verses" },
+  { href: "/play", label: "Journey" },
+  { href: "/verses", label: "Verse Library" },
   { href: "/profile", label: "Profile" },
   { href: "/leaderboard", label: "Leaderboard" },
-  { href: "/auth", label: "Sign In / Sign Up" },
+  { href: "/auth", label: "Sign In" },
   { href: "/admin", label: "Admin" },
 ];
 
@@ -34,7 +34,7 @@ export function SiteHeader() {
   return (
     <header className="topbar">
       <div className="brand-row">
-        <div className="brand">Scripture Memory</div>
+        <div className="brand">Scripture Journey</div>
         <button
           aria-controls="primary-navigation"
           aria-expanded={menuOpen}

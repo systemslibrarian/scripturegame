@@ -13,7 +13,9 @@ export async function GET() {
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("verses")
-      .select("id, reference, translation, parts, answers, decoys, theme_id")
+      .select(
+        "id, reference, translation, parts, answers, decoys, theme_id, theme_label, devotional, application_prompt, difficulty, is_daily_featured",
+      )
       .order("reference", { ascending: true });
 
     if (error) {
@@ -28,6 +30,11 @@ export async function GET() {
       answers: row.answers,
       decoys: row.decoys,
       themeId: row.theme_id,
+      themeLabel: row.theme_label,
+      devotional: row.devotional,
+      applicationPrompt: row.application_prompt,
+      difficulty: row.difficulty ?? undefined,
+      isDailyFeatured: row.is_daily_featured ?? false,
     }));
 
     if (verses.length === 0) {

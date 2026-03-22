@@ -1,3 +1,13 @@
+export type SkillLevel = "beginner" | "intermediate" | "expert";
+
+export type ThemeOption = {
+  id: string;
+  label: string;
+  description: string;
+  prompt: string;
+  verseThemeIds?: string[];
+};
+
 export type Verse = {
   id: string;
   reference: string;
@@ -6,6 +16,11 @@ export type Verse = {
   answers: string[];
   decoys: string[];
   themeId: string;
+  themeLabel: string;
+  devotional: string;
+  applicationPrompt: string;
+  difficulty?: SkillLevel;
+  isDailyFeatured?: boolean;
 };
 
 export type AttemptInput = {
@@ -15,6 +30,22 @@ export type AttemptInput = {
   totalBlanks: number;
   attemptIndex: number;
   elapsedMs: number;
+  skillLevel?: SkillLevel;
+};
+
+export type ReflectionInput = {
+  verseId: string;
+  categoryId: string;
+  responseText: string;
+};
+
+export type ReflectionRow = {
+  id: number;
+  user_id: string;
+  verse_id: string;
+  category_id: string;
+  response_text: string;
+  created_at: string;
 };
 
 export type ScoreRow = {

@@ -8,7 +8,12 @@ export const LOCAL_VERSES: Verse[] = [
     parts: ["For all have ", " and fall ", " of the glory of God."],
     answers: ["SINNED", "SHORT"],
     decoys: ["FAILED", "AWAY", "FAR"],
-    themeId: "core",
+    themeId: "doubt",
+    themeLabel: "Doubt",
+    devotional:
+      "The first movement of grace is honesty. Scripture does not invite you to pretend that you are whole on your own; it invites you to come as someone who needs God.",
+    applicationPrompt: "Where do you need to stop hiding weakness and ask God for mercy today?",
+    difficulty: "beginner",
   },
   {
     id: "jn119",
@@ -23,7 +28,12 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["CONFESS", "FAITHFUL", "FORGIVE", "PURIFY"],
     decoys: ["HIDE", "CLEANSE", "FREE", "HOLY"],
-    themeId: "core",
+    themeId: "temptation",
+    themeLabel: "Temptation",
+    devotional:
+      "Confession is not a defeat. It is the place where God meets you with cleansing, truth, and a way back into the light.",
+    applicationPrompt: "What temptation or compromise do you need to confess plainly before God today?",
+    difficulty: "intermediate",
   },
   {
     id: "rom623",
@@ -37,7 +47,12 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["SIN", "GIFT", "LIFE"],
     decoys: ["DEATH", "PEACE", "EVIL", "GRACE"],
-    themeId: "core",
+    themeId: "hope",
+    themeLabel: "Hope",
+    devotional:
+      "This verse names the seriousness of sin, but it does not end there. God meets what kills with a gift you could never earn: eternal life in Christ.",
+    applicationPrompt: "How can you live today as someone who has received life as a gift, not earned it by striving?",
+    difficulty: "beginner",
   },
   {
     id: "jn316",
@@ -52,7 +67,13 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["LOVED", "GAVE", "SON", "BELIEVES"],
     decoys: ["SENT", "CHILD", "TRUSTS", "SAVED"],
-    themeId: "core",
+    themeId: "hope",
+    themeLabel: "Hope",
+    devotional:
+      "When your heart needs steady ground, begin with God's love. His gift in Christ is not thin encouragement; it is the deep assurance of salvation and life.",
+    applicationPrompt: "What would it look like to live from God's love instead of from fear or scarcity today?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
   },
   {
     id: "php413",
@@ -61,7 +82,12 @@ export const LOCAL_VERSES: Verse[] = [
     parts: ["I can do all this through ", " who ", " me strength."],
     answers: ["CHRIST", "GIVES"],
     decoys: ["JESUS", "GOD", "LORD"],
-    themeId: "core",
+    themeId: "fear",
+    themeLabel: "Fear",
+    devotional:
+      "Strength in Scripture is not loud self-confidence. It is quiet dependence on Christ in the exact work, pressure, or obedience in front of you.",
+    applicationPrompt: "Where do you need to lean on Christ's strength instead of your own resolve today?",
+    difficulty: "beginner",
   },
   {
     id: "rom828",
@@ -75,7 +101,12 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["GOD", "GOOD", "LOVE"],
     decoys: ["JESUS", "GRACE", "BEST", "SEEK"],
-    themeId: "core",
+    themeId: "hope",
+    themeLabel: "Hope",
+    devotional:
+      "You may not see how every thread is being woven, but God is not absent from the unfinished places. Hope grows by remembering that His purpose is still at work.",
+    applicationPrompt: "What unfinished situation do you need to entrust to God's good purpose today?",
+    difficulty: "intermediate",
   },
   {
     id: "pro35",
@@ -91,7 +122,13 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["TRUST", "HEART", "UNDERSTANDING", "SUBMIT", "STRAIGHT"],
     decoys: ["BELIEVE", "SOUL", "WISDOM", "CLEAR"],
-    themeId: "core",
+    themeId: "guidance",
+    themeLabel: "Guidance",
+    devotional:
+      "Guidance often begins with surrender before it becomes clarity. The way forward is shaped by trust, not by controlling every outcome.",
+    applicationPrompt: "What decision needs trust and submission before it needs another plan?",
+    difficulty: "expert",
+    isDailyFeatured: true,
   },
   {
     id: "jer2911",
@@ -105,7 +142,13 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["PLANS", "PROSPER", "HOPE"],
     decoys: ["THOUGHTS", "BLESS", "PEACE"],
-    themeId: "core",
+    themeId: "waiting",
+    themeLabel: "Waiting",
+    devotional:
+      "Waiting can feel like silence, but God is not absent in it. His promises keep shaping a future even when you cannot yet see the whole path.",
+    applicationPrompt: "What are you still waiting for, and how can you wait with faithful hope today?",
+    difficulty: "beginner",
+    isDailyFeatured: true,
   },
   {
     id: "matt1128",
@@ -118,7 +161,13 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["WEARY", "BURDENED"],
     decoys: ["TIRED", "HEAVY", "BROKEN"],
-    themeId: "core",
+    themeId: "anxiety",
+    themeLabel: "Anxiety",
+    devotional:
+      "Jesus does not meet worn-down people with pressure. He meets them with an invitation to come close, bring the weight, and receive rest.",
+    applicationPrompt: "What burden do you need to bring honestly to Jesus instead of carrying alone today?",
+    difficulty: "beginner",
+    isDailyFeatured: true,
   },
   {
     id: "ps4610",
@@ -131,6 +180,12 @@ export const LOCAL_VERSES: Verse[] = [
     ],
     answers: ["STILL", "EXALTED"],
     decoys: ["QUIET", "CALM", "PRAISED"],
-    themeId: "core",
+    themeId: "fear",
+    themeLabel: "Fear",
+    devotional:
+      "Stillness in Scripture is not passivity. It is a deliberate refusal to let panic speak louder than the presence and rule of God.",
+    applicationPrompt: "Where do you need to become still enough to remember that God is above your fear today?",
+    difficulty: "beginner",
+    isDailyFeatured: true,
   },
 ];

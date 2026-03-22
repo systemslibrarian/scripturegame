@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { validateAndScoreAttempt } from "@/lib/attempt-security";
 import { hasSupabase } from "@/lib/env";
+import { getBlankCountForSkillLevel } from "@/lib/journey";
 import { LOCAL_VERSES } from "@/lib/verses-local";
 import { applyRateLimit, clientAddress } from "@/lib/rate-limit";
 import { authenticatedUserFromRequest } from "@/lib/supabase/auth";
@@ -23,6 +24,7 @@ const attemptSchema = z.object({
   attemptIndex: z.number().int().positive(),
   elapsedMs: z.number().int().nonnegative(),
   points: z.number().int().optional(),
+  skillLevel: z.enum(["beginner", "intermediate", "expert"]).optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -49,7 +51,8 @@ export async function POST(request: NextRequest) {
 
   let userId = payload.userId;
   let displayName = payload.userId.slice(0, 8);
-  let expectedTotalBlanks = localVerse?.answers.length;
+  const skillLevel = payload.skillLevel ?? "expert";
+  let expectedTotalBlanks = localVerse ? getBlankCountForSkillLevel(skillLevel, localVerse.answers.length) : undefined;
 
   if (!hasSupabase) {
     if (!expectedTotalBlanks) {
@@ -98,7 +101,9 @@ export async function POST(request: NextRequest) {
       .eq("id", payload.verseId)
       .maybeSingle();
 
-    expectedTotalBlanks = verseRow?.answers?.length;
+    expectedTotalBlanks = verseRow?.answers?.length
+      ? getBlankCountForSkillLevel(skillLevel, verseRow.answers.length)
+      : undefined;
     if (!expectedTotalBlanks) {
       return NextResponse.json({ error: "Unknown verseId." }, { status: 400 });
     }

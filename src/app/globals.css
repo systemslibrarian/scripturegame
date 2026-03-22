@@ -1,13 +1,13 @@
 :root {
-  --bg: #f3efe7;
-  --ink: #1f2a37;
-  --brand: #0e4c92;
-  --brand-strong: #09376b;
-  --accent: #d28f2c;
-  --card: #fffefb;
-  --muted: #6d7481;
-  --ok: #0f8f63;
-  --bad: #ba2d2d;
+  --bg: #efe9dc;
+  --ink: #23313a;
+  --brand: #315f72;
+  --brand-strong: #1d4352;
+  --accent: #d5ae67;
+  --card: #fffdfa;
+  --muted: #677681;
+  --ok: #3d7a5e;
+  --bad: #a04d46;
   --radius: 16px;
 }
 
@@ -21,8 +21,9 @@ body {
   padding: 0;
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at 20% 10%, #ffffff 0%, transparent 40%),
-    linear-gradient(170deg, #ebe2d2 0%, var(--bg) 100%);
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.9) 0%, transparent 38%),
+    radial-gradient(circle at 85% 5%, rgba(213, 174, 103, 0.2) 0%, transparent 32%),
+    linear-gradient(170deg, #e8e0d1 0%, var(--bg) 100%);
   color: var(--ink);
 }
 
@@ -123,9 +124,28 @@ a {
   box-shadow: 0 14px 30px rgba(9, 55, 107, 0.25);
 }
 
+.hero-journey {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-journey::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -30% auto;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
 .grid {
   display: grid;
   gap: 1rem;
+}
+
+.spacious {
+  gap: 1.25rem;
 }
 
 .grid.two {
@@ -165,6 +185,10 @@ a {
   flex-wrap: wrap;
 }
 
+.hero-actions {
+  margin-top: 1rem;
+}
+
 .action-row {
   align-items: center;
 }
@@ -190,6 +214,31 @@ a {
   color: var(--muted);
 }
 
+.soft-label {
+  color: rgba(35, 49, 58, 0.7);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero .soft-label,
+.hero .mission-copy,
+.hero .quiet-note {
+  position: relative;
+  z-index: 1;
+}
+
+.mission-copy {
+  max-width: 50rem;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.quiet-note {
+  margin-top: 0.9rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -209,11 +258,11 @@ a {
   border-radius: 12px;
   color: var(--ink);
   display: inline-flex;
-  min-height: 56px;
-  min-width: 128px;
+  min-height: 60px;
+  min-width: 142px;
   justify-content: center;
-  margin: 0.15rem 0.25rem;
-  padding: 0.4rem 0.75rem;
+  margin: 0.18rem 0.32rem;
+  padding: 0.5rem 0.8rem;
   font-weight: 700;
   vertical-align: middle;
 }
@@ -239,8 +288,9 @@ a {
 }
 
 .verse-text {
-  line-height: 1.8;
+  line-height: 2.15;
   margin: 0;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
 }
 
 .verse-text.drop-zone-active {
@@ -273,14 +323,144 @@ a {
   font-weight: 700;
 }
 
+.revealed-word {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  margin: 0.15rem 0.28rem;
+  padding: 0.2rem 0.15rem;
+  font-weight: 700;
+  color: #4a5a63;
+  border-bottom: 1px solid rgba(74, 90, 99, 0.28);
+}
+
 .tile {
   border-radius: 10px;
   border: 1px solid #d3dae4;
   background: #fff;
-  min-height: 44px;
-  padding: 0.35rem 0.65rem;
+  min-height: 50px;
+  padding: 0.5rem 0.8rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+.tile-row {
+  gap: 0.75rem;
+}
+
+.home-grid,
+.theme-grid,
+.practice-level-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.pillar-card {
+  min-height: 100%;
+}
+
+.journey-stage,
+.journey-verse-card,
+.verse-panel,
+.completion-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 253, 250, 0.97));
+}
+
+.journey-title {
+  margin-bottom: 0.65rem;
+}
+
+.journey-copy {
+  max-width: 46rem;
+}
+
+.journey-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.journey-progress-item {
+  border: 1px solid #d5dcd9;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.journey-progress-item.active {
+  border-color: rgba(49, 95, 114, 0.28);
+  background: rgba(49, 95, 114, 0.12);
+  color: var(--ink);
+}
+
+.journey-progress-item.complete {
+  border-color: rgba(61, 122, 94, 0.25);
+  color: #3d7a5e;
+}
+
+.journey-theme-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(49, 95, 114, 0.12);
+  color: var(--brand-strong);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.journey-reading {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.22rem, 1.9vw, 1.5rem);
+  line-height: 1.9;
+}
+
+.journey-devotional {
+  font-size: 1.03rem;
+  line-height: 1.75;
+}
+
+.theme-card,
+.practice-level-card {
+  display: grid;
+  gap: 0.45rem;
+  text-align: left;
+  width: 100%;
+  border: 1px solid #d7dddc;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1rem;
+  color: inherit;
+  cursor: pointer;
+}
+
+.theme-card span,
+.practice-level-card span {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.theme-card.selected,
+.practice-level-card.selected {
+  border-color: rgba(49, 95, 114, 0.45);
+  box-shadow: 0 0 0 3px rgba(49, 95, 114, 0.12);
+}
+
+.practice-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.completion-actions {
+  margin-top: 1rem;
 }
 
 .tile:active {
@@ -349,11 +529,15 @@ select:focus-visible {
   }
 
   .blank {
-    min-width: 108px;
-    min-height: 50px;
-    padding: 0.35rem 0.55rem;
+    min-width: 116px;
+    min-height: 54px;
+    padding: 0.4rem 0.6rem;
     margin: 0.12rem 0.18rem;
     font-size: 0.95rem;
+  }
+
+  .revealed-word {
+    min-height: 46px;
   }
 
   .tile-row {
@@ -376,5 +560,9 @@ select:focus-visible {
   .action-row .good,
   .action-row .bad {
     margin-top: 0.25rem;
+  }
+
+  .practice-meta {
+    flex-direction: column;
   }
 }

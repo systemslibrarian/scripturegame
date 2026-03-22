@@ -1,408 +1,694 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { canPlaceWord, getRemainingTileCount, normalizeWord, scoreAttempt, sessionPercentage, shuffle } from "@/lib/game";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import type { Verse } from "@/types/domain";
+import {
+  canPlaceWord,
+  getRemainingTileCount,
+  normalizeWord,
+  scoreAttempt,
+  shuffle,
+} from "@/lib/game";
+import {
+  HEART_CHECK_OPTIONS,
+  PRACTICE_LEVELS,
+  buildFullVerseText,
+  buildPracticeSet,
+  getPracticeLevelMeta,
+  pickDailyFeaturedVerse,
+  pickJourneyVerse,
+} from "@/lib/journey";
+import type { SkillLevel, Verse } from "@/types/domain";
 
-type VerseState = {
-  placements: string[];
-  attemptIndex: number;
-  answerRevealed: boolean;
+/* ------------------------------------------------------------------ */
+/*  Types                                                             */
+/* ------------------------------------------------------------------ */
+
+type JourneyStep = "intro" | "theme" | "read" | "practice" | "reflect" | "complete";
+
+type PracticeResult = { correct: number; total: number; score: number };
+
+type AttemptResponse = {
+  success: boolean;
+  score: number;
+  streak: number;
+  sessionBest: number;
+  error?: string;
 };
 
-type AttemptResult = {
-  verseId: string;
-  points: number;
-  correctCount: number;
+type ReflectionMode = "choose" | "write";
+
+const STEP_LABELS: Record<JourneyStep, string> = {
+  intro: "Welcome",
+  theme: "Heart Check",
+  read: "Read Slowly",
+  practice: "Practice",
+  reflect: "Live It",
+  complete: "Amen",
 };
 
-function getUserId(): string {
-  const key = "sg_user_id";
-  const existing = window.localStorage.getItem(key);
-  if (existing) return existing;
+/* ------------------------------------------------------------------ */
+/*  Helpers                                                           */
+/* ------------------------------------------------------------------ */
 
-  const generated = crypto.randomUUID();
-  window.localStorage.setItem(key, generated);
-  return generated;
+function classNames(...values: (string | false | null | undefined)[]): string {
+  return values.filter(Boolean).join(" ");
 }
 
-function createVerseState(verse: Verse): VerseState {
-  return {
-    placements: Array(verse.answers.length).fill(""),
-    attemptIndex: 1,
-    answerRevealed: false,
-  };
+async function getUserId(): Promise<string> {
+  try {
+    const response = await fetch("/api/profile");
+    if (response.ok) {
+      const data = await response.json();
+      if (data.userId) return data.userId as string;
+    }
+  } catch {
+    /* fall through */
+  }
+  const KEY = "sg_guest_id";
+  let guestId = localStorage.getItem(KEY);
+  if (!guestId) {
+    guestId = `guest_${crypto.randomUUID()}`;
+    localStorage.setItem(KEY, guestId);
+  }
+  return guestId;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Component                                                         */
+/* ------------------------------------------------------------------ */
 
 export default function PlayPage() {
+  /* ---- data state ---- */
   const [verses, setVerses] = useState<Verse[]>([]);
-  const [current, setCurrent] = useState(0);
-  const [states, setStates] = useState<Record<string, VerseState>>({});
-  const [results, setResults] = useState<AttemptResult[]>([]);
-  const [feedback, setFeedback] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [actionPending, setActionPending] = useState(false);
-  const [dropTarget, setDropTarget] = useState<number | null>(null);
-  const [isDraggingTile, setIsDraggingTile] = useState(false);
-  const startedAtRef = useRef<number>(0);
 
+  /* ---- journey flow ---- */
+  const [step, setStep] = useState<JourneyStep>("intro");
+  const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("intermediate");
+  const [verse, setVerse] = useState<Verse | null>(null);
+
+  /* ---- practice state ---- */
+  const [placements, setPlacements] = useState<string[]>([]);
+  const [tilePool, setTilePool] = useState<string[]>([]);
+  const [blankIndices, setBlankIndices] = useState<number[]>([]);
+  const [blankIndexLookup, setBlankIndexLookup] = useState<Map<number, number>>(new Map());
+  const [practiceAnswers, setPracticeAnswers] = useState<string[]>([]);
+  const [selectedTile, setSelectedTile] = useState<string | null>(null);
+  const [attemptIndex, setAttemptIndex] = useState(1);
+  const [practiceResult, setPracticeResult] = useState<PracticeResult | null>(null);
+  const [startTime, setStartTime] = useState(0);
+
+  /* ---- reflection state ---- */
+  const [reflectionMode, setReflectionMode] = useState<ReflectionMode>("choose");
+  const [reflectionText, setReflectionText] = useState("");
+  const [reflectionSaved, setReflectionSaved] = useState(false);
+  const [reflectionError, setReflectionError] = useState<string | null>(null);
+
+  /* ---- overall stats ---- */
+  const [streak, setStreak] = useState(0);
+  const [sessionScore, setSessionScore] = useState(0);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  /* ---- fetch verses ---- */
   useEffect(() => {
-    let mounted = true;
-
-    async function load() {
-      const response = await fetch("/api/verses");
-      const payload = (await response.json()) as { verses: Verse[] };
-      if (!mounted) return;
-      const normalizedVerses = payload.verses.map((item) => ({
-        ...item,
-        answers: item.answers.map((answer) => normalizeWord(answer)),
-        decoys: item.decoys.map((decoy) => normalizeWord(decoy)),
-      }));
-      setVerses(normalizedVerses);
-      setLoading(false);
-    }
-
-    void load();
-    return () => {
-      mounted = false;
-    };
+    (async () => {
+      try {
+        const response = await fetch("/api/verses");
+        if (!response.ok) throw new Error("fetch verses failed");
+        const data: Verse[] = await response.json();
+        setVerses(data);
+      } catch {
+        setVerses([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
-  useEffect(() => {
-    startedAtRef.current = performance.now();
-  }, [current]);
+  /* featured verse for intro */
+  const featuredVerse = useMemo(
+    () => (verses.length > 0 ? pickDailyFeaturedVerse(verses) : null),
+    [verses],
+  );
 
-  const verse = verses[current];
-  const state = verse ? states[verse.id] ?? createVerseState(verse) : undefined;
+  /* ---- step progress bar ---- */
+  const stepOrder: JourneyStep[] = ["intro", "theme", "read", "practice", "reflect", "complete"];
+  const currentStepIndex = stepOrder.indexOf(step);
 
-  const tiles = useMemo(() => {
-    if (!verse) return [];
-    return shuffle([...verse.answers, ...verse.decoys]);
-  }, [verse]);
+  /* ---- navigation helpers ---- */
+  const goToTheme = useCallback(() => setStep("theme"), []);
 
+  const goToRead = useCallback(
+    (themeId: string | null) => {
+      setSelectedThemeId(themeId);
+      const picked = pickJourneyVerse(verses, themeId);
+      setVerse(picked ?? null);
+      setStep("read");
+    },
+    [verses],
+  );
+
+  const initPractice = useCallback(
+    (level: SkillLevel) => {
+      if (!verse) return;
+      setSelectedLevel(level);
+
+      const { blankIndices: bi, blankIndexLookup: lookup, practiceAnswers: pa } =
+        buildPracticeSet(verse, level);
+
+      setBlankIndices(bi);
+      setBlankIndexLookup(lookup);
+      setPracticeAnswers(pa);
+      setPlacements(new Array(bi.length).fill(""));
+      setTilePool(shuffle([...pa, ...verse.decoys.map(normalizeWord)]));
+      setSelectedTile(null);
+      setAttemptIndex(1);
+      setPracticeResult(null);
+      setStartTime(Date.now());
+      setStep("practice");
+    },
+    [verse],
+  );
+
+  const goToReflect = useCallback(() => {
+    setReflectionMode("choose");
+    setReflectionText("");
+    setReflectionSaved(false);
+    setReflectionError(null);
+    setStep("reflect");
+  }, []);
+
+  const goToComplete = useCallback(() => setStep("complete"), []);
+
+  const startOver = useCallback(() => {
+    setStep("intro");
+    setSelectedThemeId(null);
+    setVerse(null);
+    setPracticeResult(null);
+    setReflectionText("");
+    setReflectionSaved(false);
+    setServerError(null);
+  }, []);
+
+  /* ---- practice interaction ---- */
+  const handleTileClick = useCallback(
+    (tile: string) => {
+      if (practiceResult) return;
+      setSelectedTile((prev) => (prev === tile ? null : tile));
+    },
+    [practiceResult],
+  );
+
+  const handleBlankClick = useCallback(
+    (slotIndex: number) => {
+      if (practiceResult) return;
+
+      if (placements[slotIndex]) {
+        setPlacements((prev) => {
+          const next = [...prev];
+          next[slotIndex] = "";
+          return next;
+        });
+        return;
+      }
+
+      if (!selectedTile) return;
+      if (!canPlaceWord(selectedTile, placements, tilePool, slotIndex)) return;
+
+      setPlacements((prev) => {
+        const next = [...prev];
+        next[slotIndex] = selectedTile;
+        return next;
+      });
+      setSelectedTile(null);
+    },
+    [placements, selectedTile, tilePool, practiceResult],
+  );
+
+  const allFilled = placements.length > 0 && placements.every(Boolean);
+
+  const handleSubmit = useCallback(async () => {
+    if (!verse || !allFilled) return;
+
+    let correct = 0;
+    placements.forEach((placed, index) => {
+      if (normalizeWord(placed) === practiceAnswers[index]) correct += 1;
+    });
+
+    const total = practiceAnswers.length;
+    const score = scoreAttempt(correct, total, attemptIndex);
+    const result: PracticeResult = { correct, total, score };
+    setPracticeResult(result);
+    setSessionScore((prev) => prev + score);
+
+    try {
+      const userId = await getUserId();
+      const response = await fetch("/api/attempt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          verseId: verse.id,
+          correctCount: correct,
+          totalBlanks: total,
+          attemptIndex,
+          elapsedMs: Date.now() - startTime,
+          skillLevel: selectedLevel,
+        }),
+      });
+
+      if (response.ok) {
+        const data: AttemptResponse = await response.json();
+        if (data.streak !== undefined) setStreak(data.streak);
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setServerError(data.error ?? "Server error");
+      }
+    } catch {
+      setServerError("Could not save progress — offline?");
+    }
+  }, [verse, allFilled, placements, practiceAnswers, attemptIndex, startTime, selectedLevel]);
+
+  const handleRetry = useCallback(() => {
+    if (!verse) return;
+    setPlacements(new Array(blankIndices.length).fill(""));
+    setSelectedTile(null);
+    setPracticeResult(null);
+    setAttemptIndex((prev) => prev + 1);
+    setStartTime(Date.now());
+    setTilePool(shuffle([...practiceAnswers, ...verse.decoys.map(normalizeWord)]));
+  }, [verse, blankIndices.length, practiceAnswers]);
+
+  /* ---- reflection save ---- */
+  const handleSaveReflection = useCallback(async () => {
+    if (!verse || !reflectionText.trim()) return;
+    setReflectionError(null);
+
+    try {
+      const response = await fetch("/api/reflection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          verseId: verse.id,
+          categoryId: selectedThemeId ?? "general",
+          responseText: reflectionText.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        setReflectionSaved(true);
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setReflectionError(data.error ?? "Could not save reflection.");
+      }
+    } catch {
+      setReflectionError("Could not save — you may be offline.");
+    }
+  }, [verse, reflectionText, selectedThemeId]);
+
+  /* ---- loading screen ---- */
   if (loading) {
-    return <main className="card">Loading verses...</main>;
-  }
-
-  if (!verse || !state) {
-    const totalScore = results.reduce((sum, item) => sum + item.points, 0);
-    const maxScore = verses.length * 10;
-
     return (
-      <main className="grid" style={{ gap: "1rem" }}>
-        <section className="card">
-          <h2 style={{ marginTop: 0 }}>Session complete</h2>
-          <p>
-            Score: <strong>{totalScore}</strong> / {maxScore} ({sessionPercentage(totalScore, maxScore)}%)
-          </p>
-        </section>
-        <section className="card">
-          <h3 style={{ marginTop: 0 }}>By verse</h3>
-          <ul>
-            {results.map((row) => (
-              <li key={row.verseId}>
-                {row.verseId}: {row.points} pts
-              </li>
-            ))}
-          </ul>
-        </section>
+      <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
+        <p className="soft-label">Preparing your journey…</p>
       </main>
     );
   }
 
-  const activeState = state;
-
-  function updatePlacements(targetIndex: number, word: string) {
-    setFeedback("");
-    setStates((prev) => {
-      const next = { ...prev };
-      const active = next[verse.id] ?? createVerseState(verse);
-      if (actionPending || active.answerRevealed || !canPlaceWord(word, active.placements, tiles, targetIndex)) {
-        return prev;
-      }
-      const placements = [...active.placements];
-      placements[targetIndex] = normalizeWord(word);
-      next[verse.id] = { ...active, placements };
-      return next;
-    });
+  if (!loading && verses.length === 0) {
+    return (
+      <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
+        <p>No verses available. Please try again later.</p>
+      </main>
+    );
   }
 
-  function placeWord(word: string) {
-    const target = activeState.placements.findIndex((item) => item === "");
-    if (target === -1) return;
-    updatePlacements(target, word);
-  }
+  /* ================================================================ */
+  /*  RENDER                                                          */
+  /* ================================================================ */
 
-  function clearSlot(index: number) {
-    setFeedback("");
-    setStates((prev) => {
-      const next = { ...prev };
-      const active = next[verse.id] ?? createVerseState(verse);
-      if (actionPending || active.answerRevealed) return prev;
-      const placements = [...active.placements];
-      placements[index] = "";
-      next[verse.id] = { ...active, placements };
-      return next;
-    });
-  }
-
-  function clearPlacements() {
-    setDropTarget(null);
-    setIsDraggingTile(false);
-    setFeedback("");
-    setStates((prev) => ({
-      ...prev,
-      [verse.id]: {
-        ...(prev[verse.id] ?? createVerseState(verse)),
-        placements: Array(verse.answers.length).fill(""),
-        answerRevealed: false,
-      },
-    }));
-  }
-
-  async function postAttempt(correctCount: number, points: number, attemptIndex: number, elapsedMs: number) {
-    let authHeader: string | undefined;
-    let userId = getUserId();
-
-    try {
-      const supabase = getSupabaseBrowserClient();
-      const { data } = await supabase.auth.getSession();
-      const token = data.session?.access_token;
-      if (token) {
-        authHeader = `Bearer ${token}`;
-        userId = data.session?.user.id ?? userId;
-      }
-    } catch {
-      // Local/dev mode can run without Supabase auth.
-    }
-
-    await fetch("/api/attempt", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(authHeader ? { Authorization: authHeader } : {}),
-      },
-      body: JSON.stringify({
-        userId,
-        verseId: verse.id,
-        correctCount,
-        totalBlanks: verse.answers.length,
-        attemptIndex,
-        elapsedMs,
-        points,
-      }),
-    });
-  }
-
-  async function submitAttempt(eventTimestamp: number) {
-    if (actionPending || activeState.answerRevealed) {
-      return;
-    }
-
-    setActionPending(true);
-
-    try {
-      const correctCount = activeState.placements.reduce(
-        (acc, value, idx) => acc + (normalizeWord(value) === normalizeWord(verse.answers[idx]) ? 1 : 0),
-        0,
-      );
-      const points = scoreAttempt(correctCount, verse.answers.length, activeState.attemptIndex);
-
-      const elapsedMs = Math.max(0, Math.round(eventTimestamp - startedAtRef.current));
-      await postAttempt(correctCount, points, activeState.attemptIndex, elapsedMs);
-
-      if (correctCount === verse.answers.length) {
-        setFeedback(`Correct. +${points} points`);
-        setResults((prev) => [...prev, { verseId: verse.id, points, correctCount }]);
-        setCurrent((x) => x + 1);
-        return;
-      }
-
-      setFeedback(`You got ${correctCount}/${verse.answers.length}. Try again.`);
-      setStates((prev) => ({
-        ...prev,
-        [verse.id]: {
-          placements: activeState.placements,
-          attemptIndex: activeState.attemptIndex + 1,
-          answerRevealed: false,
-        },
-      }));
-    } finally {
-      setActionPending(false);
-    }
-  }
-
-  async function revealAnswer() {
-    if (actionPending || activeState.answerRevealed) {
-      return;
-    }
-
-    setActionPending(true);
-
-    try {
-      const elapsedMs = Math.max(0, Math.round(performance.now() - startedAtRef.current));
-      await postAttempt(0, 0, activeState.attemptIndex, elapsedMs);
-      setDropTarget(null);
-      setIsDraggingTile(false);
-      setStates((prev) => ({
-        ...prev,
-        [verse.id]: {
-          placements: [...verse.answers],
-          attemptIndex: activeState.attemptIndex,
-          answerRevealed: true,
-        },
-      }));
-      setResults((prev) => [...prev, { verseId: verse.id, points: 0, correctCount: 0 }]);
-      setFeedback("Answer shown. No points awarded for this verse.");
-    } finally {
-      setActionPending(false);
-    }
-  }
-
-  function moveToNextVerse() {
-    setFeedback("");
-    setDropTarget(null);
-    setIsDraggingTile(false);
-    setCurrent((value) => value + 1);
-  }
-
-  function goToPreviousVerse() {
-    setFeedback("");
-    setDropTarget(null);
-    setIsDraggingTile(false);
-    setCurrent((value) => Math.max(0, value - 1));
-  }
-
-  function goToNextVerse() {
-    setFeedback("");
-    setDropTarget(null);
-    setIsDraggingTile(false);
-    // Record a zero-point result so the session total stays accurate
-    setResults((prev) => [...prev, { verseId: verse.id, points: 0, correctCount: 0 }]);
-    setCurrent((value) => value + 1);
-  }
+  const themeOption = HEART_CHECK_OPTIONS.find((option) => option.id === selectedThemeId);
+  const levelMeta = getPracticeLevelMeta(selectedLevel);
 
   return (
-    <main className="grid" style={{ gap: "1rem" }}>
-      <section className="card">
-        <div className="muted">
-          Verse {current + 1} / {verses.length}
+    <main className="shell">
+      {/* progress bar */}
+      {step !== "intro" && (
+        <div className="journey-progress" role="progressbar" aria-valuenow={currentStepIndex} aria-valuemin={0} aria-valuemax={stepOrder.length - 1}>
+          {stepOrder.map((s, i) => (
+            <div
+              key={s}
+              className={classNames(
+                "journey-progress-step",
+                i < currentStepIndex && "done",
+                i === currentStepIndex && "active",
+              )}
+              title={STEP_LABELS[s]}
+            />
+          ))}
         </div>
-        <h2 style={{ marginTop: "0.2rem" }}>{verse.reference}</h2>
-        <div className="row verse-nav-row" role="group" aria-label="Verse navigation">
-          <button className="btn secondary" disabled={current === 0 || actionPending} onClick={goToPreviousVerse} type="button">
-            <span className="btn-chevron" aria-hidden="true">
-              <
-            </span>{" "}
-            Previous verse
-          </button>
-          {activeState.answerRevealed ? (
-            <button className="btn secondary" disabled={actionPending} onClick={moveToNextVerse} type="button">
-              Next verse{" "}
-              <span className="btn-chevron" aria-hidden="true">
-                >
-              </span>
-            </button>
-          ) : (
-            <button className="btn secondary" disabled={actionPending} onClick={goToNextVerse} type="button">
-              Skip to next verse{" "}
-              <span className="btn-chevron" aria-hidden="true">
-                >
-              </span>
-            </button>
+      )}
+
+      {/* ------- INTRO ------- */}
+      {step === "intro" && (
+        <section className="journey-stage" style={{ textAlign: "center" }}>
+          <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.8rem", marginBottom: "0.5rem" }}>
+            Today&rsquo;s Journey
+          </h1>
+          <p className="soft-label" style={{ maxWidth: 480, margin: "0 auto 2rem" }}>
+            Read a verse slowly, practice placing its words, and take one thought
+            with you into your day.
+          </p>
+
+          {featuredVerse && (
+            <div className="journey-verse-card" style={{ marginBottom: "2rem" }}>
+              <p className="soft-label" style={{ marginBottom: "0.25rem" }}>Today&rsquo;s featured verse</p>
+              <p style={{ fontStyle: "italic", lineHeight: 1.6, marginBottom: "0.5rem" }}>
+                &ldquo;{buildFullVerseText(featuredVerse)}&rdquo;
+              </p>
+              <p style={{ fontWeight: 600 }}>{featuredVerse.reference}</p>
+            </div>
           )}
-        </div>
-        <div className="drop-help" role="note">
-          Drag each word tile into the dashed blanks in the verse below. Tap a blank to clear it.
-        </div>
-        <p className={`verse-text ${isDraggingTile ? "drop-zone-active" : ""}`}>
-          {verse.parts.map((chunk, idx) => (
-            <span key={`${verse.id}-${idx}`}>
-              {chunk}
-              {idx < verse.answers.length ? (
-                <button
-                  className={`blank ${activeState.placements[idx] ? "filled" : "empty"} ${dropTarget === idx ? "drag-over" : ""}`}
-                  onClick={() => clearSlot(idx)}
-                  onDragOver={(event) => {
-                    if (activeState.answerRevealed) return;
-                    event.preventDefault();
-                    setDropTarget(idx);
-                  }}
-                  onDragLeave={() => setDropTarget((currentTarget) => (currentTarget === idx ? null : currentTarget))}
-                  onDrop={(event) => {
-                    event.preventDefault();
-                    const word = event.dataTransfer.getData("text/plain");
-                    setDropTarget(null);
-                    setIsDraggingTile(false);
-                    if (!word) return;
-                    updatePlacements(idx, word);
-                  }}
-                  type="button"
-                >
-                  {activeState.placements[idx] || (
-                    <span className="blank-placeholder">Drop word here</span>
-                  )}
-                </button>
-              ) : null}
-            </span>
-          ))}
-        </p>
-      </section>
 
-      <section className="card">
-        <h3 style={{ marginTop: 0 }}>Word tiles</h3>
-        <div className="row tile-row">
-          {tiles.map((tile, index) => (
-            <button
-              className="tile"
-              disabled={
-                actionPending || activeState.answerRevealed || getRemainingTileCount(tile, tiles, activeState.placements) === 0
-              }
-              draggable={
-                !actionPending && !activeState.answerRevealed && getRemainingTileCount(tile, tiles, activeState.placements) > 0
-              }
-              key={`${tile}-${index}`}
-              onClick={() => placeWord(tile)}
-              onDragStart={(event) => {
-                event.dataTransfer.setData("text/plain", tile);
-                event.dataTransfer.effectAllowed = "move";
-                setIsDraggingTile(true);
-              }}
-              onDragEnd={() => {
-                setDropTarget(null);
-                setIsDraggingTile(false);
-              }}
-              type="button"
-            >
-              {tile}
-            </button>
-          ))}
-        </div>
-      </section>
+          <button className="btn" onClick={goToTheme}>
+            Begin today&rsquo;s journey
+          </button>
+        </section>
+      )}
 
-      <section className="card row action-row" aria-live="polite">
-        <button
-          className="btn primary"
-          disabled={actionPending || activeState.answerRevealed}
-          onClick={(e) => submitAttempt(e.timeStamp)}
-          type="button"
-        >
-          Check answers
-        </button>
-        <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={clearPlacements} type="button">
-          Clear
-        </button>
-        <button className="btn secondary" disabled={actionPending || activeState.answerRevealed} onClick={() => void revealAnswer()} type="button">
-          Show answer
-        </button>
-        {feedback ? (
-          <div className={feedback.startsWith("Correct") ? "good" : "bad"} role="status">
-            {feedback}
+      {/* ------- THEME (Heart Check) ------- */}
+      {step === "theme" && (
+        <section className="journey-stage">
+          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Heart Check</h2>
+          <p className="soft-label" style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1.5rem" }}>
+            What are you carrying today? Choose a theme and let Scripture meet you there.
+          </p>
+
+          <div className="theme-grid">
+            {HEART_CHECK_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                className={classNames("theme-card", selectedThemeId === option.id && "selected")}
+                onClick={() => setSelectedThemeId(option.id)}
+              >
+                <strong>{option.label}</strong>
+                <span className="soft-label" style={{ fontSize: "0.85rem" }}>
+                  {option.description}
+                </span>
+              </button>
+            ))}
           </div>
-        ) : null}
-      </section>
+
+          <div style={{ textAlign: "center", marginTop: "1.5rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <button className="btn" disabled={!selectedThemeId} onClick={() => goToRead(selectedThemeId)}>
+              Continue with this theme
+            </button>
+            <button className="btn btn-ghost" onClick={() => goToRead(null)}>
+              Surprise me
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* ------- READ SLOWLY ------- */}
+      {step === "read" && verse && (
+        <section className="journey-stage">
+          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Read Slowly</h2>
+          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            Let this passage wash over you before you practice it.
+          </p>
+
+          <div className="journey-reading">
+            <p className="journey-devotional">
+              &ldquo;{buildFullVerseText(verse)}&rdquo;
+            </p>
+            <p style={{ fontWeight: 600, textAlign: "center" }}>{verse.reference}</p>
+
+            {verse.devotional && (
+              <div style={{ marginTop: "1.25rem", padding: "1rem", background: "rgba(49,95,114,0.06)", borderRadius: "var(--radius)" }}>
+                <p className="soft-label" style={{ marginBottom: "0.25rem" }}>A thought to sit with</p>
+                <p style={{ lineHeight: 1.7 }}>{verse.devotional}</p>
+              </div>
+            )}
+          </div>
+
+          <h3 style={{ textAlign: "center", marginTop: "2rem", marginBottom: "0.25rem" }}>
+            Choose your practice depth
+          </h3>
+          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1rem" }}>
+            How many words would you like to fill in?
+          </p>
+
+          <div className="practice-level-grid">
+            {PRACTICE_LEVELS.map((level) => (
+              <button
+                key={level.id}
+                className={classNames("practice-level-card", selectedLevel === level.id && "selected")}
+                onClick={() => setSelectedLevel(level.id)}
+              >
+                <strong>{level.label}</strong>
+                <span className="soft-label" style={{ fontSize: "0.85rem" }}>{level.description}</span>
+              </button>
+            ))}
+          </div>
+
+          <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+            <button className="btn" onClick={() => initPractice(selectedLevel)}>
+              Begin practice
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* ------- PRACTICE ------- */}
+      {step === "practice" && verse && (
+        <section className="journey-stage">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
+            <h2 style={{ margin: 0 }}>Practice</h2>
+            <span className="soft-label">{levelMeta.label} &middot; {verse.reference}</span>
+          </div>
+
+          {/* verse with blanks */}
+          <div className="verse-area" style={{ lineHeight: 2.15, fontSize: "1.15rem" }}>
+            {verse.parts.map((part, answerIndex) => {
+              const slotIndex = blankIndexLookup.get(answerIndex);
+              const isBlank = slotIndex !== undefined;
+              const answer = verse.answers[answerIndex];
+
+              return (
+                <span key={answerIndex}>
+                  {part}
+                  {answerIndex < verse.answers.length && (
+                    isBlank ? (
+                      <button
+                        className={classNames(
+                          "blank",
+                          placements[slotIndex] && "filled",
+                          practiceResult &&
+                            (normalizeWord(placements[slotIndex]) === practiceAnswers[slotIndex]
+                              ? "correct"
+                              : "wrong"),
+                        )}
+                        onClick={() => handleBlankClick(slotIndex)}
+                        disabled={!!practiceResult}
+                        style={{ minWidth: 100, minHeight: 44 }}
+                      >
+                        {placements[slotIndex] || "\u00A0"}
+                      </button>
+                    ) : (
+                      <span className="revealed-word">{answer}</span>
+                    )
+                  )}
+                </span>
+              );
+            })}
+          </div>
+
+          {/* tile pool */}
+          {!practiceResult && (
+            <div className="tile-pool" style={{ marginTop: "1.5rem" }}>
+              {tilePool.map((tile, tileIndex) => {
+                const remaining = getRemainingTileCount(tile, tilePool, placements);
+                return (
+                  <button
+                    key={`${tile}-${tileIndex}`}
+                    className={classNames(
+                      "tile",
+                      selectedTile === tile && "selected",
+                      remaining <= 0 && "used",
+                    )}
+                    onClick={() => handleTileClick(tile)}
+                    disabled={remaining <= 0}
+                  >
+                    {tile}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* submit / result */}
+          {!practiceResult && (
+            <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+              <button className="btn" disabled={!allFilled} onClick={handleSubmit}>
+                Check my answers
+              </button>
+            </div>
+          )}
+
+          {practiceResult && (
+            <div className="journey-verse-card" style={{ marginTop: "1.5rem", textAlign: "center" }}>
+              <p style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "0.25rem" }}>
+                {practiceResult.correct} of {practiceResult.total} correct
+              </p>
+              <p className="soft-label" style={{ marginBottom: "0.75rem" }}>
+                +{practiceResult.score} points &middot; Attempt #{attemptIndex}
+              </p>
+
+              {serverError && (
+                <p style={{ color: "var(--bad)", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
+                  {serverError}
+                </p>
+              )}
+
+              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+                <button className="btn btn-ghost" onClick={handleRetry}>
+                  Try again
+                </button>
+                <button className="btn" onClick={goToReflect}>
+                  Continue &rarr;
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ------- REFLECT (Live It) ------- */}
+      {step === "reflect" && verse && (
+        <section className="journey-stage" style={{ maxWidth: 560, margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", marginBottom: "0.25rem" }}>Live It</h2>
+          <p className="soft-label" style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            Take one truth from this passage into the rest of your day.
+          </p>
+
+          {themeOption && (
+            <div className="journey-verse-card" style={{ marginBottom: "1.5rem" }}>
+              <p style={{ fontStyle: "italic", lineHeight: 1.6 }}>{themeOption.prompt}</p>
+            </div>
+          )}
+
+          {verse.applicationPrompt && (
+            <div className="journey-verse-card" style={{ marginBottom: "1.5rem" }}>
+              <p className="soft-label" style={{ marginBottom: "0.25rem" }}>From today&rsquo;s verse</p>
+              <p style={{ lineHeight: 1.6 }}>{verse.applicationPrompt}</p>
+            </div>
+          )}
+
+          {reflectionMode === "choose" && (
+            <div style={{ textAlign: "center", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <button className="btn" onClick={() => { setReflectionMode("write"); setTimeout(() => textareaRef.current?.focus(), 60); }}>
+                Write a short reflection
+              </button>
+              <button className="btn btn-ghost" onClick={goToComplete}>
+                Skip for now
+              </button>
+            </div>
+          )}
+
+          {reflectionMode === "write" && !reflectionSaved && (
+            <div>
+              <textarea
+                ref={textareaRef}
+                className="reflection-textarea"
+                rows={4}
+                maxLength={1000}
+                placeholder="What is one way you can live this verse today?"
+                value={reflectionText}
+                onChange={(event) => setReflectionText(event.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "0.75rem",
+                  borderRadius: "var(--radius)",
+                  border: "1px solid rgba(0,0,0,0.12)",
+                  fontSize: "1rem",
+                  fontFamily: "inherit",
+                  resize: "vertical",
+                }}
+              />
+              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginTop: "0.75rem" }}>
+                <button
+                  className="btn"
+                  disabled={!reflectionText.trim()}
+                  onClick={handleSaveReflection}
+                >
+                  Save &amp; finish
+                </button>
+                <button className="btn btn-ghost" onClick={goToComplete}>
+                  Skip
+                </button>
+              </div>
+              {reflectionError && (
+                <p style={{ color: "var(--bad)", textAlign: "center", marginTop: "0.5rem", fontSize: "0.9rem" }}>
+                  {reflectionError}
+                </p>
+              )}
+            </div>
+          )}
+
+          {reflectionSaved && (
+            <div style={{ textAlign: "center" }}>
+              <p style={{ color: "var(--ok)", fontWeight: 600, marginBottom: "1rem" }}>
+                Reflection saved.
+              </p>
+              <button className="btn" onClick={goToComplete}>
+                Finish &rarr;
+              </button>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ------- COMPLETE ------- */}
+      {step === "complete" && (
+        <section className="journey-stage completion-panel" style={{ textAlign: "center" }}>
+          <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.6rem", marginBottom: "0.25rem" }}>
+            Amen.
+          </h2>
+          <p className="soft-label" style={{ maxWidth: 420, margin: "0 auto 1.5rem" }}>
+            You showed up today. The Word is doing its work, even when you can&rsquo;t see it.
+          </p>
+
+          {verse && (
+            <div className="journey-verse-card" style={{ marginBottom: "1.5rem" }}>
+              <p style={{ fontStyle: "italic", lineHeight: 1.6 }}>
+                &ldquo;{buildFullVerseText(verse)}&rdquo;
+              </p>
+              <p style={{ fontWeight: 600 }}>{verse.reference}</p>
+            </div>
+          )}
+
+          {sessionScore > 0 && (
+            <p style={{ marginBottom: "0.5rem" }}>
+              Session: <strong>{sessionScore} points</strong>
+              {streak > 0 && <> &middot; {streak}-day streak</>}
+            </p>
+          )}
+
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "1rem" }}>
+            <button className="btn" onClick={startOver}>
+              Start a new journey
+            </button>
+            <a href="/verses" className="btn btn-ghost">
+              Browse the verse library
+            </a>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
