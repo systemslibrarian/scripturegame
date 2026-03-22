@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 
+import { getAppUrl } from "@/lib/env";
+
 export default function robots(): MetadataRoute.Robots {
-  const base = process.env.NEXT_PUBLIC_APP_URL || "https://systemslibrarian.github.io/scripturegame";
+  const base = getAppUrl();
 
   return {
     rules: {

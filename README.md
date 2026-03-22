@@ -1,7 +1,5 @@
 # Scripture Journey
 
-**[Live Demo →](https://systemslibrarian.github.io/scripturegame/)**
-
 ## About
 
 Scripture Journey is a calm daily companion for hiding God's Word in your heart.
@@ -163,14 +161,6 @@ npm run preflight
 4. Trigger deployment via push to `main` or manually from Actions.
 
 Workflow file: `.github/workflows/deploy-vercel.yml`
-
-## Deploy on GitHub Pages
-
-1. Ensure GitHub Pages is set to use GitHub Actions as source.
-2. Push to `main` or run the workflow manually.
-3. The workflow validates lint/type/test and deploys static PWA assets.
-
-Workflow file: `.github/workflows/deploy-pages.yml`
 
 ## 10/10 Progress Tracker
 

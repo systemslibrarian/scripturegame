@@ -4,6 +4,20 @@ export const hasSupabase = Boolean(
     process.env.SUPABASE_SERVICE_ROLE_KEY,
 );
 
+export function getAppUrl(): string {
+  const explicitUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (explicitUrl) {
+    return explicitUrl;
+  }
+
+  const vercelProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercelProductionUrl) {
+    return `https://${vercelProductionUrl}`;
+  }
+
+  return "http://localhost:3000";
+}
+
 export function assertEnv(name: string, value: string | undefined): string {
   if (!value) {
     throw new Error(`Missing required environment variable: ${name}`);

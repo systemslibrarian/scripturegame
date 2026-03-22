@@ -9,9 +9,6 @@ const config = [
       "node_modules/**",
       ".next/**",
       "coverage/**",
-      "public/sw.js",
-      "index.html",
-      "sw.js",
     ],
   },
 ];

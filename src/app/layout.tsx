@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { Crimson_Text } from "next/font/google";
 
 import { SiteHeader } from "@/components/site-header";
+import { getAppUrl } from "@/lib/env";
 import { TranslationProvider } from "@/lib/translation-context";
 
 import "./globals.css";
+
+const appUrl = getAppUrl();
 
 const crimsonText = Crimson_Text({
   subsets: ["latin"],
@@ -18,12 +21,12 @@ export const metadata: Metadata = {
   title: "Scripture Journey",
   description: "A calm daily Scripture journey for reading, reflecting, memorizing, and living God's Word.",
   manifest: "/manifest.webmanifest",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://systemslibrarian.github.io/scripturegame"),
+  metadataBase: new URL(appUrl),
   openGraph: {
     title: "Scripture Journey",
     description: "A calm daily Scripture journey for reading, reflecting, memorizing, and living God's Word.",
     type: "website",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://systemslibrarian.github.io/scripturegame",
+    url: appUrl,
     images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Scripture Journey" }],
   },
   twitter: {

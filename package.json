@@ -11,8 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preflight": "node scripts/preflight.mjs",
-    "pages:build": "node scripts/build-pages-site.mjs"
+    "preflight": "node scripts/preflight.mjs"
   },
   "repository": {
     "type": "git",
