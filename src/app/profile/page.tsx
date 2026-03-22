@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Profile = {
@@ -74,6 +75,11 @@ export default function ProfilePage() {
           <dt>Current streak</dt>
           <dd style={{ margin: 0 }}>{profile.currentStreak} days</dd>
         </dl>
+      </section>
+      <section className="card" style={{ textAlign: "center" }}>
+        <Link href="/profile/reflections" style={{ color: "var(--brand)", fontWeight: 600, fontSize: "1.02rem" }}>
+          View your reflections →
+        </Link>
       </section>
     </main>
   );

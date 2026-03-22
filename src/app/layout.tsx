@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
+import { Crimson_Text } from "next/font/google";
 
 import { SiteHeader } from "@/components/site-header";
 import { TranslationProvider } from "@/lib/translation-context";
 
 import "./globals.css";
+
+const crimsonText = Crimson_Text({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-crimson",
+});
 
 export const metadata: Metadata = {
   title: "Scripture Journey",
@@ -27,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={crimsonText.variable}>
       <body>
         <TranslationProvider>
           <a className="skip-link" href="#main-content">
@@ -39,6 +48,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
             </div>
           </div>
+          <footer className="site-footer">
+            <p className="footer-scripture">
+              &ldquo;Not to us, O Lord, but to Your name give glory.&rdquo; — Psalm 115:1
+            </p>
+            <p className="footer-tagline">Built to draw hearts closer to Christ.</p>
+          </footer>
         </TranslationProvider>
       </body>
     </html>

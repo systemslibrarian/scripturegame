@@ -1,6 +1,13 @@
-# Scripture Memory
+# Scripture Journey
 
-A calm, daily Scripture practice app. Read a passage slowly, sit with it, place the missing words from memory, and carry one clear response into the rest of your day.
+## About
+
+scripturegame is a calm daily companion for hiding God's Word in your heart.
+
+Rooted in Psalm 119:11 — it guides you through reading, reflection, memorization,
+and application in a quiet, focused journey. No scores. No timers. Just Scripture.
+
+Built with Next.js 15, Supabase, and TypeScript.
 
 ## What It Does
 
@@ -17,7 +24,7 @@ Themes include anxiety, fear, doubt, temptation, waiting, guidance, hope, and mo
 - **Drag-and-drop word tiles** — the central memorization mechanic, designed for mobile and desktop.
 - **Heart check** — pick a theme that matches where you are right now before your verse is chosen.
 - **Three skill levels** — beginner, intermediate, and expert control how many blanks appear.
-- **Streaks and scoring** — track daily consistency and see your progress over time.
+- **Streaks** — track daily consistency and see your continued rhythm over time.
 - **Leaderboard** — optional friendly accountability with other users.
 - **Guest mode** — start immediately, no account required. Sign in later to sync progress across devices.
 - **Offline-capable** — a local verse set works without any backend connection.
@@ -106,9 +113,10 @@ ISC
 ## App Routes
 
 - `/` home
-- `/play` game session
+- `/play` daily journey
 - `/auth` sign in/sign up
-- `/profile` user stats
+- `/profile` your journey stats
+- `/profile/reflections` devotional journal
 - `/leaderboard` rankings
 - `/admin` verse CMS UI
 
@@ -116,13 +124,15 @@ ISC
 
 - `GET /api/verses`
 - `POST /api/attempt`
+- `GET /api/reflections`
+- `POST /api/reflection`
 - `GET /api/profile?userId=...`
 - `GET /api/leaderboard`
 - `POST /api/admin/verse` (requires Supabase authenticated admin role when Supabase is enabled)
 
 ## Security Hardening
 
-- Server-side score validation and anti-cheat checks on `/api/attempt`.
+- Server-side validation and integrity checks on `/api/attempt`.
 - Per-endpoint rate limiting for attempt, admin, and leaderboard APIs.
 - Admin content write path now supports Supabase role-based authorization (`app_metadata.role=admin`).
 - Local fallback mode keeps `x-admin-token` support for non-Supabase development.

@@ -112,6 +112,10 @@ export default function PlayPage() {
   const [streak, setStreak] = useState(0);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  /* ---- same-day return detection ---- */
+  const [completedToday, setCompletedToday] = useState(false);
+  const [completedVerseRef, setCompletedVerseRef] = useState<string | null>(null);
+
   /* ---- translation preference (shared context) ---- */
   const { translationKey } = useTranslation();
 
@@ -131,6 +135,13 @@ export default function PlayPage() {
         setLoading(false);
       }
     })();
+
+    /* Check if today's journey was already completed */
+    const today = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem("sg_lastJourneyDate") === today) {
+      setCompletedToday(true);
+      setCompletedVerseRef(localStorage.getItem("sg_lastJourneyVerse"));
+    }
   }, []);
 
   /* featured verse for step 1 */
@@ -188,7 +199,12 @@ export default function PlayPage() {
     setTimeout(() => textareaRef.current?.focus(), 60);
   }, []);
 
-  const goToComplete = useCallback(() => setStep("complete"), []);
+  const goToComplete = useCallback(() => {
+    setStep("complete");
+    const today = new Date().toISOString().slice(0, 10);
+    localStorage.setItem("sg_lastJourneyDate", today);
+    if (verse) localStorage.setItem("sg_lastJourneyVerse", verse.reference);
+  }, [verse]);
 
   const toggleHeartCheckTag = useCallback((tag: string) => {
     setHeartCheckTags((prev) =>
@@ -413,8 +429,31 @@ export default function PlayPage() {
         </nav>
       )}
 
+      {/* ------- SAME-DAY RETURN ------- */}
+      {step === "today" && completedToday && (
+        <section className="journey-stage" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
+          <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.25rem", lineHeight: 1.6, marginBottom: "1rem" }}>
+            You&rsquo;ve journeyed with today&rsquo;s verse.
+          </p>
+          {completedVerseRef && (
+            <p style={{ fontFamily: "var(--scripture-font)", fontStyle: "italic", color: "var(--muted)", marginBottom: "1.5rem" }}>
+              &ldquo;{completedVerseRef}&rdquo;
+            </p>
+          )}
+          <p style={{ color: "var(--muted)", lineHeight: 1.7, marginBottom: "2rem" }}>
+            Your reflection is saved. Come back tomorrow — or revisit your reflections.
+          </p>
+          <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/profile/reflections" className="btn">View my reflections</Link>
+            <button className="btn btn-ghost" onClick={() => { setCompletedToday(false); }}>
+              Practice again anyway
+            </button>
+          </div>
+        </section>
+      )}
+
       {/* ------- STEP 1 — TODAY ------- */}
-      {step === "today" && (
+      {step === "today" && !completedToday && (
         <section className="journey-stage" aria-labelledby="today-heading" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
           <p className="soft-label" style={{ marginBottom: "0.75rem", letterSpacing: "0.12em" }}>A moment with Scripture</p>
           <h1 id="today-heading" style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", marginBottom: "1.5rem", lineHeight: 1.3 }}>
@@ -488,9 +527,12 @@ export default function PlayPage() {
           <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1rem", letterSpacing: "0.12em" }}>
             Read slowly
           </p>
+          <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.92rem", marginBottom: "1.5rem" }}>
+            Read slowly, 2–3 times. There is no timer.
+          </p>
 
           <div className="journey-reading" style={{ padding: "1.5rem 0" }}>
-            <p className="journey-devotional" style={{ fontSize: "clamp(1.2rem, 2vw, 1.4rem)", lineHeight: 2, textAlign: "center" }}>
+            <p className="journey-devotional" style={{ fontFamily: "var(--scripture-font)", fontSize: "clamp(1.4rem, 2.8vw, 1.85rem)", lineHeight: 2, textAlign: "center" }}>
               &ldquo;{buildFullVerseText(verse, translationKey)}&rdquo;
             </p>
             <p style={{ fontWeight: 600, textAlign: "center", marginTop: "0.75rem" }}>{verse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
@@ -536,9 +578,12 @@ export default function PlayPage() {
         const t = getVerseTranslation(verse, translationKey);
         return (
         <section className="journey-stage">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.5rem" }}>
-            <p className="soft-label" style={{ margin: 0, letterSpacing: "0.12em" }}>Settle into the passage</p>
-            <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
+              <p className="soft-label" style={{ margin: 0, letterSpacing: "0.12em" }}>Hide this verse in your heart</p>
+              <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
+            </div>
+            <p style={{ margin: "0.35rem 0 0", fontSize: "0.88rem", fontStyle: "italic", color: "var(--muted)" }}>Psalm 119:11</p>
           </div>
 
           {/* verse with blanks */}
@@ -625,7 +670,7 @@ export default function PlayPage() {
                 {answerRevealed
                   ? "Here is the complete verse. Read it slowly."
                   : practiceResult.correct === practiceResult.total
-                    ? "The Word is taking root."
+                    ? "Practice complete. The Word is taking root."
                     : `${practiceResult.correct} of ${practiceResult.total} placed correctly.`}
               </p>
 
