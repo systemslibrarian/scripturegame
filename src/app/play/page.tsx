@@ -56,6 +56,11 @@ function classNames(...values: (string | false | null | undefined)[]): string {
   return values.filter(Boolean).join(" ");
 }
 
+function displayWord(word: string): string {
+  if (!word) return word;
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
 async function getUserId(): Promise<string> {
   try {
     const response = await fetch("/api/profile");
@@ -625,13 +630,13 @@ export default function PlayPage() {
                         )}
                         onClick={() => handleBlankClick(slotIndex)}
                         disabled={!!practiceResult}
-                        aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${placements[slotIndex]}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
+                        aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${displayWord(placements[slotIndex])}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
                         style={{ minWidth: 100, minHeight: 48 }}
                       >
-                        {placements[slotIndex] || "\u00A0"}
+                        {placements[slotIndex] ? displayWord(placements[slotIndex]) : "\u00A0"}
                       </button>
                     ) : (
-                      <span className="revealed-word">{answer}</span>
+                      <span className="revealed-word">{displayWord(answer)}</span>
                     )
                   )}
                 </span>
@@ -662,9 +667,9 @@ export default function PlayPage() {
                     onClick={() => handleTileClick(tileIndex)}
                     disabled={isUsed}
                     aria-pressed={selectedTile === tileIndex}
-                    aria-label={isUsed ? `${tile} (already placed)` : tile}
+                    aria-label={isUsed ? `${displayWord(tile)} (already placed)` : displayWord(tile)}
                   >
-                    {tile}
+                    {displayWord(tile)}
                   </button>
                 );
               })}
@@ -676,7 +681,7 @@ export default function PlayPage() {
           {!practiceResult && (
             <div style={{ textAlign: "center", marginTop: "1.5rem", display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
               <button className="btn" disabled={!allFilled} onClick={handleSubmit}>
-                Check my words
+                Commit to heart
               </button>
               <button className="btn btn-ghost" onClick={handleShowAnswer}>
                 Show answer
@@ -691,8 +696,8 @@ export default function PlayPage() {
                 {answerRevealed
                   ? "Here is the complete verse. Read it slowly."
                   : practiceResult.correct === practiceResult.total
-                    ? "Practice complete. The Word is taking root."
-                    : `${practiceResult.correct} of ${practiceResult.total} placed correctly.`}
+                    ? "Practice complete — hidden deeper in your heart."
+                    : "Almost there. A few words need another look."}
               </p>
 
               {serverError && (

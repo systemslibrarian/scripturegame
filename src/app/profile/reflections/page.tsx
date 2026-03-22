@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import { LOCAL_VERSES } from "@/lib/verses-local";
 
 type Reflection = {
   id: number;
@@ -22,6 +24,12 @@ function formatDate(iso: string): string {
 export default function ReflectionsPage() {
   const [reflections, setReflections] = useState<Reflection[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const verseRefMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const v of LOCAL_VERSES) map.set(v.id, v.reference);
+    return map;
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -75,7 +83,7 @@ export default function ReflectionsPage() {
           {reflections.map((r) => (
             <article key={r.id} className="card" style={{ padding: "1.25rem 1.5rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
-                <strong style={{ fontSize: "1.05rem" }}>{r.verse_id}</strong>
+                <strong style={{ fontFamily: "var(--scripture-font)", fontSize: "1.08rem" }}>{verseRefMap.get(r.verse_id) ?? r.verse_id}</strong>
                 <time dateTime={r.created_at} style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
                   {formatDate(r.created_at)}
                 </time>

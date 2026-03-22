@@ -266,6 +266,16 @@ a {
   margin: 0.25rem 0 1.25rem;
 }
 
+.hero-subtitle {
+  font-family: var(--scripture-font);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.15rem 0 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
 .hero-secondary {
   align-items: center;
   gap: 0.5rem;
@@ -739,12 +749,12 @@ select:focus-visible {
   transition: background 0.2s, color 0.2s;
 }
 
-.translation-toggle button[aria-pressed="true"] {
+.translation-toggle button[aria-checked="true"] {
   background: var(--brand);
   color: #fff;
 }
 
-.translation-toggle button:hover:not([aria-pressed="true"]) {
+.translation-toggle button:hover:not([aria-checked="true"]) {
   background: rgba(0,0,0,0.04);
 }
 

@@ -64,13 +64,11 @@ export default function ProfilePage() {
         <p className="muted">Mode: {authMode === "account" ? "Signed in account" : "Guest mode"}</p>
       </section>
       <section className="card">
-        <h3 style={{ marginTop: 0 }}>Stats</h3>
+        <h3 style={{ marginTop: 0 }}>Your Walk</h3>
         <dl style={{ margin: 0 }}>
-          <dt>Total points</dt>
+          <dt>Journeys</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.totalPoints}</dd>
-          <dt>Best session</dt>
-          <dd style={{ margin: "0 0 0.4rem" }}>{profile.bestSession}</dd>
-          <dt>Verses completed</dt>
+          <dt>Verses memorized</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.versesCompleted}</dd>
           <dt>Current streak</dt>
           <dd style={{ margin: 0 }}>{profile.currentStreak} days</dd>

@@ -1,23 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useTranslation } from "@/lib/translation-context";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
   { href: "/play", label: "Today's Verse" },
-  { href: "/verses", label: "Verse Library" },
   { href: "/profile", label: "Profile" },
   { href: "/auth", label: "Sign In" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
   const { translationKey, switchTranslation } = useTranslation();
 
   useEffect(() => {
@@ -77,7 +72,7 @@ export function SiteHeader() {
         </div>
       </div>
       <nav aria-label="Primary" className={`nav ${menuOpen ? "open" : ""}`} id="primary-navigation">
-        {NAV_LINKS.filter((link) => !(pathname === "/" && link.href === "/verses")).map((link) => (
+        {NAV_LINKS.map((link) => (
           <Link href={link.href} key={link.href} onClick={() => setMenuOpen(false)}>
             {link.label}
           </Link>

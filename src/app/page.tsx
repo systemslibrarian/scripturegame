@@ -4,7 +4,8 @@ export default function HomePage() {
   return (
     <main className="grid spacious">
       <section className="hero hero-journey">
-        <h1 style={{ marginTop: 0 }}>A calm daily companion to hide God&apos;s Word in your heart.</h1>
+        <h1 style={{ marginTop: 0 }}>A calm daily companion<br />to hide God&apos;s Word in your heart.</h1>
+        <p className="hero-subtitle">Rooted in Psalm 119:11.</p>
         <p className="hero-rhythm">Read · Reflect · Memorize · Live</p>
 
         <blockquote className="scripture-anchor">
@@ -18,7 +19,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="row hero-secondary">
-          <Link className="btn hero-link" href="/auth">Sign in</Link>
+          <Link className="btn hero-link" href="/auth">Sign in to track your walk</Link>
           <span className="hero-or">or</span>
           <Link className="btn hero-link" href="/play">Continue as guest</Link>
         </div>
