@@ -93,7 +93,6 @@ export default function PlayPage() {
   /* ---- journey flow ---- */
   const [step, setStep] = useState<JourneyStep>("today");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
-  const [heartCheckTags, setHeartCheckTags] = useState<string[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("intermediate");
   const [verse, setVerse] = useState<Verse | null>(null);
 
@@ -212,12 +211,6 @@ export default function PlayPage() {
     if (verse) localStorage.setItem("sg_lastJourneyVerse", verse.reference);
   }, [verse]);
 
-  const toggleHeartCheckTag = useCallback((tag: string) => {
-    setHeartCheckTags((prev) =>
-      prev.includes(tag) ? [] : [tag],
-    );
-  }, []);
-
   const navigateToStep = useCallback(
     (target: JourneyStep) => {
       const targetIndex = stepOrder.indexOf(target);
@@ -226,7 +219,6 @@ export default function PlayPage() {
       if (target === "today") {
         setStep("today");
         setSelectedThemeId(null);
-        setHeartCheckTags([]);
         setVerse(null);
         setPracticeResult(null);
         setReflectionText("");
@@ -247,7 +239,6 @@ export default function PlayPage() {
   const startOver = useCallback(() => {
     setStep("today");
     setSelectedThemeId(null);
-    setHeartCheckTags([]);
     setVerse(null);
     setPracticeResult(null);
     setAnswerRevealed(false);
@@ -503,34 +494,19 @@ export default function PlayPage() {
       {step === "heartcheck" && (
         <section className="journey-stage" aria-labelledby="heartcheck-heading">
           <h2 id="heartcheck-heading" style={{ textAlign: "center", fontFamily: "'Fraunces', Georgia, serif", marginBottom: "0.5rem" }}>What are you carrying today?</h2>
-          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
+          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1.5rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
             Choose what resonates. Let Scripture meet you there.
           </p>
-
-          <div style={{ textAlign: "center", marginBottom: "1.5rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <button
-              className="btn"
-              disabled={heartCheckTags.length === 0}
-              onClick={() => {
-                const primary = heartCheckTags[0] ?? null;
-                setSelectedThemeId(primary);
-                goToRead(primary);
-              }}
-            >
-              Continue
-            </button>
-            <button className="btn btn-ghost" onClick={() => goToRead(null)}>
-              I&rsquo;m not sure &mdash; choose for me
-            </button>
-          </div>
 
           <div className="theme-grid" role="group" aria-label="Select what you are carrying">
             {HEART_CHECK_OPTIONS.map((option) => (
               <button
                 key={option.id}
-                className={classNames("theme-card", heartCheckTags.includes(option.id) && "selected")}
-                onClick={() => toggleHeartCheckTag(option.id)}
-                aria-pressed={heartCheckTags.includes(option.id)}
+                className="theme-card"
+                onClick={() => {
+                  setSelectedThemeId(option.id);
+                  goToRead(option.id);
+                }}
               >
                 <strong>{option.label}</strong>
                 <span className="soft-label" style={{ fontSize: "0.85rem" }}>
@@ -752,11 +728,14 @@ export default function PlayPage() {
             ) : null;
           })()}
 
-          {heartCheckTags.length > 0 && (
-            <p style={{ fontStyle: "italic", color: "var(--muted)", textAlign: "center", marginBottom: "1.25rem", lineHeight: 1.6 }}>
-              You said you are carrying {heartCheckTags.map((t) => t.toLowerCase()).join(" and ")}…
-            </p>
-          )}
+          {selectedThemeId && (() => {
+            const theme = getThemeOption(selectedThemeId);
+            return theme ? (
+              <p style={{ fontStyle: "italic", color: "var(--muted)", textAlign: "center", marginBottom: "1.25rem", lineHeight: 1.6 }}>
+                You said you are carrying {theme.label.toLowerCase()}…
+              </p>
+            ) : null;
+          })()}
 
           {verse.applicationPrompt && (
             <div style={{ marginBottom: "2rem", padding: "1.25rem 1.5rem", background: "rgba(49,95,114,0.05)", borderRadius: "var(--radius)", borderLeft: "3px solid rgba(49,95,114,0.2)" }}>

@@ -71,6 +71,30 @@ export const HEART_CHECK_OPTIONS: ThemeOption[] = [
     description: "You are running on empty. Stop striving and receive what Christ is offering you right now.",
     prompt: "What are you still carrying that Christ already carried for you?",
   },
+  {
+    id: "faithfulness",
+    label: "God's Faithfulness",
+    description: "His compassions are new every morning. Stand on what God has proven, not on what you feel right now.",
+    prompt: "Where do you need to trust what God has already shown to be true about Himself?",
+  },
+  {
+    id: "light",
+    label: "God's Light",
+    description: "Things feel unclear or dark. Let the Word illuminate the next step you've been avoiding.",
+    prompt: "What would obedience look like if you trusted the light God has already given you?",
+  },
+  {
+    id: "love",
+    label: "God's Love",
+    description: "You need to be reminded that you are not just tolerated — you are genuinely, fiercely loved.",
+    prompt: "What would change if you stopped trying to earn God's love and simply received it?",
+  },
+  {
+    id: "identity",
+    label: "Identity in Christ",
+    description: "You've been living from an old story. Step into who God says you actually are.",
+    prompt: "What old story about yourself are you still living from that Christ has already declared finished?",
+  },
 ];
 
 export const PRACTICE_LEVELS: Array<{

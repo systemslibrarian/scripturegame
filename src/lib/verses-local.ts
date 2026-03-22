@@ -759,4 +759,312 @@ export const LOCAL_VERSES: Verse[] = [
       decoys: ["DAY", "RESTED", "THEIR", "WORK"],
     },
   },
+
+  /* ------------------------------------------------------------------ */
+  /*  GOD'S FAITHFULNESS                                                */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "lam322",
+    reference: "Lamentations 3:22-23",
+    translation: "NIV",
+    parts: [
+      "Because of the LORD's great ",
+      " we are not ",
+      ", for his compassions never ",
+      ". They are new every morning; great is your ",
+      ".",
+    ],
+    answers: ["LOVE", "CONSUMED", "FAIL", "FAITHFULNESS"],
+    decoys: ["MERCY", "LOST", "END", "GOODNESS", "GRACE"],
+    themeId: "faithfulness",
+    themeLabel: "God's Faithfulness",
+    devotional:
+      "God's compassions are not recycled or diminished by yesterday's failures. Every morning — not once a season, not when you have earned it — He shows up with fresh mercies that were never depleted. This is not optimism. It is the character of God on display.",
+    applicationPrompt: "What yesterday are you dragging into today that God has already buried under fresh mercy?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
+    kjv: {
+      parts: ["It is of the LORD's ", " that we are not ", ", because his compassions fail not. They are new every morning: great is thy ", "."],
+      answers: ["MERCIES", "CONSUMED", "FAITHFULNESS"],
+      decoys: ["LOVE", "LOST", "GOODNESS", "GRACE"],
+    },
+  },
+  {
+    id: "ps365",
+    reference: "Psalm 36:5",
+    translation: "NIV",
+    parts: [
+      "Your ",
+      ", Lord, reaches to the ",
+      ", your faithfulness to the ",
+      ".",
+    ],
+    answers: ["LOVE", "HEAVENS", "SKIES"],
+    decoys: ["MERCY", "CLOUDS", "STARS", "EARTH"],
+    themeId: "faithfulness",
+    themeLabel: "God's Faithfulness",
+    devotional:
+      "His love doesn't just run deep — it reaches to the heavens. His faithfulness has no ceiling. You are not navigating this life under a limited or uncertain God. You are under One who fills the whole sky above you with constancy.",
+    applicationPrompt: "Where do you doubt whether God is still faithful to you, and what would it change to believe He is?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["Thy ", ", O LORD, is in the heavens; and thy faithfulness reacheth unto the ", "."],
+      answers: ["MERCY", "CLOUDS"],
+      decoys: ["LOVE", "SKIES", "STARS", "HEAVENS"],
+    },
+  },
+  {
+    id: "2tim213",
+    reference: "2 Timothy 2:13",
+    translation: "NIV",
+    parts: [
+      "if we are ",
+      ", he remains ",
+      ", for he cannot ",
+      " himself.",
+    ],
+    answers: ["FAITHLESS", "FAITHFUL", "DISOWN"],
+    decoys: ["WEAK", "TRUE", "DENY", "FORGET"],
+    themeId: "faithfulness",
+    themeLabel: "God's Faithfulness",
+    devotional:
+      "This verse is for the low moments — when your faith feels thin, your belief weak, your grip slipping. Even then, God does not stop being God. His faithfulness is not contingent on yours. He simply cannot act against His own nature. Your faithlessness does not cancel His.",
+    applicationPrompt: "In what area have you been faithless, and how does God's unchanging faithfulness speak into that right now?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["If we ", " not, yet he abideth ", ": he cannot ", " himself."],
+      answers: ["BELIEVE", "FAITHFUL", "DENY"],
+      decoys: ["TRUST", "TRUE", "DISOWN", "FORGET"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  GOD'S LIGHT                                                       */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "jn812",
+    reference: "John 8:12",
+    translation: "NIV",
+    parts: [
+      "I am the ",
+      " of the world. Whoever ",
+      " me will never walk in ",
+      ", but will have the light of life.",
+    ],
+    answers: ["LIGHT", "FOLLOWS", "DARKNESS"],
+    decoys: ["WAY", "TRUTH", "SHADOW", "BELIEVES"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "Jesus doesn't say He has helpful advice about light. He says He is the light. You don't follow a principle into clarity — you follow a Person. Darkness cannot coexist with His presence. Where He walks, darkness loses.",
+    applicationPrompt: "What area of your life feels dark right now, and have you invited Jesus — not just His principles — into it?",
+    difficulty: "beginner",
+    isDailyFeatured: true,
+    kjv: {
+      parts: ["I am the ", " of the world: he that ", " me shall not walk in ", ", but shall have the light of life."],
+      answers: ["LIGHT", "FOLLOWETH", "DARKNESS"],
+      decoys: ["WAY", "TRUTH", "SHADOW", "BELIEVETH"],
+    },
+  },
+  {
+    id: "ps119105",
+    reference: "Psalm 119:105",
+    translation: "NIV",
+    parts: [
+      "Your word is a ",
+      " for my feet, a light on my ",
+      ".",
+    ],
+    answers: ["LAMP", "PATH"],
+    decoys: ["LIGHT", "GUIDE", "ROAD", "WAY"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "God doesn't give you a floodlight that shows the whole path at once. He gives a lamp — enough light for the next step. This is intentional. Walking by His Word requires continued closeness. You can't take the lamp and run ahead; you must stay near to see where you're going.",
+    applicationPrompt: "What next step is God's Word illuminating that you've been avoiding because you want to see further ahead first?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["Thy word is a ", " unto my feet, and a light unto my ", "."],
+      answers: ["LAMP", "PATH"],
+      decoys: ["LIGHT", "GUIDE", "ROAD", "WAY"],
+    },
+  },
+  {
+    id: "ps271",
+    reference: "Psalm 27:1",
+    translation: "NIV",
+    parts: [
+      "The LORD is my ",
+      " and my ",
+      " — whom shall I fear? The LORD is the ",
+      " of my life — of whom shall I be afraid?",
+    ],
+    answers: ["LIGHT", "SALVATION", "STRONGHOLD"],
+    decoys: ["HOPE", "STRENGTH", "FORTRESS", "REFUGE"],
+    themeId: "light",
+    themeLabel: "God's Light",
+    devotional:
+      "The same God who is your light in darkness is the one who saves you from it. When fear comes — and it will — the question changes. Not 'is this scary?' but 'who is with me?' The LORD is the stronghold of your life. Fear doesn't disappear, but it loses its authority.",
+    applicationPrompt: "What fear feels loudest right now, and what would it mean to stand it next to 'the LORD is my light'?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["The LORD is my ", " and my ", "; whom shall I fear? the LORD is the ", " of my life; of whom shall I be afraid?"],
+      answers: ["LIGHT", "SALVATION", "STRENGTH"],
+      decoys: ["HOPE", "STRONGHOLD", "FORTRESS", "REFUGE"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  GOD'S LOVE                                                        */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "jer313",
+    reference: "Jeremiah 31:3",
+    translation: "NIV",
+    parts: [
+      "I have ",
+      " you with an ",
+      " love; I have drawn you with unfailing ",
+      ".",
+    ],
+    answers: ["LOVED", "EVERLASTING", "KINDNESS"],
+    decoys: ["CHOSEN", "ETERNAL", "MERCY", "GRACE"],
+    themeId: "love",
+    themeLabel: "God's Love",
+    devotional:
+      "Everlasting love. Not love that was strong once and is now wavering. Not love that waited until you were loveable. God says He drew you — actively, intentionally — with unfailing kindness. You were not an accident or an afterthought. You were sought.",
+    applicationPrompt: "When do you have the hardest time believing you are genuinely and unconditionally loved by God?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
+    kjv: {
+      parts: ["I have loved thee with an ", " love: therefore with ", " have I drawn thee."],
+      answers: ["EVERLASTING", "LOVINGKINDNESS"],
+      decoys: ["ETERNAL", "KINDNESS", "MERCY", "GRACE"],
+    },
+  },
+  {
+    id: "rom58",
+    reference: "Romans 5:8",
+    translation: "NIV",
+    parts: [
+      "But God ",
+      " his own ",
+      " for us in this: While we were still ",
+      ", Christ died for us.",
+    ],
+    answers: ["DEMONSTRATES", "LOVE", "SINNERS"],
+    decoys: ["SHOWS", "GRACE", "MERCY", "BROKEN", "LOST"],
+    themeId: "love",
+    themeLabel: "God's Love",
+    devotional:
+      "God did not wait for you to clean yourself up. He demonstrated His love at the exact moment you were most unloveable. The timing is the argument. While we were still sinners. This is not the love of someone who waited for the right person — it is the love of someone who acted when there was no reason to.",
+    applicationPrompt: "What would change in how you live today if you fully believed God loves you not after you improve but right now, exactly as you are?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["But God ", " his ", " toward us, in that, while we were yet ", ", Christ died for us."],
+      answers: ["COMMENDETH", "LOVE", "SINNERS"],
+      decoys: ["SHOWETH", "GRACE", "MERCY", "BROKEN", "LOST"],
+    },
+  },
+  {
+    id: "1jn49",
+    reference: "1 John 4:9",
+    translation: "NIV",
+    parts: [
+      "This is how God showed his ",
+      " among us: He ",
+      " his one and only ",
+      " into the world that we might live through him.",
+    ],
+    answers: ["LOVE", "SENT", "SON"],
+    decoys: ["GRACE", "GAVE", "SPIRIT", "MERCY"],
+    themeId: "love",
+    themeLabel: "God's Love",
+    devotional:
+      "Love has to be shown to be believed. God didn't send a statement. He sent His Son — one and only — into this broken world so that we might live. Not survive. Live. The magnitude of the gift is the measure of the love.",
+    applicationPrompt: "Do you receive God's love as something you need to earn on an ongoing basis, or as something already given? What would it look like to simply receive it today?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["In this was ", " the love of God toward us, because that God sent his only begotten ", " into the world, that we might live through him."],
+      answers: ["MANIFESTED", "SON"],
+      decoys: ["SHOWN", "REVEALED", "SPIRIT", "GRACE"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  IDENTITY IN CHRIST                                                */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "2cor517",
+    reference: "2 Corinthians 5:17",
+    translation: "NIV",
+    parts: [
+      "if anyone is in ",
+      ", the new ",
+      " has come: The ",
+      " has gone, the ",
+      " is here!",
+    ],
+    answers: ["CHRIST", "CREATION", "OLD", "NEW"],
+    decoys: ["GOD", "LIFE", "PAST", "FUTURE"],
+    themeId: "identity",
+    themeLabel: "Identity in Christ",
+    devotional:
+      "New creation. Not renovation. Not improvement. The old is gone — not just forgiven, it has passed away. This is not a feeling; it is a fact about who you are in Christ. The question is not whether you have been made new but whether you are living from that truth or still living from the old story.",
+    applicationPrompt: "What old story about yourself are you still living from that Christ has already declared finished?",
+    difficulty: "intermediate",
+    isDailyFeatured: true,
+    kjv: {
+      parts: ["if any man be in Christ, he is a new ", ": old things are passed ", "; behold, all things are become ", "."],
+      answers: ["CREATURE", "AWAY", "NEW"],
+      decoys: ["CREATION", "GONE", "FRESH", "LIFE"],
+    },
+  },
+  {
+    id: "gal220",
+    reference: "Galatians 2:20",
+    translation: "NIV",
+    parts: [
+      "I have been ",
+      " with Christ and I no longer live, but Christ ",
+      " in me. The life I now live in the body, I live by ",
+      " in the Son of God, who loved me and gave himself for me.",
+    ],
+    answers: ["CRUCIFIED", "LIVES", "FAITH"],
+    decoys: ["BURIED", "DWELLS", "TRUST", "HOPE"],
+    themeId: "identity",
+    themeLabel: "Identity in Christ",
+    devotional:
+      "Paul had everything the world would call identity — education, status, heritage. And he says: that man was crucified. Now I live — but barely, because it is Christ doing the living. This is not motivational language. It is a completely rewritten story of who is at the center.",
+    applicationPrompt: "What part of your identity are you still building around yourself instead of around Christ living in you?",
+    difficulty: "expert",
+    kjv: {
+      parts: ["I am ", " with Christ: nevertheless I live; yet not I, but Christ ", " in me: and the life which I now live in the flesh I live by the ", " of the Son of God, who loved me, and gave himself for me."],
+      answers: ["CRUCIFIED", "LIVETH", "FAITH"],
+      decoys: ["BURIED", "DWELLETH", "TRUST", "HOPE"],
+    },
+  },
+  {
+    id: "eph210",
+    reference: "Ephesians 2:10",
+    translation: "NIV",
+    parts: [
+      "For we are God's ",
+      ", created in Christ Jesus to do good ",
+      ", which God prepared in advance for us to do.",
+    ],
+    answers: ["HANDIWORK", "WORKS"],
+    decoys: ["CREATION", "MASTERPIECE", "DEEDS", "THINGS"],
+    themeId: "identity",
+    themeLabel: "Identity in Christ",
+    devotional:
+      "You are not an accident looking for purpose. You are God's handiwork — a word Paul used for a masterpiece, something crafted with care. The works you do were prepared in advance. Before you were born, there was a life being arranged for you to walk into. You are not improvising. You are being led.",
+    applicationPrompt: "What would you do differently today if you believed your life was a prepared work of God rather than something you have to build on your own?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["For we are his ", ", created in Christ Jesus unto good ", ", which God hath before ordained that we should walk in them."],
+      answers: ["WORKMANSHIP", "WORKS"],
+      decoys: ["CREATION", "MASTERPIECE", "DEEDS", "THINGS"],
+    },
+  },
 ];

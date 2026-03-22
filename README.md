@@ -28,11 +28,9 @@ Themes include anxiety, fear, doubt, temptation, waiting, guidance, hope, and mo
 ## Features
 
 - **Word-tile memorization** — the central mechanic, designed for mobile and desktop.
-- **Heart check** — pick a theme that matches where you are right now before your verse is chosen.
+- **Heart check** — choose your focus and let Scripture meet you there.
 - **Three depth levels** — beginner, intermediate, and expert control how many blanks appear.
-- **Streaks** — track daily consistency and see your continued rhythm over time.
 - **NIV / KJV toggle** — switch translations at any time.
-- **Guest mode** — start immediately, no account required. Sign in later to sync progress across devices.
 - **Offline-capable** — a local verse set works without any backend connection.
 - **Reflections** — save short written responses to application prompts after each journey.
 
