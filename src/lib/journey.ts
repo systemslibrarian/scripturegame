@@ -101,6 +101,90 @@ export const HEART_CHECK_OPTIONS: ThemeOption[] = [
     description: "Every good thing in your life traces back to Him. He does not shift, shadow, or change. He is the source.",
     prompt: "What good gift have you been crediting to yourself or circumstances that actually came down from above?",
   },
+  {
+    id: "salvation",
+    label: "Salvation",
+    description: "The gospel is not complicated. God came, God died, God rose. Let Truth anchor you again.",
+    prompt: "If someone asked you today why you have hope, what would you say — and do you still believe it?",
+  },
+  {
+    id: "gods-word",
+    label: "God's Word",
+    description: "His Word is not dead text. It is living, sharp, and active — let it search you today.",
+    prompt: "Where have you been reading Scripture without letting it read you?",
+  },
+  {
+    id: "perseverance",
+    label: "Perseverance",
+    description: "The race is not a sprint. Press on — not in your own strength, but in the One who finishes what He starts.",
+    prompt: "What are you tempted to quit, and what would it look like to take one more faithful step?",
+  },
+  {
+    id: "surrender",
+    label: "Surrender",
+    description: "Stop managing your life and lay it down. The One asking for it is the One who already gave His.",
+    prompt: "What part of your life are you still gripping that God is asking you to open your hands on?",
+  },
+  {
+    id: "courage",
+    label: "Courage",
+    description: "Courage is not the absence of fear. It is trusting the God who goes before you into the thing you dread.",
+    prompt: "What would you do today if you believed God was truly with you in it?",
+  },
+  {
+    id: "wisdom",
+    label: "Wisdom",
+    description: "You do not need more information. You need the fear of the Lord — and the humility to follow what He shows.",
+    prompt: "Where are you relying on your own understanding instead of asking God for His?",
+  },
+  {
+    id: "grace",
+    label: "Grace",
+    description: "You cannot earn what has already been given. Stop performing and receive the finished work of Christ.",
+    prompt: "What are you still trying to pay for that Christ already paid for on the cross?",
+  },
+  {
+    id: "mission",
+    label: "Mission",
+    description: "You were not saved to sit still. The same Jesus who called you now sends you — go where He leads.",
+    prompt: "Who in your life needs to hear the good news, and what is keeping you from being the one to share it?",
+  },
+  {
+    id: "prayer",
+    label: "Prayer",
+    description: "Prayer is not a ritual. It is your lifeline to the God who hears, answers, and moves on your behalf.",
+    prompt: "What conversation with God have you been putting off — and what would it cost you to start it now?",
+  },
+  {
+    id: "provision",
+    label: "Provision",
+    description: "He who feeds the sparrows and clothes the lilies will not forget you. Trust His supply, not your strategy.",
+    prompt: "What need are you anxiously trying to meet on your own instead of trusting God to provide?",
+  },
+  {
+    id: "forgiveness",
+    label: "Forgiveness",
+    description: "Unforgiveness is a prison you lock yourself inside. Release it — not because they earned it, but because Christ released you.",
+    prompt: "Who do you need to forgive, and what would freedom look like if you stopped holding the debt?",
+  },
+  {
+    id: "obedience",
+    label: "Obedience",
+    description: "Obedience is not legalism. It is love in action — the proof that you trust the One who gave the command.",
+    prompt: "What has God clearly asked of you that you have been delaying or rationalizing away?",
+  },
+  {
+    id: "joy",
+    label: "Joy",
+    description: "Joy is not happiness. It is the deep, unshakeable anchor that holds when everything on the surface is storm.",
+    prompt: "Where have you confused happiness with joy, and what would it look like to rejoice even now?",
+  },
+  {
+    id: "strength",
+    label: "Strength",
+    description: "Your own strength ran out a long time ago. His never does. Let the God of the universe be your power today.",
+    prompt: "Where are you running on fumes instead of drawing from the limitless strength God offers?",
+  },
 ];
 
 export const PRACTICE_LEVELS: Array<{

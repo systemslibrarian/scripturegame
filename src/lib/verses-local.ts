@@ -1511,4 +1511,155 @@ export const LOCAL_VERSES: Verse[] = [
       decoys: ["POWER", "PRESENCE", "LORD", "LAMP", "SON"],
     },
   },
+
+  /* ------------------------------------------------------------------ */
+  /*  SALVATION                                                         */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "john146",
+    reference: "John 14:6",
+    translation: "NIV",
+    parts: [
+      "Jesus answered, \u201cI am the ",
+      ", the ",
+      ", and the life. No one comes to the ",
+      " except through me.\u201d",
+    ],
+    answers: ["WAY", "TRUTH", "FATHER"],
+    decoys: ["LIGHT", "DOOR", "LORD", "GATE"],
+    themeId: "salvation",
+    themeLabel: "Salvation",
+    devotional:
+      "Jesus does not say He knows the way \u2014 He says He is the way. Not a way among many, the way. In a world that worships options, this exclusivity offends. But it is also the deepest comfort: there is no maze, no riddle, no secret handshake. There is a Person. And He is not hiding.",
+    applicationPrompt: "Where are you looking for life apart from the One who said He is the life?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["Jesus saith unto him, I am the ", ", the ", ", and the life: no man cometh unto the ", ", but by me."],
+      answers: ["WAY", "TRUTH", "FATHER"],
+      decoys: ["LIGHT", "DOOR", "LORD", "GATE"],
+    },
+  },
+  {
+    id: "rom116",
+    reference: "Romans 1:16",
+    translation: "NIV",
+    parts: [
+      "For I am not ",
+      " of the gospel, because it is the ",
+      " of God that brings ",
+      " to everyone who believes.",
+    ],
+    answers: ["ASHAMED", "POWER", "SALVATION"],
+    decoys: ["AFRAID", "GLORY", "GRACE", "HOPE"],
+    themeId: "salvation",
+    themeLabel: "Salvation",
+    devotional:
+      "Paul wrote this to Rome \u2014 the center of the world\u2019s power. And he was not ashamed. The gospel does not need cultural approval to do its work. It is the power of God. Not a suggestion, not a moral framework \u2014 power. The same force that spoke creation into being is in the message you carry.",
+    applicationPrompt: "Where have you been tempted to soften the gospel to make it more acceptable, and what would boldness look like today?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["For I am not ", " of the gospel of Christ: for it is the ", " of God unto ", " to every one that believeth."],
+      answers: ["ASHAMED", "POWER", "SALVATION"],
+      decoys: ["AFRAID", "GLORY", "GRACE", "HOPE"],
+    },
+  },
+  {
+    id: "rom81",
+    reference: "Romans 8:1",
+    translation: "NIV",
+    parts: [
+      "Therefore, there is now no ",
+      " for those who are in ",
+      ".",
+    ],
+    answers: ["CONDEMNATION", "CHRIST JESUS"],
+    decoys: ["JUDGMENT", "PUNISHMENT", "THE LORD", "GOD"],
+    themeId: "salvation",
+    themeLabel: "Salvation",
+    devotional:
+      "No condemnation. Not reduced condemnation. Not condemnation-on-hold. None. If you are in Christ, the verdict has already been handed down and it is not guilty. The enemy will keep bringing up your record. God has already closed the case.",
+    applicationPrompt: "What guilt are you still carrying that God has already declared finished in Christ?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["There is therefore now no ", " to them which are in ", ", who walk not after the flesh, but after the Spirit."],
+      answers: ["CONDEMNATION", "CHRIST JESUS"],
+      decoys: ["JUDGMENT", "PUNISHMENT", "THE LORD", "GOD"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  GRACE                                                             */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "eph289",
+    reference: "Ephesians 2:8-9",
+    translation: "NIV",
+    parts: [
+      "For it is by ",
+      " you have been saved, through ",
+      "\u2014and this is not from yourselves, it is the ",
+      " of God\u2014not by works, so that no one can boast.",
+    ],
+    answers: ["GRACE", "FAITH", "GIFT"],
+    decoys: ["MERCY", "LOVE", "POWER", "BLESSING"],
+    themeId: "grace",
+    themeLabel: "Grace",
+    devotional:
+      "Grace means you cannot add to what Christ has done. Faith means you simply receive it. Gift means you did not earn it. And \u201cnot by works\u201d means every performance-based identity you have built is unnecessary scaffolding around a finished building.",
+    applicationPrompt: "What are you still trying to earn from God that He has already freely given?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["For by ", " are ye saved through ", "; and that not of yourselves: it is the ", " of God: Not of works, lest any man should boast."],
+      answers: ["GRACE", "FAITH", "GIFT"],
+      decoys: ["MERCY", "LOVE", "POWER", "BLESSING"],
+    },
+  },
+  {
+    id: "gal52223",
+    reference: "Galatians 5:22-23",
+    translation: "NIV",
+    parts: [
+      "But the fruit of the Spirit is ",
+      ", joy, ",
+      ", forbearance, kindness, goodness, ",
+      ", gentleness and self-control.",
+    ],
+    answers: ["LOVE", "PEACE", "FAITHFULNESS"],
+    decoys: ["HOPE", "GRACE", "MERCY", "PATIENCE"],
+    themeId: "surrender",
+    themeLabel: "Surrender",
+    devotional:
+      "Notice it is fruit, not fruits. Singular. You do not pick which qualities to grow \u2014 the Spirit produces them all as one harvest. And fruit is not manufactured; it is grown. Your job is to stay connected to the vine. The Spirit does the rest.",
+    applicationPrompt: "Which fruit of the Spirit is most noticeably absent in your life right now, and what does that reveal about where you are resisting the Spirit?",
+    difficulty: "expert",
+    kjv: {
+      parts: ["But the fruit of the Spirit is ", ", joy, ", ", longsuffering, gentleness, goodness, ", ", meekness, temperance: against such there is no law."],
+      answers: ["LOVE", "PEACE", "FAITH"],
+      decoys: ["HOPE", "GRACE", "MERCY", "PATIENCE"],
+    },
+  },
+  {
+    id: "matt281920",
+    reference: "Matthew 28:19-20",
+    translation: "NIV",
+    parts: [
+      "Therefore go and make ",
+      " of all nations, baptizing them in the name of the Father and of the Son and of the ",
+      ", and teaching them to ",
+      " everything I have commanded you.",
+    ],
+    answers: ["DISCIPLES", "HOLY SPIRIT", "OBEY"],
+    decoys: ["FOLLOWERS", "LORD", "KEEP", "REMEMBER"],
+    themeId: "mission",
+    themeLabel: "Mission",
+    devotional:
+      "This is not a suggestion for the especially gifted. It is a command for every follower. Go. Make disciples. Teach obedience. And the promise underneath it all: I am with you always. The mission is impossible without the presence \u2014 and the presence makes the mission unstoppable.",
+    applicationPrompt: "Who is one person in your life you could begin investing in spiritually this week?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["Go ye therefore, and ", " all nations, baptizing them in the name of the Father, and of the Son, and of the ", ": Teaching them to ", " all things whatsoever I have commanded you."],
+      answers: ["TEACH", "HOLY GHOST", "OBSERVE"],
+      decoys: ["DISCIPLE", "LORD", "KEEP", "FOLLOW"],
+    },
+  },
 ];
