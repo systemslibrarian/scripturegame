@@ -113,7 +113,57 @@ Compared against the current source PDFs in `verses/`:
 - 2 Corinthians 4:18
 - 1 Corinthians 10:31
 
+### In Verse Docs But Not Yet In App
+
+High-confidence sample backlog from the source PDFs:
+
+- 1 Chronicles 16:34
+- 1 Corinthians 12:27
+- 1 Corinthians 13:13
+- 1 Corinthians 13:4-5
+- 1 Corinthians 16:14
+- 1 Corinthians 2:2
+- 1 Corinthians 2:9
+- 1 Corinthians 6:19
+- 1 John 1:8
+- 1 John 2:2
+- 1 John 4:1
+- 1 John 4:7
+- 1 John 5:14-15
+- 1 Peter 1:6-7
+- 1 Peter 2:24
+- 1 Peter 2:9
+- 1 Peter 3:15
+- 1 Peter 5:6-7
+- 1 Thessalonians 5:17
+- 1 Thessalonians 5:18
+- 1 Thessalonians 5:21
+- 2 Corinthians 5:21
+- 2 Corinthians 5:7
+- 2 Corinthians 6:14
+- 2 Corinthians 9:7
+- 2 Timothy 1:7
+- 2 Timothy 2:15
+- 2 Timothy 3:16-17
+- Acts 16:31
+- Colossians 3:16
+- Deuteronomy 6:5
+- Deuteronomy 6:6-7
+- Ephesians 2:8-10
+- Ephesians 5:8
+- Exodus 14:14
+- Exodus 34:6
+- Galatians 6:9-10
+- Genesis 1:27
+- Hebrews 10:24-25
+- Hebrews 13:5
+- Isaiah 26:4
+- Isaiah 40:28
+
+There are 269 high-confidence missing references from the PDFs after filtering out a few OCR extraction artifacts that still need manual normalization.
+
 ## Notes
 
 - These counts reflect the current in-app verse sources, including both adults and kids.
 - Adding the 271 doc references that are not yet in the app is a larger content curation task because each verse needs exercise-ready text parts, answers, decoys, theme assignment, devotional copy, and application prompts.
+- I have not generated new NIV verse text automatically for those missing references because that content needs to come from your licensed/source material rather than being invented here.
