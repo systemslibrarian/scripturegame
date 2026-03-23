@@ -626,7 +626,7 @@ a {
 .theme-grid,
 .practice-level-grid {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.6rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
@@ -724,13 +724,13 @@ a {
 .theme-card,
 .practice-level-card {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.3rem;
   text-align: left;
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 18px;
   background: var(--surface-soft);
-  padding: 1.15rem 1.25rem;
+  padding: 0.85rem 1.1rem;
   color: inherit;
   cursor: pointer;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;

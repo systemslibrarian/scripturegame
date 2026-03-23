@@ -604,8 +604,8 @@ export default function PlayPage() {
             )}
           </div>
 
-          <div style={{ marginTop: "1.25rem", borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
-            <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: "0.75rem", fontSize: "0.95rem" }}>
+          <div style={{ marginTop: "0.75rem", borderTop: "1px solid var(--border)", paddingTop: "0.75rem" }}>
+            <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: "0.5rem", fontSize: "0.88rem" }}>
               When you are ready, choose how deeply you want to practice.
             </p>
 
@@ -624,7 +624,7 @@ export default function PlayPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+          <div style={{ textAlign: "center", marginTop: "0.75rem" }}>
             <button className="btn" onClick={() => initPractice(selectedLevel)}>
               I&rsquo;m ready to practice
             </button>
