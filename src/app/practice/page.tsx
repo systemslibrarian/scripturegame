@@ -128,17 +128,6 @@ export default function PracticePage() {
     })();
   }, [isKids]);
 
-  /* ---- pick initial verse ---- */
-  useEffect(() => {
-    if (verses.length === 0) return;
-    const saved = typeof window !== "undefined" ? localStorage.getItem("sg_lastJourneyVerse") : null;
-    if (saved) {
-      const match = verses.find((v) => v.reference === saved);
-      if (match) { setVerse(match); return; }
-    }
-    setVerse(verses[0]);
-  }, [verses]);
-
   /* ---- start practice ---- */
   const initPractice = useCallback(
     (level: SkillLevel) => {
@@ -248,7 +237,7 @@ export default function PracticePage() {
     );
   }
 
-  if (!verse) {
+  if (verses.length === 0) {
     return (
       <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
         <p role="alert">No verses available.</p>
@@ -257,7 +246,7 @@ export default function PracticePage() {
     );
   }
 
-  const levelMeta = getPracticeLevelMeta(selectedLevel);
+  const levelMeta = verse ? getPracticeLevelMeta(selectedLevel) : null;
 
   const versesByBook: Record<string, Verse[]> = {};
   for (const v of verses) {
@@ -288,7 +277,7 @@ export default function PracticePage() {
                 {bookVerses.map((v) => (
                   <button
                     key={v.id}
-                    className={classNames("theme-card", v.id === verse.id && "selected")}
+                    className={classNames("theme-card", v.id === verse?.id && "selected")}
                     style={{ padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "center" }}
                     onClick={() => handleChooseVerse(v)}
                   >
@@ -303,6 +292,7 @@ export default function PracticePage() {
       )}
 
       {/* ---- verse header ---- */}
+      {verse && (
       <div className="journey-stage">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
           <h2 style={{ margin: 0, fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.25rem" }}>{verse.reference}</h2>
@@ -351,7 +341,7 @@ export default function PracticePage() {
           return (
             <>
               <div style={{ marginBottom: "1rem" }}>
-                <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
+                <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>{levelMeta?.label} &middot; {verse.reference} ({translationKey.toUpperCase()})</span>
               </div>
 
               <div className="verse-area" role="group" aria-label="Verse with blanks to fill" style={{ lineHeight: 2.15, fontSize: "1.15rem" }}>
@@ -455,6 +445,7 @@ export default function PracticePage() {
           );
         })()}
       </div>
+      )}
 
     </main>
   );

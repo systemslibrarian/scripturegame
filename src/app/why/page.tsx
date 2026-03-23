@@ -87,9 +87,9 @@ export default function WhyPage() {
 
       {/* Section 4 — CTA */}
       <section className="why-section" style={{ textAlign: "center" }}>
-        <h2>Ready to begin?</h2>
+        <h2>Choose your next step</h2>
         <div className="two-paths-grid" style={{ maxWidth: 520, margin: "1.5rem auto 0" }}>
-          <Link href="/play" className="path-card path-card-primary">
+          <Link href="/play?today=1" className="path-card path-card-primary">
             <strong>Begin your journey</strong>
             <span className="path-cta">Start &rarr;</span>
           </Link>

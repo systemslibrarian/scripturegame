@@ -4,6 +4,7 @@ import { Crimson_Text } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { AudienceProvider } from "@/lib/audience-context";
 import { getAppUrl } from "@/lib/env";
+import { ThemeProvider } from "@/lib/theme-context";
 import { TranslationProvider } from "@/lib/translation-context";
 
 import "./globals.css";
@@ -42,25 +43,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={crimsonText.variable}>
       <body>
-        <TranslationProvider>
-          <AudienceProvider>
-          <a className="skip-link" href="#main-content">
-            Skip to content
-          </a>
-          <div className="shell">
-            <SiteHeader />
-            <div id="main-content">
-              {children}
+        <ThemeProvider>
+          <TranslationProvider>
+            <AudienceProvider>
+            <a className="skip-link" href="#main-content">
+              Skip to content
+            </a>
+            <div className="shell">
+              <SiteHeader />
+              <div id="main-content">
+                {children}
+              </div>
             </div>
-          </div>
-          <footer className="site-footer">
-            <p className="footer-scripture">
-              &ldquo;Not to us, O Lord, but to Your name give glory.&rdquo; — Psalm 115:1 (NKJV)
-            </p>
-            <p className="footer-tagline">Built to draw hearts closer to Christ.</p>
-          </footer>
-          </AudienceProvider>
-        </TranslationProvider>
+            <footer className="site-footer">
+              <p className="footer-scripture">
+                &ldquo;Not to us, O Lord, but to Your name give glory.&rdquo; — Psalm 115:1 (NKJV)
+              </p>
+              <p className="footer-tagline">Built to draw hearts closer to Christ.</p>
+            </footer>
+            </AudienceProvider>
+          </TranslationProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { useAudience } from "@/lib/audience-context";
+import { useTheme } from "@/lib/theme-context";
 export function SiteHeader() {
   const { audienceMode, switchAudience } = useAudience();
+  const { themeMode, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -30,6 +32,14 @@ export function SiteHeader() {
               Kids
             </button>
           </div>
+          <button
+            type="button"
+            className="theme-toggle"
+            aria-pressed={themeMode === "dark"}
+            onClick={toggleTheme}
+          >
+            {themeMode === "dark" ? "Light mode" : "Dark mode"}
+          </button>
         </div>
 
         <button

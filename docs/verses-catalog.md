@@ -54,7 +54,66 @@
 | About Faith | 6 |
 | About Love | 5 |
 
+## Reference Doc Coverage
+
+Compared against the current source PDFs in `verses/`:
+
+| Metric | Count |
+|---|---:|
+| Unique references across all verse docs | 380 |
+| Unique references currently in app | 154 |
+| In app but not in any verse doc | 45 |
+| In verse docs but not yet in app | 271 |
+
+### In App But Not In Verse Docs
+
+- Matthew 11:28
+- Philippians 4:6
+- Proverbs 15:1
+- Ephesians 4:26-27
+- James 1:19-20
+- Mark 9:24
+- Lamentations 3:25
+- Philippians 4:7
+- Matthew 11:29
+- Psalm 23:1-2
+- Hebrews 4:9-10
+- Psalm 36:5
+- John 8:12
+- Jeremiah 31:3
+- 1 John 4:9
+- 1 John 1:5
+- John 1:4-5
+- 2 Samuel 22:29
+- Psalm 18:28
+- Psalm 119:130
+- Micah 7:8
+- Matthew 4:16
+- John 12:36
+- 1 John 1:7
+- Isaiah 60:1
+- Daniel 2:22
+- Isaiah 60:19
+- Revelation 21:23
+- Romans 3:24
+- Colossians 3:13
+- Matthew 6:14
+- Psalm 37:25
+- Isaiah 40:29
+- 2 Corinthians 12:9
+- 1 John 5:14
+- 1 Corinthians 15:58
+- Deuteronomy 31:6
+- Nehemiah 8:10
+- Psalm 16:11
+- Ephesians 6:10-11
+- Hebrews 12:1-2
+- Psalm 23:4
+- Matthew 7:7
+- 2 Corinthians 4:18
+- 1 Corinthians 10:31
+
 ## Notes
 
 - These counts reflect the current in-app verse sources, including both adults and kids.
-- If you also want PDF overlap/missing analysis, regenerate that as a separate report so this catalog remains the source of truth for app inventory.
+- Adding the 271 doc references that are not yet in the app is a larger content curation task because each verse needs exercise-ready text parts, answers, decoys, theme assignment, devotional copy, and application prompts.
