@@ -4,10 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { useAudience } from "@/lib/audience-context";
-import { useTranslation } from "@/lib/translation-context";
-
 export function SiteHeader() {
-  const { translationKey, switchTranslation } = useTranslation();
   const { audienceMode, switchAudience } = useAudience();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -15,27 +12,6 @@ export function SiteHeader() {
     <header className="topbar" role="banner">
       <div className="brand-row">
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
-          <div className="translation-toggle" role="radiogroup" aria-label="Bible translation">
-            <button
-              type="button"
-              role="radio"
-              aria-checked={translationKey === "niv"}
-              aria-label="New International Version"
-              onClick={() => switchTranslation("niv")}
-            >
-              NIV
-            </button>
-            <button
-              type="button"
-              role="radio"
-              aria-checked={translationKey === "kjv"}
-              aria-label="King James Version"
-              onClick={() => switchTranslation("kjv")}
-            >
-              KJV
-            </button>
-          </div>
-
           <div className="translation-toggle" role="radiogroup" aria-label="Audience mode">
             <button
               type="button"

@@ -1,10 +1,10 @@
-# Scripture Journey
+# HideInHeart
 
-**[Live Demo ->](https://systemslibrarian.github.io/scripturegame/)**
+**[Live App →](https://scripturegame.vercel.app)**
 
 ## About
 
-Scripture Journey is a calm daily companion for hiding God's Word in your heart.
+HideInHeart is a calm daily companion for hiding God's Word in your heart.
 
 Rooted in Psalm 119:11 — it guides you through reading, reflection,
 memorization, and application in a quiet daily journey. No scores. No timers.
@@ -27,9 +27,12 @@ Each session you walk through a short journey:
 ## Features
 
 - **Word-tile memorization** — the central mechanic, designed for mobile and desktop.
-- **Topic selection** — choose a theme and let Scripture meet you there.
+- **Topic selection** — 28 themes across 134 adult verses and 38 kid-friendly verses.
+- **Practice mode** — quick standalone verse practice without a full journey.
+- **Kids mode** — age-appropriate verses across 5 themes with an Adults/Kids toggle.
 - **Three depth levels** — beginner, intermediate, and expert control how many blanks appear.
 - **NIV / KJV toggle** — switch translations at any time.
+- **"Why memorize Scripture" page** — encouragement and context for the practice.
 - **Offline-capable** — a local verse set works without any backend connection.
 - **Reflections** — save short written responses to application prompts after each journey.
 
@@ -109,12 +112,16 @@ ISC
 
 ## App Routes
 
-- `/` home
-- `/play` daily journey
-- `/auth` sign in/sign up
-- `/profile` your journey walk
-- `/profile/reflections` devotional journal
-- `/admin` verse CMS UI
+- `/` — home (two entry points: journey or practice)
+- `/play` — daily journey
+- `/practice` — standalone verse practice
+- `/why` — why memorize Scripture
+- `/verses` — browse the verse library
+- `/auth` — sign in / sign up
+- `/profile` — your journey walk
+- `/profile/reflections` — devotional journal
+- `/leaderboard` — community leaderboard
+- `/admin` — verse CMS UI
 
 ## API Routes
 
@@ -125,6 +132,7 @@ ISC
 - `GET /api/profile?userId=...`
 - `GET /api/leaderboard`
 - `POST /api/admin/verse` (requires Supabase authenticated admin role when Supabase is enabled)
+- `PUT /api/profile/translation` (update preferred translation)
 
 ## Security Hardening
 
@@ -159,9 +167,11 @@ npm run preflight
 2. Add project environment variables from `.env.example`.
 3. Add GitHub repository secrets for workflow deployment:
 	- `VERCEL_TOKEN`
+	- `VERCEL_ORG_ID`
+	- `VERCEL_PROJECT_ID`
 4. Trigger deployment via push to `main` or manually from Actions.
 
-Workflow file: `.github/workflows/deploy-vercel.yml`
+Workflow files: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`
 
 ## 10/10 Progress Tracker
 

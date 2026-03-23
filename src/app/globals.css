@@ -447,7 +447,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
   flex-wrap: wrap;
 }
 
@@ -584,14 +584,14 @@ a {
 .journey-stage,
 .journey-verse-card,
 .verse-panel {
-  padding: clamp(1.25rem, 3vw, 2rem);
+  padding: clamp(1rem, 2.5vw, 1.5rem);
   border-radius: var(--radius);
   background: var(--card);
   box-shadow: 0 2px 16px rgba(31, 42, 55, 0.05);
 }
 
 .completion-panel {
-  padding: clamp(3rem, 7vw, 5rem) clamp(2rem, 5vw, 3rem);
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
   max-width: 560px;
   margin: 0 auto;
   border-radius: var(--radius);
@@ -610,7 +610,7 @@ a {
 .journey-progress {
   display: flex;
   gap: 6px;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.75rem;
   padding: 0 clamp(1rem, 3vw, 2rem);
 }
 
@@ -895,7 +895,7 @@ select:focus-visible {
   }
 
   .journey-stage {
-    padding: clamp(1rem, 3vw, 1.75rem);
+    padding: clamp(0.75rem, 2.5vw, 1.25rem);
   }
 
   .theme-grid,
@@ -904,7 +904,7 @@ select:focus-visible {
   }
 
   .completion-panel {
-    padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.75rem);
   }
 
   .action-row {

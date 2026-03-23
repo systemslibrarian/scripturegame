@@ -7,7 +7,10 @@ import { hasSupabase } from "@/lib/env";
 export const dynamic = "force-static";
 import { getBlankCountForSkillLevel } from "@/lib/journey";
 import { LOCAL_VERSES } from "@/lib/verses-local";
+import { KIDS_VERSES } from "@/lib/kids-verses";
 import { applyRateLimit, clientAddress } from "@/lib/rate-limit";
+
+const ALL_LOCAL_VERSES = [...LOCAL_VERSES, ...KIDS_VERSES];
 import { authenticatedUserFromRequest } from "@/lib/supabase/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
 
@@ -49,7 +52,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const localVerse = LOCAL_VERSES.find((item) => item.id === payload.verseId);
+  const localVerse = ALL_LOCAL_VERSES.find((item) => item.id === payload.verseId);
 
   let userId = payload.userId;
   let displayName = payload.userId.slice(0, 8);
