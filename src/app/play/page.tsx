@@ -489,7 +489,7 @@ export default function PlayPage() {
       {step === "heartcheck" && !completedToday && (
         <section className="journey-stage" aria-labelledby="heartcheck-heading">
           <h2 id="heartcheck-heading" style={{ textAlign: "center", fontFamily: "'Fraunces', Georgia, serif", marginBottom: "0.35rem" }}>Choose a topic</h2>
-          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
+          <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1rem", color: "var(--muted)", lineHeight: 1.7 }}>
             Select a theme below and let Scripture meet you there.
           </p>
 
@@ -540,13 +540,13 @@ export default function PlayPage() {
 
             {verse.devotional && !isKids && (
               <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", background: "rgba(49,95,114,0.05)", borderRadius: "var(--radius)", borderLeft: "3px solid rgba(49,95,114,0.2)" }}>
-                <p style={{ lineHeight: 1.8, fontSize: "1.02rem", color: "rgba(35,49,58,0.85)" }}>{verse.devotional}</p>
+                <p style={{ lineHeight: 1.8, fontSize: "1.02rem", color: "var(--ink)" }}>{verse.devotional}</p>
               </div>
             )}
           </div>
 
           <div style={{ marginTop: "2.5rem", borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "2rem" }}>
-            <p style={{ textAlign: "center", color: "rgba(35,49,58,0.7)", marginBottom: "1rem", fontSize: "1.02rem" }}>
+            <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: "1rem", fontSize: "1.02rem" }}>
               When you are ready, choose how deeply you want to practice.
             </p>
 

@@ -241,12 +241,12 @@ a {
 
 .btn.btn-ghost {
   background: transparent;
-  border: 1px solid rgba(35, 49, 58, 0.2);
+  border: 1px solid var(--nav-border);
   color: var(--ink);
 }
 
 .btn.btn-ghost:hover {
-  background: rgba(35, 49, 58, 0.04);
+  background: var(--surface-strong);
   opacity: 1;
 }
 
@@ -422,7 +422,7 @@ a {
 }
 
 .soft-label {
-  color: rgba(35, 49, 58, 0.7);
+  color: var(--muted);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -696,7 +696,7 @@ a {
 .journey-devotional {
   font-size: 1.05rem;
   line-height: 1.9;
-  color: rgba(35, 49, 58, 0.82);
+  color: var(--ink);
 }
 
 .theme-card,
