@@ -21,7 +21,7 @@ export default function HomePage() {
         <p className="scripture-inline" style={{ textAlign: "left" }}>&ldquo;{PSALM_119_11[translationKey]}&rdquo; <span style={{ whiteSpace: "nowrap" }}>— Psalm 119:11 ({label})</span></p>
 
         <div className="row hero-actions" style={{ justifyContent: "center" }}>
-          <Link className="btn primary large" href="/play">
+          <Link className="btn primary large" href="/play?today=1">
             Begin today&apos;s journey
           </Link>
         </div>
@@ -50,7 +50,7 @@ export default function HomePage() {
       <section className="two-paths-section">
         <h2 className="two-paths-heading">Two ways to begin</h2>
         <div className="two-paths-grid">
-          <Link href="/play" className="path-card path-card-primary">
+          <Link href="/play?today=1" className="path-card path-card-primary">
             <strong>Begin today&apos;s journey</strong>
             <span className="muted">Read, reflect, memorize, and apply a verse.</span>
             <span className="path-cta">Begin Journey &rarr;</span>

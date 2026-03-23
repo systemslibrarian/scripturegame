@@ -34,6 +34,51 @@ function displayWord(word: string): string {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
+const BIBLE_BOOK_ORDER = [
+  "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
+  "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings",
+  "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalm",
+  "Psalms", "Proverbs", "Ecclesiastes", "Song of Songs", "Isaiah", "Jeremiah",
+  "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah",
+  "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi",
+  "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians",
+  "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians",
+  "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon",
+  "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude",
+  "Revelation",
+] as const;
+
+const BIBLE_BOOK_INDEX = new Map(BIBLE_BOOK_ORDER.map((book, index) => [book, index]));
+
+function bookFromReference(reference: string): string {
+  const maybeBook = reference.replace(/\s+\d+:\d+.*$/, "").trim();
+  return maybeBook || reference;
+}
+
+function chapterVerseFromReference(reference: string): { chapter: number; verse: number } {
+  const match = reference.match(/(\d+):(\d+)/);
+  if (!match) return { chapter: Number.MAX_SAFE_INTEGER, verse: Number.MAX_SAFE_INTEGER };
+  return { chapter: Number(match[1]), verse: Number(match[2]) };
+}
+
+function compareReferences(a: string, b: string): number {
+  const aBook = bookFromReference(a);
+  const bBook = bookFromReference(b);
+
+  const aBookIndex = BIBLE_BOOK_INDEX.get(aBook) ?? Number.MAX_SAFE_INTEGER;
+  const bBookIndex = BIBLE_BOOK_INDEX.get(bBook) ?? Number.MAX_SAFE_INTEGER;
+  if (aBookIndex !== bBookIndex) return aBookIndex - bBookIndex;
+
+  if (aBook !== bBook) return aBook.localeCompare(bBook);
+
+  const aCv = chapterVerseFromReference(a);
+  const bCv = chapterVerseFromReference(b);
+  if (aCv.chapter !== bCv.chapter) return aCv.chapter - bCv.chapter;
+  if (aCv.verse !== bCv.verse) return aCv.verse - bCv.verse;
+
+  return a.localeCompare(b);
+}
+
 /* ------------------------------------------------------------------ */
 /*  Component                                                         */
 /* ------------------------------------------------------------------ */
@@ -48,6 +93,7 @@ export default function PracticePage() {
   const [loading, setLoading] = useState(true);
   const [verse, setVerse] = useState<Verse | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerMode, setPickerMode] = useState<"topic" | "book">("book");
 
   /* ---- practice config ---- */
   const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("intermediate");
@@ -224,6 +270,21 @@ export default function PracticePage() {
     versesByTheme[key].push(v);
   }
 
+  const sortedThemes = Object.entries(versesByTheme)
+    .map(([theme, themeVerses]) => [theme, [...themeVerses].sort((a, b) => compareReferences(a.reference, b.reference))] as const)
+    .sort((a, b) => a[0].localeCompare(b[0]));
+
+  const versesByBook: Record<string, Verse[]> = {};
+  for (const v of verses) {
+    const book = bookFromReference(v.reference);
+    if (!versesByBook[book]) versesByBook[book] = [];
+    versesByBook[book].push(v);
+  }
+
+  const sortedBooks = Object.entries(versesByBook)
+    .map(([book, bookVerses]) => [book, [...bookVerses].sort((a, b) => compareReferences(a.reference, b.reference))] as const)
+    .sort((a, b) => compareReferences(`${a[0]} 1:1`, `${b[0]} 1:1`));
+
   return (
     <main className="shell" aria-label="Practice mode">
       <div style={{ marginBottom: "1.25rem" }}>
@@ -397,9 +458,28 @@ export default function PracticePage() {
 
           {pickerOpen && (
             <div className="journey-stage" style={{ maxHeight: "60vh", overflowY: "auto" }}>
-              {Object.entries(versesByTheme).map(([theme, themeVerses]) => (
+              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                <button
+                  className={classNames("btn btn-ghost", pickerMode === "topic" && "selected")}
+                  aria-pressed={pickerMode === "topic"}
+                  onClick={() => setPickerMode("topic")}
+                >
+                  Browse by topic
+                </button>
+                <button
+                  className={classNames("btn btn-ghost", pickerMode === "book" && "selected")}
+                  aria-pressed={pickerMode === "book"}
+                  onClick={() => setPickerMode("book")}
+                >
+                  Browse by Bible book
+                </button>
+              </div>
+
+              {pickerMode === "topic" && sortedThemes.map(([theme, themeVerses]) => (
                 <div key={theme} style={{ marginBottom: "1.25rem" }}>
-                  <p className="soft-label" style={{ marginBottom: "0.5rem" }}>{theme}</p>
+                  <p className="soft-label" style={{ marginBottom: "0.5rem" }}>
+                    {theme} ({themeVerses.length})
+                  </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                     {themeVerses.map((v) => (
                       <button
@@ -409,6 +489,27 @@ export default function PracticePage() {
                         onClick={() => handleChooseVerse(v)}
                       >
                         <strong style={{ fontSize: "0.95rem" }}>{v.reference}</strong>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {pickerMode === "book" && sortedBooks.map(([book, bookVerses]) => (
+                <div key={book} style={{ marginBottom: "1.25rem" }}>
+                  <p className="soft-label" style={{ marginBottom: "0.5rem" }}>
+                    {book} ({bookVerses.length})
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                    {bookVerses.map((v) => (
+                      <button
+                        key={v.id}
+                        className={classNames("theme-card", v.id === verse.id && "selected")}
+                        style={{ padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "center" }}
+                        onClick={() => handleChooseVerse(v)}
+                      >
+                        <strong style={{ fontSize: "0.95rem", textAlign: "left" }}>{v.reference}</strong>
+                        <span className="soft-label" style={{ fontSize: "0.75rem" }}>{v.themeLabel}</span>
                       </button>
                     ))}
                   </div>

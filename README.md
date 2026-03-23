@@ -1,6 +1,6 @@
 # HideInHeart
 
-**[Live App →](https://hideinheart.vercel.app)**
+**[Live App →](https://hideinheart.vercel.app/)**
 
 ## About
 

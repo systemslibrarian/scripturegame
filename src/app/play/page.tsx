@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
@@ -87,6 +88,10 @@ async function getUserId(): Promise<string> {
 /* ------------------------------------------------------------------ */
 
 export default function PlayPage() {
+  const searchParams = useSearchParams();
+  const startWithToday = searchParams.get("today") === "1";
+  const autoStartedTodayRef = useRef(false);
+
   /* ---- data state ---- */
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(true);
@@ -176,6 +181,16 @@ export default function PlayPage() {
     },
     [verses],
   );
+
+  useEffect(() => {
+    if (!startWithToday) return;
+    if (loading || verses.length === 0) return;
+    if (completedToday) return;
+    if (autoStartedTodayRef.current) return;
+
+    autoStartedTodayRef.current = true;
+    goToRead(null);
+  }, [startWithToday, loading, verses, completedToday, goToRead]);
 
   const initPractice = useCallback(
     (level: SkillLevel) => {
