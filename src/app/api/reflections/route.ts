@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { hasSupabase } from "@/lib/env";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 import { authenticatedUserFromRequest } from "@/lib/supabase/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
 

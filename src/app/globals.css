@@ -605,6 +605,14 @@ a {
   touch-action: manipulation;
 }
 
+.tile[draggable="true"] {
+  cursor: grab;
+}
+
+.tile[draggable="true"]:active {
+  cursor: grabbing;
+}
+
 .tile:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(31, 42, 55, 0.1);

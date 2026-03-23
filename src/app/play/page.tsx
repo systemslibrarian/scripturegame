@@ -291,6 +291,42 @@ export default function PlayPage() {
     setServerError(null);
   }, []);
 
+  /* ---- drag-and-drop ---- */
+  const dragIndexRef = useRef<number | null>(null);
+  const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
+
+  const handleDragStart = useCallback((tileIndex: number) => {
+    dragIndexRef.current = tileIndex;
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, slotIndex: number) => {
+    e.preventDefault();
+    setDragOverSlot(slotIndex);
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setDragOverSlot(null);
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent, slotIndex: number) => {
+      e.preventDefault();
+      setDragOverSlot(null);
+      const tileIndex = dragIndexRef.current;
+      if (tileIndex === null || practiceResult) return;
+      const word = tilePool[tileIndex];
+      if (!canPlaceWord(word, placements, tilePool, slotIndex)) return;
+      setPlacements((prev) => {
+        const next = [...prev];
+        next[slotIndex] = word;
+        return next;
+      });
+      setSelectedTile(null);
+      dragIndexRef.current = null;
+    },
+    [practiceResult, tilePool, placements],
+  );
+
   /* ---- practice interaction ---- */
   const handleTileClick = useCallback(
     (tileIndex: number) => {
@@ -634,12 +670,16 @@ export default function PlayPage() {
                           "blank",
                           placements[slotIndex] && "filled",
                           !placements[slotIndex] && selectedTile !== null && "awaiting",
+                          !placements[slotIndex] && dragOverSlot === slotIndex && "drag-over",
                           practiceResult &&
                             (normalizeWord(placements[slotIndex]) === practiceAnswers[slotIndex]
                               ? "correct"
                               : "wrong"),
                         )}
                         onClick={() => handleBlankClick(slotIndex)}
+                        onDragOver={(e) => !placements[slotIndex] && handleDragOver(e, slotIndex)}
+                        onDragLeave={handleDragLeave}
+                        onDrop={(e) => !placements[slotIndex] && handleDrop(e, slotIndex)}
                         disabled={!!practiceResult}
                         aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${displayWord(placements[slotIndex])}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
                         style={{ minWidth: 100, minHeight: 48 }}
@@ -659,7 +699,7 @@ export default function PlayPage() {
           {!practiceResult && (
             <>
               <p style={{ textAlign: "center", margin: "1.5rem 0 0.5rem", fontSize: "0.88rem", color: "var(--muted)" }}>
-                Tap a word to place it in the next blank &middot; tap a filled blank to remove it
+                Tap or drag a word into a blank &middot; tap a filled blank to remove it
               </p>
               <div className="tile-pool" role="group" aria-label="Word tiles" style={{ marginTop: "0" }}>
               {tilePool.map((tile, tileIndex) => {
@@ -675,6 +715,8 @@ export default function PlayPage() {
                       selectedTile === tileIndex && "selected",
                       isUsed && "used",
                     )}
+                    draggable={!isUsed && !practiceResult}
+                    onDragStart={() => handleDragStart(tileIndex)}
                     onClick={() => handleTileClick(tileIndex)}
                     disabled={isUsed}
                     aria-pressed={selectedTile === tileIndex}
