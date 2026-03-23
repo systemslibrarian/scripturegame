@@ -92,8 +92,6 @@ export default function PracticePage() {
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(true);
   const [verse, setVerse] = useState<Verse | null>(null);
-  const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerMode, setPickerMode] = useState<"topic" | "book">("book");
 
   /* ---- practice config ---- */
   const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("intermediate");
@@ -239,7 +237,6 @@ export default function PracticePage() {
     setVerse(v);
     setPracticeStarted(false);
     setPracticeResult(null);
-    setPickerOpen(false);
   }, []);
 
   /* ---- loading ---- */
@@ -262,18 +259,6 @@ export default function PracticePage() {
 
   const levelMeta = getPracticeLevelMeta(selectedLevel);
 
-  /* ---- group verses by theme for picker ---- */
-  const versesByTheme: Record<string, Verse[]> = {};
-  for (const v of verses) {
-    const key = v.themeLabel || "Other";
-    if (!versesByTheme[key]) versesByTheme[key] = [];
-    versesByTheme[key].push(v);
-  }
-
-  const sortedThemes = Object.entries(versesByTheme)
-    .map(([theme, themeVerses]) => [theme, [...themeVerses].sort((a, b) => compareReferences(a.reference, b.reference))] as const)
-    .sort((a, b) => a[0].localeCompare(b[0]));
-
   const versesByBook: Record<string, Verse[]> = {};
   for (const v of verses) {
     const book = bookFromReference(v.reference);
@@ -290,6 +275,32 @@ export default function PracticePage() {
       <div style={{ marginBottom: "1.25rem" }}>
         <Link href="/" style={{ color: "var(--muted)", fontSize: "0.9rem" }}>&larr; Back to home</Link>
       </div>
+
+      {!practiceStarted && (
+        <div className="journey-stage" style={{ maxHeight: "60vh", overflowY: "auto", marginBottom: "1.5rem" }}>
+          <p className="soft-label" style={{ marginBottom: "1rem" }}>Choose a verse by Bible book</p>
+          {sortedBooks.map(([book, bookVerses]) => (
+            <div key={book} style={{ marginBottom: "1.25rem" }}>
+              <p className="soft-label" style={{ marginBottom: "0.5rem" }}>
+                {book} ({bookVerses.length})
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                {bookVerses.map((v) => (
+                  <button
+                    key={v.id}
+                    className={classNames("theme-card", v.id === verse.id && "selected")}
+                    style={{ padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "center" }}
+                    onClick={() => handleChooseVerse(v)}
+                  >
+                    <strong style={{ fontSize: "0.95rem", textAlign: "left" }}>{v.reference}</strong>
+                    <span className="soft-label" style={{ fontSize: "0.75rem" }}>{v.themeLabel}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* ---- verse header ---- */}
       <div className="journey-stage">
@@ -434,7 +445,7 @@ export default function PracticePage() {
                     <button className="btn btn-ghost" onClick={handleRetry}>
                       Try again
                     </button>
-                    <button className="btn btn-ghost" onClick={() => { setPickerOpen(true); setPracticeStarted(false); setPracticeResult(null); }}>
+                    <button className="btn btn-ghost" onClick={() => { setPracticeStarted(false); setPracticeResult(null); }}>
                       Choose a different verse
                     </button>
                   </div>
@@ -445,80 +456,6 @@ export default function PracticePage() {
         })()}
       </div>
 
-      {/* ---- verse picker ---- */}
-      {(pickerOpen || (!practiceStarted && !loading)) && (
-        <div style={{ marginTop: "1.5rem" }}>
-          <button
-            className="btn btn-ghost"
-            style={{ width: "100%", marginBottom: "1rem" }}
-            onClick={() => setPickerOpen((o) => !o)}
-          >
-            {pickerOpen ? "Hide verse list" : "Choose a different verse"}
-          </button>
-
-          {pickerOpen && (
-            <div className="journey-stage" style={{ maxHeight: "60vh", overflowY: "auto" }}>
-              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
-                <button
-                  className={classNames("btn btn-ghost", pickerMode === "topic" && "selected")}
-                  aria-pressed={pickerMode === "topic"}
-                  onClick={() => setPickerMode("topic")}
-                >
-                  Browse by topic
-                </button>
-                <button
-                  className={classNames("btn btn-ghost", pickerMode === "book" && "selected")}
-                  aria-pressed={pickerMode === "book"}
-                  onClick={() => setPickerMode("book")}
-                >
-                  Browse by Bible book
-                </button>
-              </div>
-
-              {pickerMode === "topic" && sortedThemes.map(([theme, themeVerses]) => (
-                <div key={theme} style={{ marginBottom: "1.25rem" }}>
-                  <p className="soft-label" style={{ marginBottom: "0.5rem" }}>
-                    {theme} ({themeVerses.length})
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                    {themeVerses.map((v) => (
-                      <button
-                        key={v.id}
-                        className={classNames("theme-card", v.id === verse.id && "selected")}
-                        style={{ padding: "0.75rem 1rem" }}
-                        onClick={() => handleChooseVerse(v)}
-                      >
-                        <strong style={{ fontSize: "0.95rem" }}>{v.reference}</strong>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {pickerMode === "book" && sortedBooks.map(([book, bookVerses]) => (
-                <div key={book} style={{ marginBottom: "1.25rem" }}>
-                  <p className="soft-label" style={{ marginBottom: "0.5rem" }}>
-                    {book} ({bookVerses.length})
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                    {bookVerses.map((v) => (
-                      <button
-                        key={v.id}
-                        className={classNames("theme-card", v.id === verse.id && "selected")}
-                        style={{ padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "center" }}
-                        onClick={() => handleChooseVerse(v)}
-                      >
-                        <strong style={{ fontSize: "0.95rem", textAlign: "left" }}>{v.reference}</strong>
-                        <span className="soft-label" style={{ fontSize: "0.75rem" }}>{v.themeLabel}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </main>
   );
 }

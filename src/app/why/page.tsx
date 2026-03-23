@@ -85,16 +85,7 @@ export default function WhyPage() {
         )}
       </section>
 
-      {/* Section 4 — anchor verse */}
-      <section className="why-verse-block">
-        <p className="verse-display">
-          &ldquo;I have hidden your word in my heart,<br />
-          that I might not sin against you.&rdquo;
-        </p>
-        <p className="completion-verse-ref">— Psalm 119:11</p>
-      </section>
-
-      {/* Section 5 — CTA */}
+      {/* Section 4 — CTA */}
       <section className="why-section" style={{ textAlign: "center" }}>
         <h2>Ready to begin?</h2>
         <div className="two-paths-grid" style={{ maxWidth: 520, margin: "1.5rem auto 0" }}>
