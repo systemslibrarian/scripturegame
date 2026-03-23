@@ -48,7 +48,7 @@ const BIBLE_BOOK_ORDER = [
   "Revelation",
 ] as const;
 
-const BIBLE_BOOK_INDEX = new Map(BIBLE_BOOK_ORDER.map((book, index) => [book, index]));
+const BIBLE_BOOK_INDEX = new Map<string, number>(BIBLE_BOOK_ORDER.map((book, index) => [book, index]));
 
 function bookFromReference(reference: string): string {
   const maybeBook = reference.replace(/\s+\d+:\d+.*$/, "").trim();
