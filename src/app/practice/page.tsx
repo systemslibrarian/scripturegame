@@ -260,12 +260,12 @@ export default function PracticePage() {
     .sort((a, b) => compareReferences(`${a[0]} 1:1`, `${b[0]} 1:1`));
 
   return (
-    <main className="shell" aria-label="Practice mode">
+    <main className="shell" aria-label="Practice">
       <div style={{ marginBottom: "1.25rem" }}>
         <Link href="/" style={{ color: "var(--muted)", fontSize: "0.9rem" }}>&larr; Back to home</Link>
       </div>
 
-      {!practiceStarted && (
+      {!practiceStarted && !verse && (
         <div className="journey-stage" style={{ maxHeight: "60vh", overflowY: "auto", marginBottom: "1.5rem" }}>
           <p className="soft-label" style={{ marginBottom: "1rem" }}>Choose a verse by Bible book</p>
           {sortedBooks.map(([book, bookVerses]) => (
@@ -277,7 +277,7 @@ export default function PracticePage() {
                 {bookVerses.map((v) => (
                   <button
                     key={v.id}
-                    className={classNames("theme-card", v.id === verse?.id && "selected")}
+                    className="theme-card"
                     style={{ padding: "0.75rem 1rem", display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "center" }}
                     onClick={() => handleChooseVerse(v)}
                   >
@@ -294,6 +294,17 @@ export default function PracticePage() {
       {/* ---- verse header ---- */}
       {verse && (
       <div className="journey-stage">
+        {!practiceStarted && (
+          <div style={{ marginBottom: "1rem" }}>
+            <button
+              type="button"
+              onClick={() => { setVerse(null); setPracticeResult(null); }}
+              style={{ background: "none", border: "none", color: "var(--muted)", fontSize: "0.9rem", cursor: "pointer", padding: 0 }}
+            >
+              &larr; Choose a different verse
+            </button>
+          </div>
+        )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
           <h2 style={{ margin: 0, fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.25rem" }}>{verse.reference}</h2>
           <span className="topic-badge">{verse.themeLabel}</span>

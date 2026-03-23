@@ -66,7 +66,7 @@ export default function ProfilePage() {
       <section className="card">
         <h3 style={{ marginTop: 0 }}>Your Walk</h3>
         <dl style={{ margin: 0 }}>
-          <dt>Journeys</dt>
+          <dt>Sessions</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.totalPoints}</dd>
           <dt>Verses memorized</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.versesCompleted}</dd>

@@ -58,9 +58,10 @@ export function SiteHeader() {
 
       <nav id="main-nav" className={`nav ${menuOpen ? "open" : ""}`} aria-label="Main navigation">
         <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
-        <Link href="/play" onClick={() => setMenuOpen(false)}>Journey</Link>
-        <Link href="/practice" onClick={() => setMenuOpen(false)}>Practice</Link>
+        <Link href="/browse/topic" onClick={() => setMenuOpen(false)}>By topic</Link>
+        <Link href="/browse/book" onClick={() => setMenuOpen(false)}>By book</Link>
         <Link href="/why" onClick={() => setMenuOpen(false)}>Why memorize?</Link>
+        <Link href="/profile/reflections" onClick={() => setMenuOpen(false)}>My reflections</Link>
       </nav>
     </header>
   );

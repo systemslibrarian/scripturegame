@@ -179,19 +179,42 @@ export default function PlayPage() {
     [verses],
   );
 
-  useEffect(() => {
-    const startWithToday =
-      typeof window !== "undefined" &&
-      new URLSearchParams(window.location.search).get("today") === "1";
+  const goToReadWithVerse = useCallback(
+    (verseId: string, themeId: string | null) => {
+      setSelectedThemeId(themeId);
+      const found = verses.find((v) => v.id === verseId);
+      setVerse(found ?? null);
+      setStep("read");
+    },
+    [verses],
+  );
 
-    if (!startWithToday) return;
+  useEffect(() => {
     if (loading || verses.length === 0) return;
-    if (completedToday) return;
     if (autoStartedTodayRef.current) return;
 
-    autoStartedTodayRef.current = true;
-    goToRead(null);
-  }, [loading, verses, completedToday, goToRead]);
+    const params = typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search)
+      : null;
+    if (!params) return;
+
+    const verseId = params.get("verse");
+    const themeParam = params.get("theme");
+    const startWithToday = params.get("today") === "1";
+
+    if (verseId) {
+      autoStartedTodayRef.current = true;
+      goToReadWithVerse(verseId, themeParam);
+      return;
+    }
+
+    if (startWithToday) {
+      if (completedToday) return;
+      autoStartedTodayRef.current = true;
+      goToRead(themeParam);
+      return;
+    }
+  }, [loading, verses, completedToday, goToRead, goToReadWithVerse]);
 
   const initPractice = useCallback(
     (level: SkillLevel) => {
@@ -411,7 +434,7 @@ export default function PlayPage() {
   if (loading) {
     return (
       <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
-        <p className="soft-label" role="status" aria-live="polite">Preparing your journey…</p>
+        <p className="soft-label" role="status" aria-live="polite">Loading…</p>
       </main>
     );
   }
@@ -431,7 +454,7 @@ export default function PlayPage() {
   const levelMeta = getPracticeLevelMeta(selectedLevel);
 
   return (
-    <main className="shell" aria-label="Scripture journey">
+    <main className="shell" aria-label="Scripture memorization">
       {/* step announcer for screen readers */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {STEP_LABELS[step]}
@@ -439,7 +462,7 @@ export default function PlayPage() {
 
       {/* progress bar */}
       {
-        <nav className="journey-progress" aria-label="Journey steps">
+        <nav className="journey-progress" aria-label="Progress">
           {stepOrder.map((s, i) => {
             const canClick = i < currentStepIndex;
             return (
@@ -466,7 +489,7 @@ export default function PlayPage() {
       {step === "heartcheck" && completedToday && (
         <section className="journey-stage" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
           <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.25rem", lineHeight: 1.6, marginBottom: "1rem" }}>
-            You&rsquo;ve journeyed with today&rsquo;s verse.
+            You&rsquo;ve already completed today&rsquo;s verse.
           </p>
           {completedVerseRef && (
             <p style={{ fontFamily: "var(--scripture-font)", fontStyle: "italic", color: "var(--muted)", marginBottom: "1.5rem" }}>

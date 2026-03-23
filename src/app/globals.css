@@ -728,6 +728,70 @@ a {
   box-shadow: 0 0 0 3px rgba(49, 95, 114, 0.12);
 }
 
+/* Verse list (browse pages) */
+.verse-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.verse-list-item {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.verse-list-item:hover {
+  border-color: rgba(49, 95, 114, 0.35);
+  box-shadow: 0 0 0 2px rgba(49, 95, 114, 0.08);
+}
+
+/* Book browse */
+.book-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 600px) {
+  .book-columns {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.book-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.book-list-item:hover {
+  background: var(--surface-soft);
+}
+
 .practice-meta {
   display: flex;
   align-items: flex-start;

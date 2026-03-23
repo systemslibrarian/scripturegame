@@ -1,9 +1,27 @@
 import fs from 'fs';
 
+// Parse BASE_VERSES from verses-local.ts
 const src = fs.readFileSync('src/lib/verses-local.ts', 'utf8');
-const match = src.match(/export const LOCAL_VERSES.*?=\s*(\[[\s\S]*\]);/);
-if (!match) { console.log('Could not parse LOCAL_VERSES'); process.exit(1); }
-const verses = eval(match[1]);
+const baseMatch = src.match(/const BASE_VERSES:\s*Verse\[\]\s*=\s*(\[[\s\S]*?\n\];)/);
+let baseVerses = [];
+if (baseMatch) {
+  baseVerses = eval(baseMatch[1]);
+}
+
+// Parse ADDITIONAL_VERSES from verses-additional.ts
+const addSrc = fs.readFileSync('src/lib/verses-additional.ts', 'utf8');
+const addMatch = addSrc.match(/export const ADDITIONAL_VERSES.*?=\s*(\[[\s\S]*\]);/);
+let addVerses = [];
+if (addMatch) {
+  addVerses = eval(addMatch[1]);
+}
+
+const verses = [...baseVerses, ...addVerses];
+if (verses.length === 0) {
+  // Fallback: try old-style single export
+  const oldMatch = src.match(/export const LOCAL_VERSES.*?=\s*(\[[\s\S]*\]);/);
+  if (oldMatch) verses.push(...eval(oldMatch[1]));
+}
 
 let errors = 0;
 for (const v of verses) {

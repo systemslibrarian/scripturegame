@@ -1,6 +1,7 @@
 import { Verse } from "@/types/domain";
+import { ADDITIONAL_VERSES } from "./verses-additional";
 
-export const LOCAL_VERSES: Verse[] = [
+const BASE_VERSES: Verse[] = [
   /* ------------------------------------------------------------------ */
   /*  ANXIETY                                                           */
   /* ------------------------------------------------------------------ */
@@ -3413,3 +3414,5 @@ export const LOCAL_VERSES: Verse[] = [
     },
   },
 ];
+
+export const LOCAL_VERSES: Verse[] = [...BASE_VERSES, ...ADDITIONAL_VERSES];

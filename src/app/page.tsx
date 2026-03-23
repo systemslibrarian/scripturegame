@@ -19,21 +19,23 @@ export default function HomePage() {
         <p className="hero-rhythm" style={{ textAlign: "center" }}>Read · Reflect · Memorize · Live</p>
 
         <p className="scripture-inline" style={{ textAlign: "left" }}>&ldquo;{PSALM_119_11[translationKey]}&rdquo; <span style={{ whiteSpace: "nowrap" }}>— Psalm 119:11 ({label})</span></p>
+      </section>
 
-        <div className="row hero-actions" style={{ justifyContent: "center" }}>
-          <Link className="btn primary large" href="/play?today=1">
-            Begin today&apos;s journey
-          </Link>
+      <section style={{ textAlign: "center", margin: "0 auto", maxWidth: 520 }}>
+        <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: "1.25rem" }}>
+          What would you like to memorize today?
+        </h2>
+        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/browse/topic" className="btn large">By topic</Link>
+          <Link href="/browse/book" className="btn large">By book of the Bible</Link>
         </div>
-
-
       </section>
 
       <section className="grid three home-grid">
         <article className="card pillar-card">
           <div className="soft-label">1. Read it</div>
-          <h3>Start with today&apos;s verse</h3>
-          <p className="muted">Begin with a featured passage chosen for the day. Read it slowly and let the words settle before you move on.</p>
+          <h3>Start with a verse</h3>
+          <p className="muted">Begin with a passage you chose. Read it slowly and let the words settle before you move on.</p>
         </article>
         <article className="card pillar-card">
           <div className="soft-label">2. Reflect on it</div>
@@ -50,22 +52,6 @@ export default function HomePage() {
           <h3>Carry one response forward</h3>
           <p className="muted">Finish with a short application prompt so the passage moves from memory into obedience, trust, or rest.</p>
         </article>
-      </section>
-
-      <section className="two-paths-section">
-        <h2 className="two-paths-heading">Two ways to begin</h2>
-        <div className="two-paths-grid">
-          <Link href="/play?today=1" className="path-card path-card-primary">
-            <strong>Begin today&apos;s journey</strong>
-            <span className="muted">Read, reflect, memorize, and apply a verse.</span>
-            <span className="path-cta">Begin Journey &rarr;</span>
-          </Link>
-          <Link href="/practice" className="path-card path-card-secondary">
-            <strong>Just practice</strong>
-            <span className="muted">Pick a verse and drill the tiles. No steps.</span>
-            <span className="path-cta">Open Practice &rarr;</span>
-          </Link>
-        </div>
       </section>
     </main>
   );

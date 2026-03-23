@@ -72,8 +72,8 @@ export default function ReflectionsPage() {
         <div className="card" style={{ textAlign: "center", padding: "2.5rem 1.5rem" }}>
           <p style={{ lineHeight: 1.7, color: "var(--muted)" }}>
             Your reflections will appear here. <br />
-            <Link href="/play" style={{ color: "var(--brand)", fontWeight: 600 }}>
-              Begin today&apos;s journey
+            <Link href="/browse/topic" style={{ color: "var(--brand)", fontWeight: 600 }}>
+              Start memorizing
             </Link>{" "}
             to write your first.
           </p>
