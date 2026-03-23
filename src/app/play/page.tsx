@@ -584,28 +584,28 @@ export default function PlayPage() {
               </div>
             ) : null;
           })()}
-          <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "1rem" }}>
+          <p id="read-heading" className="soft-label" style={{ textAlign: "center", marginBottom: "0.25rem" }}>
             Read slowly
           </p>
-          <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.92rem", marginBottom: "1.5rem" }}>
+          <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.88rem", marginBottom: "0.75rem" }}>
             {isKids ? "Read it out loud if you can. Then read it again." : "Read slowly, 2–3 times. There is no timer."}
           </p>
 
-          <div className="journey-reading" style={{ padding: "1.5rem 0" }}>
-            <p className="journey-devotional" style={{ fontFamily: "var(--scripture-font)", fontSize: "clamp(1.4rem, 2.8vw, 1.85rem)", lineHeight: 2, textAlign: "center" }}>
+          <div className="journey-reading" style={{ padding: "0.75rem 0" }}>
+            <p className="journey-devotional" style={{ fontFamily: "var(--scripture-font)", fontSize: "clamp(1.25rem, 2.5vw, 1.65rem)", lineHeight: 1.7, textAlign: "center" }}>
               &ldquo;{buildFullVerseText(verse, translationKey)}&rdquo;
             </p>
-            <p style={{ fontWeight: 600, textAlign: "center", marginTop: "0.75rem" }}>{verse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
+            <p style={{ fontWeight: 600, textAlign: "center", marginTop: "0.5rem" }}>{verse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
 
             {verse.devotional && !isKids && (
-              <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", background: "var(--surface-soft)", borderRadius: "var(--radius)", borderLeft: "3px solid var(--brand)" }}>
-                <p style={{ lineHeight: 1.8, fontSize: "1.02rem", color: "var(--ink)" }}>{verse.devotional}</p>
+              <div style={{ marginTop: "1rem", padding: "0.85rem 1.15rem", background: "var(--surface-soft)", borderRadius: "var(--radius)", borderLeft: "3px solid var(--brand)" }}>
+                <p style={{ lineHeight: 1.65, fontSize: "0.97rem", color: "var(--ink)" }}>{verse.devotional}</p>
               </div>
             )}
           </div>
 
-          <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
-            <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: "1rem", fontSize: "1.02rem" }}>
+          <div style={{ marginTop: "1.25rem", borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
+            <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: "0.75rem", fontSize: "0.95rem" }}>
               When you are ready, choose how deeply you want to practice.
             </p>
 
