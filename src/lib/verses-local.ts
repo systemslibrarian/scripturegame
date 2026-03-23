@@ -1968,4 +1968,151 @@ export const LOCAL_VERSES: Verse[] = [
       decoys: ["BEAUTIFULLY", "WAYS", "HANDS", "DEEDS"],
     },
   },
+
+  /* ------------------------------------------------------------------ */
+  /*  STRENGTH                                                          */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "isa535",
+    reference: "Isaiah 53:5",
+    translation: "NIV",
+    parts: [
+      "But he was ",
+      " for our transgressions, he was ",
+      " for our iniquities; the punishment that brought us ",
+      " was on him, and by his wounds we are healed.",
+    ],
+    answers: ["PIERCED", "CRUSHED", "PEACE"],
+    decoys: ["BROKEN", "WOUNDED", "HOPE", "LIFE"],
+    themeId: "salvation",
+    themeLabel: "Salvation",
+    devotional:
+      "Every wound Christ bore was intentional. Pierced for your rebellion. Crushed for your brokenness. Punished so you could have peace. Wounded so you could be healed. This is not poetic language \u2014 it is the transaction that bought your freedom.",
+    applicationPrompt: "What in your life still needs the healing that Christ\u2019s wounds already purchased?",
+    difficulty: "intermediate",
+    kjv: {
+      parts: ["But he was ", " for our transgressions, he was ", " for our iniquities: the chastisement of our ", " was upon him; and with his stripes we are healed."],
+      answers: ["WOUNDED", "BRUISED", "PEACE"],
+      decoys: ["BROKEN", "CRUSHED", "HOPE", "LIFE"],
+    },
+  },
+  {
+    id: "john1633",
+    reference: "John 16:33",
+    translation: "NIV",
+    parts: [
+      "I have told you these things, so that in me you may have ",
+      ". In this world you will have ",
+      ". But take heart! I have overcome the world.",
+    ],
+    answers: ["PEACE", "TROUBLE"],
+    decoys: ["HOPE", "TRIALS", "JOY", "SUFFERING"],
+    themeId: "strength",
+    themeLabel: "Strength",
+    devotional:
+      "Jesus does not promise a life without trouble. He promises peace inside the trouble. He does not say you might face difficulty \u2014 He says you will. But the final word is not the trouble. It is His victory. He has already overcome the world you are struggling in.",
+    applicationPrompt: "What trouble are you facing that you\u2019ve been asking God to remove instead of asking Him to carry you through?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["These things I have spoken unto you, that in me ye might have ", ". In the world ye shall have ", ": but be of good cheer; I have overcome the world."],
+      answers: ["PEACE", "TRIBULATION"],
+      decoys: ["HOPE", "TRIALS", "JOY", "SUFFERING"],
+    },
+  },
+
+  /* ------------------------------------------------------------------ */
+  /*  OBEDIENCE                                                         */
+  /* ------------------------------------------------------------------ */
+  {
+    id: "josh18",
+    reference: "Joshua 1:8",
+    translation: "NIV",
+    parts: [
+      "Keep this Book of the ",
+      " always on your lips; ",
+      " on it day and night, so that you may be careful to do everything written in it.",
+    ],
+    answers: ["LAW", "MEDITATE"],
+    decoys: ["LORD", "REFLECT", "THINK", "WORD"],
+    themeId: "obedience",
+    themeLabel: "Obedience",
+    devotional:
+      "Success in God\u2019s economy is not hustle. It is meditation. Keep His Word on your lips, in your mind, day and night. Not efficiency. Not strategy. Saturation. When the Word fills you, obedience follows naturally \u2014 not from effort, but from overflow.",
+    applicationPrompt: "When did you last meditate on Scripture \u2014 not skim, not study, but sit with it until it changed how you think?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["This book of the ", " shall not depart out of thy mouth; but thou shalt ", " therein day and night, that thou mayest observe to do according to all that is written therein."],
+      answers: ["LAW", "MEDITATE"],
+      decoys: ["LORD", "REFLECT", "THINK", "WORD"],
+    },
+  },
+  {
+    id: "rom10910",
+    reference: "Romans 10:9-10",
+    translation: "NIV",
+    parts: [
+      "If you declare with your ",
+      ", \u201cJesus is Lord,\u201d and ",
+      " in your heart that God raised him from the dead, you will be saved.",
+    ],
+    answers: ["MOUTH", "BELIEVE"],
+    decoys: ["VOICE", "TRUST", "FAITH", "CONFESS"],
+    themeId: "salvation",
+    themeLabel: "Salvation",
+    devotional:
+      "Salvation is not a secret belief. It requires confession \u2014 your mouth \u2014 and conviction \u2014 your heart. Both together. Saying it without believing it is empty. Believing it without saying it is incomplete. The gospel asks for all of you: lips and heart, public and private.",
+    applicationPrompt: "Is your faith something you confess openly, or something you keep safely private?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["That if thou shalt confess with thy ", " the Lord Jesus, and shalt ", " in thine heart that God hath raised him from the dead, thou shalt be saved."],
+      answers: ["MOUTH", "BELIEVE"],
+      decoys: ["VOICE", "TRUST", "FAITH", "CONFESS"],
+    },
+  },
+  {
+    id: "rom51",
+    reference: "Romans 5:1",
+    translation: "NIV",
+    parts: [
+      "Therefore, since we have been ",
+      " through faith, we have ",
+      " with God through our Lord Jesus Christ.",
+    ],
+    answers: ["JUSTIFIED", "PEACE"],
+    decoys: ["SAVED", "HOPE", "GRACE", "LOVE"],
+    themeId: "peace",
+    themeLabel: "Peace",
+    devotional:
+      "Peace with God is not a feeling. It is a legal reality. Justified means declared righteous \u2014 the war is over. You are no longer God\u2019s enemy; you are His child. The hostility ended at the cross. You do not need to earn peace. You received it through faith.",
+    applicationPrompt: "Are you living as though you are at peace with God, or are you still trying to appease Him?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["Therefore being ", " by faith, we have ", " with God through our Lord Jesus Christ."],
+      answers: ["JUSTIFIED", "PEACE"],
+      decoys: ["SAVED", "HOPE", "GRACE", "LOVE"],
+    },
+  },
+  {
+    id: "heb116",
+    reference: "Hebrews 11:6",
+    translation: "NIV",
+    parts: [
+      "And without ",
+      " it is impossible to please God, because anyone who comes to him must ",
+      " that he exists and that he rewards those who earnestly seek him.",
+    ],
+    answers: ["FAITH", "BELIEVE"],
+    decoys: ["HOPE", "TRUST", "KNOW", "LOVE"],
+    themeId: "doubt",
+    themeLabel: "Doubt",
+    devotional:
+      "Faith is not optional. It is the entry point. Without it, pleasing God is not just hard \u2014 it is impossible. But notice the two requirements: believe He exists, and believe He rewards seekers. He is not hiding. He wants to be found by those who look.",
+    applicationPrompt: "Do you truly believe God rewards those who seek Him, or have you started treating faith as a duty rather than a pursuit?",
+    difficulty: "beginner",
+    kjv: {
+      parts: ["But without ", " it is impossible to please him: for he that cometh to God must ", " that he is, and that he is a rewarder of them that diligently seek him."],
+      answers: ["FAITH", "BELIEVE"],
+      decoys: ["HOPE", "TRUST", "KNOW", "LOVE"],
+    },
+  },
 ];
