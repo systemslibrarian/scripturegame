@@ -91,7 +91,7 @@ export default function PlayPage() {
   const [loading, setLoading] = useState(true);
 
   /* ---- journey flow ---- */
-  const [step, setStep] = useState<JourneyStep>("today");
+  const [step, setStep] = useState<JourneyStep>("heartcheck");
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("intermediate");
   const [verse, setVerse] = useState<Verse | null>(null);
@@ -156,7 +156,7 @@ export default function PlayPage() {
   );
 
   /* ---- step progress bar ---- */
-  const stepOrder: JourneyStep[] = ["today", "heartcheck", "read", "practice", "apply", "complete"];
+  const stepOrder: JourneyStep[] = ["heartcheck", "read", "practice", "apply", "complete"];
   const currentStepIndex = stepOrder.indexOf(step);
 
   /* ---- navigation helpers ---- */
@@ -216,8 +216,8 @@ export default function PlayPage() {
       const targetIndex = stepOrder.indexOf(target);
       const current = stepOrder.indexOf(step);
       if (targetIndex >= current) return;
-      if (target === "today") {
-        setStep("today");
+      if (target === "heartcheck") {
+        setStep("heartcheck");
         setSelectedThemeId(null);
         setVerse(null);
         setPracticeResult(null);
@@ -237,7 +237,7 @@ export default function PlayPage() {
   );
 
   const startOver = useCallback(() => {
-    setStep("today");
+    setStep("heartcheck");
     setSelectedThemeId(null);
     setVerse(null);
     setPracticeResult(null);
@@ -417,7 +417,7 @@ export default function PlayPage() {
       </div>
 
       {/* progress bar */}
-      {step !== "today" && (
+      {
         <nav className="journey-progress" aria-label="Journey steps">
           {stepOrder.map((s, i) => {
             const canClick = i < currentStepIndex;
@@ -439,10 +439,10 @@ export default function PlayPage() {
             );
           })}
         </nav>
-      )}
+      }
 
       {/* ------- SAME-DAY RETURN ------- */}
-      {step === "today" && completedToday && (
+      {step === "heartcheck" && completedToday && (
         <section className="journey-stage" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
           <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.25rem", lineHeight: 1.6, marginBottom: "1rem" }}>
             You&rsquo;ve journeyed with today&rsquo;s verse.
@@ -464,34 +464,8 @@ export default function PlayPage() {
         </section>
       )}
 
-      {/* ------- STEP 1 — TODAY ------- */}
-      {step === "today" && !completedToday && (
-        <section className="journey-stage" aria-labelledby="today-heading" style={{ textAlign: "center", padding: "clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem)" }}>
-          <p className="soft-label" style={{ marginBottom: "0.75rem" }}>A moment with Scripture</p>
-          <h1 id="today-heading" style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", marginBottom: "1.5rem", lineHeight: 1.3 }}>
-            Today&rsquo;s Verse
-          </h1>
-
-          {featuredVerse && (
-            <div style={{ marginBottom: "2.5rem" }}>
-              <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.15rem", fontWeight: 600, marginBottom: "0.35rem" }}>{featuredVerse.reference} <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: "0.9rem" }}>({translationKey.toUpperCase()})</span></p>
-              <p style={{ color: "var(--muted)", fontSize: "0.95rem", marginBottom: 0 }}>{featuredVerse.themeLabel}</p>
-            </div>
-          )}
-
-          <p style={{ maxWidth: 420, margin: "0 auto 2.5rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7, fontSize: "1.05rem" }}>
-            Read a passage slowly, sit with it, practice its words,
-            and carry one thought into the rest of your day.
-          </p>
-
-          <button className="btn" onClick={goToHeartCheck} style={{ fontSize: "1.05rem", padding: "0.7rem 1.6rem" }}>
-            Begin
-          </button>
-        </section>
-      )}
-
       {/* ------- STEP 2 — HEART CHECK ------- */}
-      {step === "heartcheck" && (
+      {step === "heartcheck" && !completedToday && (
         <section className="journey-stage" aria-labelledby="heartcheck-heading">
           <h2 id="heartcheck-heading" style={{ textAlign: "center", fontFamily: "'Fraunces', Georgia, serif", marginBottom: "0.5rem" }}>What are you carrying today?</h2>
           <p style={{ textAlign: "center", maxWidth: 440, margin: "0 auto 1.5rem", color: "rgba(35,49,58,0.7)", lineHeight: 1.7 }}>
