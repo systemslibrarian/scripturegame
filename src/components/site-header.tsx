@@ -69,6 +69,7 @@ export function SiteHeader() {
           className={`menu-toggle ${menuOpen ? "open" : ""}`}
           aria-expanded={menuOpen}
           aria-controls="main-nav"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMenuOpen((o) => !o)}
         >
           <span className="menu-toggle-icon">

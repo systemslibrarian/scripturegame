@@ -148,6 +148,7 @@ export default function BrowseByBookPage() {
           <button
             type="button"
             onClick={() => setSelectedBook(null)}
+            aria-label="Back to books"
             style={{ background: "none", border: "none", color: "var(--muted)", fontSize: "0.9rem", cursor: "pointer", padding: 0 }}
           >
             &larr; Back to books

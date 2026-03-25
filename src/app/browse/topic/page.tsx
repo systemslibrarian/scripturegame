@@ -110,6 +110,7 @@ export default function BrowseByTopicPage() {
             type="button"
             onClick={() => setSelectedThemeId(null)}
             className="btn-back"
+            aria-label="Back to topics"
             style={{ background: "none", border: "none", color: "var(--muted)", fontSize: "0.9rem", cursor: "pointer", padding: 0 }}
           >
             &larr; Back to topics
@@ -166,6 +167,7 @@ export default function BrowseByTopicPage() {
             <button
               key={option.id}
               className="theme-card"
+              aria-label={`${option.label}: ${option.description}. ${themeCounts.get(option.id) ?? 0} verses.`}
               onClick={() => setSelectedThemeId(option.id)}
             >
               <strong>{option.label}</strong>

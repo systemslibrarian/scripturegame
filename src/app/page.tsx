@@ -22,7 +22,8 @@ export default function HomePage() {
         <p className="scripture-inline" style={{ textAlign: "left" }}>&ldquo;{PSALM_119_11[translationKey] ?? PSALM_119_11.niv}&rdquo; <span style={{ whiteSpace: "nowrap" }}>— Psalm 119:11 ({label})</span></p>
       </section>
 
-      <section className="grid three home-grid">
+      <section className="grid three home-grid" aria-labelledby="how-it-works">
+        <h2 id="how-it-works" className="sr-only">How it works</h2>
         <article className="card pillar-card">
           <div className="soft-label">1. Read it</div>
           <h3>Start with a verse</h3>

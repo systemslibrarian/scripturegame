@@ -134,6 +134,8 @@ export default function VersesPage() {
                 </Link>
                 <button
                   onClick={() => toggle(verse.id)}
+                  aria-label={isMemorized ? `Remove ${verse.reference} from memorized` : `Mark ${verse.reference} as memorized`}
+                  aria-pressed={isMemorized}
                   style={{
                     background: isMemorized ? "rgba(49,95,114,0.1)" : "transparent",
                     border: `1px solid ${isMemorized ? "rgba(49,95,114,0.5)" : "rgba(0,0,0,0.2)"}`,

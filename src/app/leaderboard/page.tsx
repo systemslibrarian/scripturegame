@@ -26,7 +26,8 @@ export default function LeaderboardPage() {
     <main className="card">
       <h1 style={{ marginTop: 0, fontFamily: "'Fraunces', Georgia, serif" }}>Leaderboard</h1>
       <p className="muted">Top memorization scores across users.</p>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 320 }}>
         <caption className="sr-only">User rankings by memorization score</caption>
         <thead>
           <tr>
@@ -47,6 +48,7 @@ export default function LeaderboardPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </main>
   );
 }

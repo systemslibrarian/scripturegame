@@ -36,7 +36,7 @@ export default function ProfilePage() {
   if (error) {
     return (
       <main className="card">
-        <h2 style={{ marginTop: 0 }}>Profile</h2>
+        <h1 style={{ marginTop: 0 }}>Profile</h1>
         <p className="bad" role="alert">
           {error}
         </p>
@@ -59,7 +59,7 @@ export default function ProfilePage() {
   return (
     <main className="grid two">
       <section className="card">
-        <h2 style={{ marginTop: 0 }}>Profile</h2>
+        <h1 style={{ marginTop: 0 }}>Profile</h1>
         <p className="muted">User ID: {profile.userId}</p>
         <p className="muted">Mode: {authMode === "account" ? "Signed in account" : "Guest mode"}</p>
       </section>
