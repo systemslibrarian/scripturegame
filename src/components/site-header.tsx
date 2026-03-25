@@ -20,7 +20,7 @@ export function SiteHeader() {
     <header className="topbar" role="banner">
       <div className="brand-row">
         <Link href="/" className="brand-name" onClick={() => setMenuOpen(false)}>
-          Hidden in Heart
+          Hide in Heart
         </Link>
 
         <div className="header-controls">

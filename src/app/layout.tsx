@@ -20,20 +20,20 @@ const crimsonText = Crimson_Text({
 });
 
 export const metadata: Metadata = {
-  title: "Hidden in Heart",
+  title: "Hide in Heart",
   description: "A calm daily companion for hiding God's Word in your heart — read, reflect, memorize, and live it.",
   manifest: "/manifest.webmanifest",
   metadataBase: new URL(appUrl),
   openGraph: {
-    title: "Hidden in Heart",
+    title: "Hide in Heart",
     description: "A calm daily companion for hiding God's Word in your heart — read, reflect, memorize, and live it.",
     type: "website",
     url: appUrl,
-    images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Hidden in Heart" }],
+    images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Hide in Heart" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hidden in Heart",
+    title: "Hide in Heart",
     description: "A calm daily companion for hiding God's Word in your heart — read, reflect, memorize, and live it.",
     images: ["/icon-512.png"],
   },

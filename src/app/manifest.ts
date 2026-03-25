@@ -4,8 +4,8 @@ export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Hidden in Heart",
-    short_name: "Hidden in Heart",
+    name: "Hide in Heart",
+    short_name: "Hide in Heart",
     description: "A calm daily companion for hiding God's Word in your heart — read, reflect, memorize, and live it.",
     start_url: "/",
     display: "standalone",

@@ -1,10 +1,10 @@
-# Hidden in Heart
+# Hide in Heart
 
-**[Live App →](https://hideinheart.vercel.app/)**
+**[Live App →](https://hideinheart.com/)**
 
 ## About
 
-Hidden in Heart is a calm daily companion for hiding God's Word in your heart.
+Hide in Heart is a calm daily companion for hiding God's Word in your heart.
 
 Rooted in Psalm 119:11 — it guides you through reading, reflection,
 memorization, and application in a quiet daily journey. No scores. No timers.

@@ -1,4 +1,4 @@
-# Hidden in Heart — Verse Catalog
+# Hide in Heart — Verse Catalog
 
 > Updated 2026-03-25 from `src/lib/verses-local.ts`, `src/lib/verses-additional.ts` (adults) and `src/lib/kids-verses.ts` (kids).
 
