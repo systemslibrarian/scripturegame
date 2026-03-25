@@ -6,13 +6,13 @@
 
 | Audience | Verse count |
 |---|---:|
-| Adults | 292 |
+| Adults | 295 |
 | Kids | 34 |
-| **Total** | **326** |
+| **Total** | **329** |
 
 ---
 
-## Adults: Verses by Topic (292)
+## Adults: Verses by Topic (295)
 
 ### The Lord's Prayer (1)
 
@@ -87,6 +87,11 @@
 - Colossians 3:13
 - Ephesians 4:32
 - Matthew 6:14-15
+
+### Fruit of the Spirit (2)
+
+- Galatians 5:22-23
+- John 15:5
 
 ### God's Faithfulness (7)
 
@@ -241,7 +246,7 @@
 - Matthew 28:18-20
 - Matthew 4:19
 
-### Obedience (13)
+### Obedience (14)
 
 - 1 John 3:23
 - 1 John 5:3
@@ -255,6 +260,7 @@
 - Joshua 1:8
 - Luke 11:28
 - Matthew 7:24
+- Micah 6:8
 - Romans 13:1
 
 ### Peace (9)
@@ -478,14 +484,14 @@
 
 ---
 
-## Book Coverage (Adults — 292 verses across 33 books)
+## Book Coverage (Adults — 295 verses across 34 books)
 
 | Book | Count |
 |---|---:|
 | Psalm | 42 |
 | Romans | 28 |
 | Matthew | 26 |
-| John | 24 |
+| John | 25 |
 | 1 Corinthians | 14 |
 | Ephesians | 14 |
 | Proverbs | 14 |
@@ -496,7 +502,7 @@
 | Colossians | 9 |
 | Philippians | 8 |
 | 1 Peter | 7 |
-| Galatians | 5 |
+| Galatians | 6 |
 | Luke | 5 |
 | Mark | 5 |
 | 2 Corinthians | 4 |
@@ -514,6 +520,7 @@
 | Titus | 2 |
 | 3 John | 1 |
 | Lamentations | 1 |
+| Micah | 1 |
 | Nehemiah | 1 |
 
 ---
