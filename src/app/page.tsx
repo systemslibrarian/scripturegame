@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslation } from "@/lib/translation-context";
 
 const PSALM_119_11: Record<string, string> = {
@@ -24,13 +23,9 @@ export default function HomePage() {
       </section>
 
       <section style={{ textAlign: "center", margin: "0 auto", maxWidth: 520 }}>
-        <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: "1.25rem" }}>
+        <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: 0 }}>
           What would you like to memorize today?
         </h2>
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/browse/topic" className="btn large">By topic</Link>
-          <Link href="/browse/book" className="btn large">By book of the Bible</Link>
-        </div>
       </section>
 
       <section className="grid three home-grid">
