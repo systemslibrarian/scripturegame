@@ -34,6 +34,7 @@ const NT_BOOKS = [
 ] as const;
 
 type Testament = "all" | "ot" | "nt";
+type MemFilter = "all" | "memorized" | "not-memorized";
 
 /* ------------------------------------------------------------------ */
 /*  Helpers                                                           */
@@ -78,6 +79,7 @@ export default function BrowseByBookPage() {
   const [memorized, setMemorized] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
   const [testament, setTestament] = useState<Testament>("all");
+  const [memFilter, setMemFilter] = useState<MemFilter>("all");
 
   /* load memorized set */
   useEffect(() => { setMemorized(loadMemorized()); }, []);
@@ -145,8 +147,11 @@ export default function BrowseByBookPage() {
   /* verses for selected book */
   const bookVerses = useMemo(() => {
     if (!selectedBook) return [];
-    return bookMap.get(selectedBook) ?? [];
-  }, [bookMap, selectedBook]);
+    const base = bookMap.get(selectedBook) ?? [];
+    if (memFilter === "memorized") return base.filter((v) => memorized.has(v.id));
+    if (memFilter === "not-memorized") return base.filter((v) => !memorized.has(v.id));
+    return base;
+  }, [bookMap, selectedBook, memFilter, memorized]);
 
   if (loading) {
     return (
@@ -171,26 +176,46 @@ export default function BrowseByBookPage() {
           </button>
         </div>
 
-        <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: "1.5rem" }}>
+        <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: "1rem" }}>
           {selectedBook}
         </h1>
 
-        <div className="verse-list" role="list">
-          {bookVerses.map((v) => (
-            <Link
-              key={v.id}
-              href={`/play?verse=${v.id}&theme=${v.themeId}`}
-              className="verse-list-item"
-              role="listitem"
+        <div className="filter-tabs" role="group" aria-label="Filter by memorization" style={{ marginBottom: "1.25rem" }}>
+          {(["all", "memorized", "not-memorized"] as MemFilter[]).map((f) => (
+            <button
+              key={f}
+              type="button"
+              className={`filter-tab${memFilter === f ? " active" : ""}`}
+              onClick={() => setMemFilter(f)}
+              aria-pressed={memFilter === f}
             >
-              <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <strong>{v.reference}</strong>
-                {memorized.has(v.id) && <span className="memorized-badge">✓ memorized</span>}
-              </span>
-              <span className="muted" style={{ fontSize: "0.9rem" }}>{versePreview(v, translationKey)}</span>
-            </Link>
+              {f === "all" ? "All" : f === "memorized" ? "Memorized" : "Not yet"}
+            </button>
           ))}
         </div>
+
+        {bookVerses.length === 0 ? (
+          <p className="browse-empty">
+            {memFilter === "memorized" ? "No memorized verses in this book yet." : "All verses in this book are memorized!"}
+          </p>
+        ) : (
+          <div className="verse-list" role="list">
+            {bookVerses.map((v) => (
+              <Link
+                key={v.id}
+                href={`/play?verse=${v.id}&theme=${v.themeId}`}
+                className="verse-list-item"
+                role="listitem"
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <strong>{v.reference}</strong>
+                  {memorized.has(v.id) && <span className="memorized-badge">✓ memorized</span>}
+                </span>
+                <span className="muted" style={{ fontSize: "0.9rem" }}>{versePreview(v, translationKey)}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </main>
     );
   }

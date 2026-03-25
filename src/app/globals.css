@@ -662,6 +662,102 @@ a {
   min-height: 100%;
 }
 
+/* ---- browse shortcuts on home page ---- */
+.browse-shortcuts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.browse-shortcut-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: 0 2px 12px rgba(31, 42, 55, 0.07);
+  text-decoration: none;
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.browse-shortcut-card:hover {
+  box-shadow: 0 4px 16px rgba(31, 42, 55, 0.13);
+  transform: translateY(-1px);
+}
+
+.browse-shortcut-card svg {
+  color: var(--brand);
+  flex-shrink: 0;
+}
+
+/* ---- streak banner on home page ---- */
+.streak-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: 0 2px 12px rgba(31, 42, 55, 0.07);
+}
+
+.streak-flame {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.streak-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.streak-count {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--brand-strong);
+  line-height: 1;
+}
+
+.streak-label {
+  font-size: 0.92rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ---- milestone toast ---- */
+.milestone-toast {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: var(--brand-strong);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 6px 24px rgba(9, 55, 107, 0.3);
+  animation: toastIn 0.4s ease, toastOut 0.4s ease 4.6s forwards;
+  white-space: nowrap;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to   { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+}
+
 .journey-stage,
 .journey-verse-card,
 .verse-panel {

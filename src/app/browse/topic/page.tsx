@@ -30,6 +30,7 @@ function loadMemorized(): Set<string> {
 }
 
 type SortKey = "alpha" | "count-desc" | "count-asc";
+type MemFilter = "all" | "memorized" | "not-memorized";
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                         */
@@ -47,6 +48,7 @@ export default function BrowseByTopicPage() {
   const [memorized, setMemorized] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortKey>("alpha");
+  const [memFilter, setMemFilter] = useState<MemFilter>("all");
 
   const themeOptions: ThemeOption[] = isKids ? KIDS_THEME_OPTIONS : HEART_CHECK_OPTIONS;
 
@@ -105,15 +107,26 @@ export default function BrowseByTopicPage() {
     if (!selectedThemeId) return [];
     const theme = themeOptions.find((t) => t.id === selectedThemeId);
     const matchIds = theme?.verseThemeIds ?? [selectedThemeId];
+    const base = verses.filter((v) => matchIds.includes(v.themeId));
+    if (memFilter === "memorized") return base.filter((v) => memorized.has(v.id));
+    if (memFilter === "not-memorized") return base.filter((v) => !memorized.has(v.id));
+    return base;
+  }, [verses, selectedThemeId, themeOptions, memFilter, memorized]);
+
+  /* unfiltered count — used to decide whether to show list vs auto-redirect */
+  const unfilteredThemeVerses = useMemo(() => {
+    if (!selectedThemeId) return [];
+    const theme = themeOptions.find((t) => t.id === selectedThemeId);
+    const matchIds = theme?.verseThemeIds ?? [selectedThemeId];
     return verses.filter((v) => matchIds.includes(v.themeId));
   }, [verses, selectedThemeId, themeOptions]);
 
-  /* auto-select if theme has only 1 verse */
+  /* auto-select if theme has only 1 verse (only when unfiltered) */
   useEffect(() => {
-    if (themeVerses.length === 1) {
-      router.push(`/play?verse=${themeVerses[0].id}&theme=${selectedThemeId}`);
+    if (memFilter === "all" && unfilteredThemeVerses.length === 1) {
+      router.push(`/play?verse=${unfilteredThemeVerses[0].id}&theme=${selectedThemeId}`);
     }
-  }, [themeVerses, selectedThemeId, router]);
+  }, [unfilteredThemeVerses, selectedThemeId, router, memFilter]);
 
   if (loading) {
     return (
@@ -124,7 +137,7 @@ export default function BrowseByTopicPage() {
   }
 
   /* ------- verse list for selected theme ------- */
-  if (selectedThemeId && themeVerses.length > 1) {
+  if (selectedThemeId && unfilteredThemeVerses.length > 1) {
     const theme = themeOptions.find((t) => t.id === selectedThemeId);
     return (
       <main className="shell">
@@ -143,26 +156,46 @@ export default function BrowseByTopicPage() {
         <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: "0.35rem" }}>
           {theme?.label}
         </h1>
-        <p style={{ color: "var(--muted)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
+        <p style={{ color: "var(--muted)", marginBottom: "1rem", lineHeight: 1.6 }}>
           {theme?.description}
         </p>
 
-        <div className="verse-list" role="list">
-          {themeVerses.map((v) => (
-            <Link
-              key={v.id}
-              href={`/play?verse=${v.id}&theme=${selectedThemeId}`}
-              className="verse-list-item"
-              role="listitem"
+        <div className="filter-tabs" role="group" aria-label="Filter by memorization" style={{ marginBottom: "1.25rem" }}>
+          {(["all", "memorized", "not-memorized"] as MemFilter[]).map((f) => (
+            <button
+              key={f}
+              type="button"
+              className={`filter-tab${memFilter === f ? " active" : ""}`}
+              onClick={() => setMemFilter(f)}
+              aria-pressed={memFilter === f}
             >
-              <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <strong>{v.reference}</strong>
-                {memorized.has(v.id) && <span className="memorized-badge">✓ memorized</span>}
-              </span>
-              <span className="muted" style={{ fontSize: "0.9rem" }}>{versePreview(v, translationKey)}</span>
-            </Link>
+              {f === "all" ? "All" : f === "memorized" ? "Memorized" : "Not yet"}
+            </button>
           ))}
         </div>
+
+        {themeVerses.length === 0 ? (
+          <p className="browse-empty">
+            {memFilter === "memorized" ? "No memorized verses in this topic yet." : "All verses in this topic are memorized!"}
+          </p>
+        ) : (
+          <div className="verse-list" role="list">
+            {themeVerses.map((v) => (
+              <Link
+                key={v.id}
+                href={`/play?verse=${v.id}&theme=${selectedThemeId}`}
+                className="verse-list-item"
+                role="listitem"
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <strong>{v.reference}</strong>
+                  {memorized.has(v.id) && <span className="memorized-badge">✓ memorized</span>}
+                </span>
+                <span className="muted" style={{ fontSize: "0.9rem" }}>{versePreview(v, translationKey)}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </main>
     );
   }
