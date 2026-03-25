@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#0e1a36"/>
+  <!-- Heart shape -->
+  <path d="M256 430
+    C 180 370 60 290 60 195
+    C 60 130 110 80 170 80
+    C 210 80 240 105 256 130
+    C 272 105 302 80 342 80
+    C 402 80 452 130 452 195
+    C 452 290 332 370 256 430Z"
+    fill="#c99a3f" opacity="0.25"/>
+  <path d="M256 410
+    C 190 355 85 280 85 200
+    C 85 142 128 100 175 100
+    C 212 100 240 120 256 148
+    C 272 120 300 100 337 100
+    C 384 100 427 142 427 200
+    C 427 280 322 355 256 410Z"
+    fill="none" stroke="#c99a3f" stroke-width="10"/>
+  <!-- Open book inside the heart -->
+  <g transform="translate(256,250)">
+    <!-- Left page -->
+    <path d="M-8 -45 C-8 -45 -75 -50 -75 -40 L-75 50 C-75 55 -8 50 -8 50Z"
+      fill="#e8c47c" rx="4"/>
+    <!-- Right page -->
+    <path d="M8 -45 C8 -45 75 -50 75 -40 L75 50 C75 55 8 50 8 50Z"
+      fill="#e8c47c" rx="4"/>
+    <!-- Spine -->
+    <line x1="0" y1="-48" x2="0" y2="52" stroke="#0e1a36" stroke-width="3"/>
+    <!-- Text lines - left page -->
+    <line x1="-58" y1="-20" x2="-20" y2="-20" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="-58" y1="-5" x2="-20" y2="-5" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="-58" y1="10" x2="-20" y2="10" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="-58" y1="25" x2="-35" y2="25" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <!-- Text lines - right page -->
+    <line x1="20" y1="-20" x2="58" y2="-20" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="20" y1="-5" x2="58" y2="-5" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="20" y1="10" x2="58" y2="10" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <line x1="20" y1="25" x2="42" y2="25" stroke="#0e1a36" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  </g>
+</svg>
