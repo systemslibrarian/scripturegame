@@ -4,7 +4,7 @@ import { z } from "zod";
 import { validateAndScoreAttempt } from "@/lib/attempt-security";
 import { hasSupabase } from "@/lib/env";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 import { getBlankCountForSkillLevel } from "@/lib/journey";
 import { LOCAL_VERSES } from "@/lib/verses-local";
 import { KIDS_VERSES } from "@/lib/kids-verses";

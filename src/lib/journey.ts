@@ -16,7 +16,6 @@ export function getVerseTranslation(verse: Verse, key: TranslationKey): VerseTra
   if (entry) {
     if (key === "nkjv" && entry.nkjv) return entry.nkjv;
     if (key === "esv" && entry.esv) return entry.esv;
-    if (key === "kjv" && entry.nkjv) return entry.nkjv; /* NKJV as KJV fallback */
   }
 
   /* Ultimate fallback: NIV */

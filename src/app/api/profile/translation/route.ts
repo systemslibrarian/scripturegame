@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { hasSupabase } from "@/lib/env";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
+import { authenticatedUserFromRequest } from "@/lib/supabase/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+
+const VALID_TRANSLATIONS = new Set(["niv", "kjv", "nkjv", "esv"]);
 
 export async function PUT(request: NextRequest) {
   let body: { translation?: string };
@@ -14,29 +17,22 @@ export async function PUT(request: NextRequest) {
   }
 
   const translation = body.translation;
-  if (translation !== "niv" && translation !== "kjv") {
-    return NextResponse.json({ error: "Invalid translation. Use 'niv' or 'kjv'." }, { status: 400 });
+  if (!translation || !VALID_TRANSLATIONS.has(translation)) {
+    return NextResponse.json({ error: "Invalid translation. Supported: niv, kjv, nkjv, esv." }, { status: 400 });
   }
 
   if (!hasSupabase) {
     return NextResponse.json({ saved: false, reason: "local-only" });
   }
 
-  /* Extract user from cookie-based session */
-  const supabase = createSupabaseAdminClient();
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader) {
-    return NextResponse.json({ saved: false, reason: "not-authenticated" });
-  }
-
-  const token = authHeader.replace(/^Bearer\s+/i, "");
-  const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data.user) {
+  const user = await authenticatedUserFromRequest(request);
+  if (!user) {
     return NextResponse.json({ saved: false, reason: "not-authenticated" });
   }
 
   /* Store in user_metadata */
-  const { error: updateError } = await supabase.auth.admin.updateUserById(data.user.id, {
+  const supabase = createSupabaseAdminClient();
+  const { error: updateError } = await supabase.auth.admin.updateUserById(user.id, {
     user_metadata: { preferred_translation: translation },
   });
 

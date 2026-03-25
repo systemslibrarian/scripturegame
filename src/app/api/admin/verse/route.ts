@@ -4,7 +4,7 @@ import { z } from "zod";
 import { hasSupabase } from "@/lib/env";
 import { applyRateLimit, clientAddress } from "@/lib/rate-limit";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 import { authenticatedUserFromRequest, isAdminUser } from "@/lib/supabase/auth";
 import { LOCAL_VERSES } from "@/lib/verses-local";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";

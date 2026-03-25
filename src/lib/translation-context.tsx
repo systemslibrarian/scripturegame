@@ -33,9 +33,13 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, key);
 
     /* Best-effort save for logged-in users */
+    const token = typeof window !== "undefined" ? localStorage.getItem("sg_access_token") : null;
     fetch("/api/profile/translation", {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify({ translation: key }),
     }).catch(() => {
       /* offline or guest — ignore */

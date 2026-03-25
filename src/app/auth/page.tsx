@@ -54,6 +54,9 @@ export default function AuthPage() {
       if (data.user?.id) {
         localStorage.setItem("sg_user_id", data.user.id);
         localStorage.setItem("sg_auth_mode", "account");
+        if (data.session?.access_token) {
+          localStorage.setItem("sg_access_token", data.session.access_token);
+        }
       }
       setMessage("Account created. Check your email for confirmation if enabled.");
     } catch (error) {
@@ -73,6 +76,9 @@ export default function AuthPage() {
       if (data.user?.id) {
         localStorage.setItem("sg_user_id", data.user.id);
         localStorage.setItem("sg_auth_mode", "account");
+        if (data.session?.access_token) {
+          localStorage.setItem("sg_access_token", data.session.access_token);
+        }
       }
       setMessage("Signed in successfully.");
       router.push("/play");
