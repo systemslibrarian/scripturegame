@@ -81,7 +81,6 @@ separately. Do not mix translation text or assume one translation's wording
 matches another.
 
 **Rules:**
-- Do not supply or infer verse text from training data for any translation
 - NIV is the default — do not substitute ESV or NKJV wording unless the user
   has explicitly toggled to that translation
 - Answer validation must compare against the correct translation's stored text,
@@ -254,7 +253,6 @@ Violations of this rule are always wrong, regardless of context or intent.
 
 ## DO NOT (AI-specific rules)
 
-- Do not generate verse text from memory — only use files in `/src/lib/`
 - Do not implement features not present in the current codebase unless explicitly asked
 - Do not modify `attempt-security.ts` without flagging the change and waiting for confirmation
 - Do not write inline schema changes — always create a migration file
