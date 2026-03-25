@@ -229,7 +229,8 @@ export default function PlayPage() {
       setBlankIndexLookup(lookup);
       setPracticeAnswers(pa);
       setPlacements(new Array(bi.length).fill(""));
-      setTilePool(shuffle([...pa, ...t.decoys.map(normalizeWord)]));
+      const decoys = level === "expert" ? [] : t.decoys.map(normalizeWord);
+      setTilePool(shuffle([...pa, ...decoys]));
       setSelectedTile(null);
       setAttemptIndex(1);
       setPracticeResult(null);
@@ -441,8 +442,9 @@ export default function PlayPage() {
     setHintUsed(false);
     setAttemptIndex((prev) => prev + 1);
     setStartTime(Date.now());
-    setTilePool(shuffle([...practiceAnswers, ...t.decoys.map(normalizeWord)]));
-  }, [verse, translationKey, blankIndices.length, practiceAnswers]);
+    const decoys = selectedLevel === "expert" ? [] : t.decoys.map(normalizeWord);
+    setTilePool(shuffle([...practiceAnswers, ...decoys]));
+  }, [verse, translationKey, blankIndices.length, practiceAnswers, selectedLevel]);
 
   const handleShowAnswer = useCallback(() => {
     if (!verse || practiceResult) return;

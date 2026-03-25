@@ -53,10 +53,10 @@ export function SiteHeader() {
         <button
           type="button"
           className="theme-toggle"
-          aria-pressed={themeMode === "dark"}
+          aria-label={`Switch to ${themeMode === "light" ? "dark" : "light"} mode`}
           onClick={toggleTheme}
         >
-          {themeMode === "dark" ? "Light mode" : "Dark mode"}
+          {themeMode === "light" ? "🌙" : "☀️"}
         </button>
       </div>
 
@@ -66,6 +66,21 @@ export function SiteHeader() {
         <Link href="/browse/book" onClick={() => setMenuOpen(false)}>By book</Link>
         <Link href="/verses" onClick={() => setMenuOpen(false)}>My memorized</Link>
         <Link href="/profile/reflections" onClick={() => setMenuOpen(false)}>My reflections</Link>
+
+        <div className="mobile-controls">
+          <div className="translation-toggle" role="radiogroup" aria-label="Audience mode">
+            <button type="button" role="radio" aria-checked={audienceMode === "adults"} onClick={() => switchAudience("adults")}>Adults</button>
+            <button type="button" role="radio" aria-checked={audienceMode === "kids"} onClick={() => switchAudience("kids")}>Kids</button>
+          </div>
+          <div className="translation-toggle" role="radiogroup" aria-label="Bible translation">
+            {TRANSLATION_OPTIONS.map((key) => (
+              <button key={key} type="button" role="radio" aria-checked={translationKey === key} onClick={() => switchTranslation(key)}>{key.toUpperCase()}</button>
+            ))}
+          </div>
+          <button type="button" className="theme-toggle" aria-label={`Switch to ${themeMode === "light" ? "dark" : "light"} mode`} onClick={toggleTheme}>
+            {themeMode === "light" ? "🌙" : "☀️"}
+          </button>
+        </div>
       </nav>
 
       <div className="brand-row">
