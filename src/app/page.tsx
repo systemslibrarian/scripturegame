@@ -22,12 +22,6 @@ export default function HomePage() {
         <p className="scripture-inline" style={{ textAlign: "left" }}>&ldquo;{PSALM_119_11[translationKey] ?? PSALM_119_11.niv}&rdquo; <span style={{ whiteSpace: "nowrap" }}>— Psalm 119:11 ({label})</span></p>
       </section>
 
-      <section style={{ textAlign: "center", margin: "0 auto", maxWidth: 520 }}>
-        <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)", marginBottom: 0 }}>
-          What would you like to memorize today?
-        </h2>
-      </section>
-
       <section className="grid three home-grid">
         <article className="card pillar-card">
           <div className="soft-label">1. Read it</div>
