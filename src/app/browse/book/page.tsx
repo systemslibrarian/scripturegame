@@ -33,9 +33,6 @@ const NT_BOOKS = [
   "Jude", "Revelation",
 ] as const;
 
-const OT_SET = new Set<string>(OT_BOOKS);
-const NT_SET = new Set<string>(NT_BOOKS);
-
 type Testament = "all" | "ot" | "nt";
 
 /* ------------------------------------------------------------------ */
