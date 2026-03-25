@@ -21,6 +21,7 @@ import {
   pickJourneyVerse,
 } from "@/lib/journey";
 import { KIDS_VERSES, KIDS_THEME_OPTIONS } from "@/lib/kids-verses";
+import { fetchVerses } from "@/lib/verses-fetch";
 import { useAudience } from "@/lib/audience-context";
 import { useTranslation } from "@/lib/translation-context";
 import type { SkillLevel, Verse } from "@/types/domain";
@@ -144,10 +145,8 @@ export default function PlayPage() {
     }
     (async () => {
       try {
-        const response = await fetch("/api/verses");
-        if (!response.ok) throw new Error("fetch verses failed");
-        const data = await response.json();
-        setVerses(Array.isArray(data) ? data : data.verses ?? []);
+        const verses = await fetchVerses();
+        setVerses(verses);
       } catch {
         setVerses([]);
       } finally {

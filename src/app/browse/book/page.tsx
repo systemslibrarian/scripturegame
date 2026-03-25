@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { buildFullVerseText } from "@/lib/journey";
 import { KIDS_VERSES } from "@/lib/kids-verses";
+import { fetchVerses } from "@/lib/verses-fetch";
 import { useAudience } from "@/lib/audience-context";
 import { useTranslation } from "@/lib/translation-context";
 import type { TranslationKey, Verse } from "@/types/domain";
@@ -86,10 +87,8 @@ export default function BrowseByBookPage() {
     }
     (async () => {
       try {
-        const res = await fetch("/api/verses");
-        if (!res.ok) throw new Error("fetch failed");
-        const data = await res.json();
-        setVerses(Array.isArray(data) ? data : data.verses ?? []);
+        const verses = await fetchVerses();
+        setVerses(verses);
       } catch {
         setVerses([]);
       } finally {
