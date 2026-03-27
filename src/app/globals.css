@@ -1528,8 +1528,18 @@ html[data-theme="dark"] .topic-badge {
   border-color: rgba(125, 183, 186, 0.25);
 }
 
+html[data-theme="dark"] .tile {
+  color: #fff;
+}
+
 html[data-theme="dark"] .tile:hover:not(:disabled) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .tile.selected {
+  border-color: var(--brand);
+  background: rgba(128, 188, 192, 0.08);
+  box-shadow: 0 0 0 2px rgba(128, 188, 192, 0.3);
 }
 
 html[data-theme="dark"] a:focus-visible,
