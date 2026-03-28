@@ -72,10 +72,16 @@ export default function VersesPage() {
 
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [memorized, setMemorized] = useState<Set<string>>(loadMemorized);
-  const [mounted] = useState(() => typeof window !== "undefined");
+  const [memorized, setMemorized] = useState<Set<string>>(new Set());
+  const [mounted, setMounted] = useState(false);
   const [search, setSearch] = useState("");
   const [memorizedFilter, setMemorizedFilter] = useState<MemorizedFilter>("all");
+
+  /* Load memorized set from localStorage after hydration to avoid SSR mismatch */
+  useEffect(() => {
+    setMounted(true);
+    setMemorized(loadMemorized());
+  }, []);
 
   useEffect(() => {
     if (isKids) {
@@ -176,18 +182,44 @@ export default function VersesPage() {
           {filteredVerses.length} {filteredVerses.length === 1 ? "verse" : "verses"}
           {normalizedSearch ? ` matching \"${search.trim()}\"` : " in this catalog"}
         </p>
-        <div className="filter-tabs" role="group" aria-label="Filter verses by memorized status">
-          {(["all", "memorized", "not-memorized"] as MemorizedFilter[]).map((filter) => (
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem", justifyContent: "space-between" }}>
+          <div className="filter-tabs" role="group" aria-label="Filter verses by memorized status">
+            {(["all", "memorized", "not-memorized"] as MemorizedFilter[]).map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                className={`filter-tab${memorizedFilter === filter ? " active" : ""}`}
+                onClick={() => setMemorizedFilter(filter)}
+                aria-pressed={memorizedFilter === filter}
+              >
+                {filter === "all" ? "All" : filter === "memorized" ? `Memorized (${memorized.size})` : "Not yet memorized"}
+              </button>
+            ))}
+          </div>
+          {memorized.size > 0 && (
             <button
-              key={filter}
               type="button"
-              className={`filter-tab${memorizedFilter === filter ? " active" : ""}`}
-              onClick={() => setMemorizedFilter(filter)}
-              aria-pressed={memorizedFilter === filter}
+              onClick={() => {
+                if (!confirm("Remove all memorized marks? This cannot be undone.")) return;
+                const empty = new Set<string>();
+                saveMemorized(empty);
+                setMemorized(empty);
+                setMemorizedFilter("all");
+              }}
+              style={{
+                background: "none",
+                border: "1px solid rgba(180,60,60,0.4)",
+                color: "rgba(180,60,60,0.85)",
+                borderRadius: "6px",
+                padding: "0.35rem 0.75rem",
+                fontSize: "0.82rem",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
             >
-              {filter === "all" ? "All" : filter === "memorized" ? "Memorized" : "Not yet memorized"}
+              Reset memorized
             </button>
-          ))}
+          )}
         </div>
       </section>
 
