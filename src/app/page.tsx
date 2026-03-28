@@ -87,11 +87,11 @@ export default function HomePage() {
 
       <section className="grid three home-grid" aria-labelledby="how-it-works">
         <h2 id="how-it-works" className="sr-only">How it works</h2>
-        <article className="card pillar-card">
+        <Link href="/browse/topic" className="card pillar-card pillar-card-link" aria-label="Start with a verse">
           <div className="soft-label">1. Read it</div>
-          <h3><Link href="/browse/topic" className="pillar-link">Start with a verse</Link></h3>
+          <h3>Start with a verse</h3>
           <p className="muted">Begin with a passage you chose. Read it slowly and let the words settle before you move on.</p>
-        </article>
+        </Link>
         <article className="card pillar-card">
           <div className="soft-label">2. Reflect on it</div>
           <h3>Pause over what it means</h3>

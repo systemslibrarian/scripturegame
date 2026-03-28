@@ -138,7 +138,11 @@ export default function ReflectionsPage() {
       </p>
 
       {reflections.length > 0 && (
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", marginBottom: "1rem" }}>
+        <div style={{ display: "grid", gap: "0.5rem", marginBottom: "1rem" }}>
+          <p className="muted" style={{ margin: 0, fontSize: "0.9rem" }}>
+            You can remove one reflection at a time or reset your full reflection history.
+          </p>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", flexWrap: "wrap" }}>
           <button
             onClick={exportAsText}
             style={{
@@ -156,6 +160,7 @@ export default function ReflectionsPage() {
           <button
             onClick={deleteAll}
             disabled={deleting === "all"}
+            aria-label="Reset all reflections"
             style={{
               background: "none",
               border: "1px solid rgba(180,60,60,0.4)",
@@ -167,8 +172,9 @@ export default function ReflectionsPage() {
               opacity: deleting === "all" ? 0.5 : 1,
             }}
           >
-            {deleting === "all" ? "Removing…" : "Clear all reflections"}
+            {deleting === "all" ? "Resetting…" : "Reset all reflections"}
           </button>
+          </div>
         </div>
       )}
 

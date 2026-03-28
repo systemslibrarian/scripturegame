@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { LOCAL_VERSES } from "@/lib/verses-local";
-import type { Verse } from "@/types/domain";
+import { buildFullVerseText } from "@/lib/journey";
+import { useAudience } from "@/lib/audience-context";
+import { KIDS_VERSES } from "@/lib/kids-verses";
+import { useTranslation } from "@/lib/translation-context";
+import { fetchVerses } from "@/lib/verses-fetch";
+import type { TranslationKey, Verse } from "@/types/domain";
 
 const BIBLE_BOOK_ORDER: string[] = [
   "Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth",
@@ -37,6 +41,12 @@ function sortByBibleOrder(verses: Verse[]): Verse[] {
   });
 }
 
+function verseTextForSearch(verse: Verse, translationKey: TranslationKey): string {
+  return buildFullVerseText(verse, translationKey).toLowerCase();
+}
+
+type MemorizedFilter = "all" | "memorized" | "not-memorized";
+
 const STORAGE_KEY = "sg_memorized_verses";
 
 function loadMemorized(): Set<string> {
@@ -56,8 +66,34 @@ function saveMemorized(set: Set<string>) {
 }
 
 export default function VersesPage() {
+  const { audienceMode } = useAudience();
+  const { translationKey } = useTranslation();
+  const isKids = audienceMode === "kids";
+
+  const [verses, setVerses] = useState<Verse[]>([]);
+  const [loading, setLoading] = useState(true);
   const [memorized, setMemorized] = useState<Set<string>>(loadMemorized);
   const [mounted] = useState(() => typeof window !== "undefined");
+  const [search, setSearch] = useState("");
+  const [memorizedFilter, setMemorizedFilter] = useState<MemorizedFilter>("all");
+
+  useEffect(() => {
+    if (isKids) {
+      setVerses(KIDS_VERSES);
+      setLoading(false);
+      return;
+    }
+
+    (async () => {
+      try {
+        setVerses(await fetchVerses());
+      } catch {
+        setVerses([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [isKids]);
 
   function toggle(id: string) {
     setMemorized((prev) => {
@@ -73,6 +109,43 @@ export default function VersesPage() {
   }
 
   const memorizedCount = mounted ? memorized.size : 0;
+  const normalizedSearch = search.trim().toLowerCase();
+
+  const filteredVerses = useMemo(() => {
+    const ordered = sortByBibleOrder(verses);
+    return ordered.filter((verse) => {
+      const isMemorized = memorized.has(verse.id);
+      const matchesMemorizedFilter =
+        memorizedFilter === "all" ||
+        (memorizedFilter === "memorized" && isMemorized) ||
+        (memorizedFilter === "not-memorized" && !isMemorized);
+
+      if (!matchesMemorizedFilter) return false;
+      if (!normalizedSearch) return true;
+
+      const reference = verse.reference.toLowerCase();
+      const theme = `${verse.themeLabel} ${verse.themeId}`.toLowerCase();
+      const verseText = verseTextForSearch(verse, translationKey);
+
+      return (
+        reference.includes(normalizedSearch) ||
+        theme.includes(normalizedSearch) ||
+        verseText.includes(normalizedSearch)
+      );
+    });
+  }, [verses, normalizedSearch, translationKey, memorizedFilter, memorized]);
+
+  if (loading) {
+    return (
+      <main className="grid" style={{ gap: "1rem" }}>
+        <section className="card" style={{ textAlign: "center" }}>
+          <p className="muted" role="status" aria-live="polite" style={{ margin: 0 }}>
+            Loading verse catalog...
+          </p>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="grid" style={{ gap: "1rem" }}>
@@ -86,8 +159,40 @@ export default function VersesPage() {
         </p>
       </section>
 
+      <section className="card" style={{ display: "grid", gap: "0.75rem" }}>
+        <label htmlFor="verse-search" style={{ fontWeight: 600 }}>
+          Search verses
+        </label>
+        <input
+          id="verse-search"
+          className="browse-search"
+          type="search"
+          placeholder="Search by reference, theme, or verse text..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-describedby="verse-search-results"
+        />
+        <p id="verse-search-results" className="muted" style={{ margin: 0 }}>
+          {filteredVerses.length} {filteredVerses.length === 1 ? "verse" : "verses"}
+          {normalizedSearch ? ` matching \"${search.trim()}\"` : " in this catalog"}
+        </p>
+        <div className="filter-tabs" role="group" aria-label="Filter verses by memorized status">
+          {(["all", "memorized", "not-memorized"] as MemorizedFilter[]).map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              className={`filter-tab${memorizedFilter === filter ? " active" : ""}`}
+              onClick={() => setMemorizedFilter(filter)}
+              aria-pressed={memorizedFilter === filter}
+            >
+              {filter === "all" ? "All" : filter === "memorized" ? "Memorized" : "Not yet memorized"}
+            </button>
+          ))}
+        </div>
+      </section>
+
       <section aria-label="Verse catalog" className="grid two">
-        {sortByBibleOrder(LOCAL_VERSES).map((verse) => {
+        {filteredVerses.map((verse) => {
           const isMemorized = mounted && memorized.has(verse.id);
           return (
             <article
@@ -121,15 +226,15 @@ export default function VersesPage() {
               <h2 style={{ marginBottom: "0.5rem", marginTop: "0.25rem", paddingRight: isMemorized ? "7rem" : 0 }}>
                 {verse.reference}{" "}
                 <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 400 }}>
-                  ({verse.translation})
+                  ({translationKey.toUpperCase()})
                 </span>
               </h2>
               <p className="muted" style={{ marginTop: 0 }}>
-                Theme: {verse.themeId} | Blanks: {verse.answers.length}
+                Theme: {verse.themeLabel} | Blanks: {verse.answers.length}
               </p>
-              <p className="verse-preview">{verse.parts.join("_____")}</p>
+              <p className="verse-preview">{buildFullVerseText(verse, translationKey)}</p>
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
-                <Link className="btn secondary" href="/play">
+                <Link className="btn secondary" href={`/play?verse=${verse.id}&theme=${verse.themeId}`}>
                   Practice this set
                 </Link>
                 <button
@@ -154,6 +259,14 @@ export default function VersesPage() {
             </article>
           );
         })}
+
+        {filteredVerses.length === 0 && (
+          <article className="card" style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+            <p style={{ margin: 0, lineHeight: 1.7, color: "var(--muted)" }}>
+              No verses match this filter yet. Try a book name, passage reference, topic, phrase from the verse, or a different memorized setting.
+            </p>
+          </article>
+        )}
       </section>
     </main>
   );
