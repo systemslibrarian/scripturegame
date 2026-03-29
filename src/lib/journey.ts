@@ -240,7 +240,7 @@ export const PRACTICE_LEVELS: Array<{
     id: "expert",
     label: "Deep practice",
     shortLabel: "Deep",
-    description: "All key words are hidden — see how much of the verse you can recall from memory.",
+    description: "Every word becomes a tile to place — rebuild the whole verse from memory.",
   },
 ];
 
@@ -316,6 +316,16 @@ export function buildPracticeSet(verse: Verse, skillLevel: SkillLevel, translati
     blankIndexLookup,
     practiceAnswers: blankIndices.map((answerIndex) => normalizeWord(t.answers[answerIndex])),
   };
+}
+
+/** Deep practice: every word in the verse becomes a blank tile to place. */
+export function buildFullWordPracticeSet(verse: Verse, translationKey: TranslationKey = "niv") {
+  const fullText = buildFullVerseText(verse, translationKey);
+  const tokens = fullText.trim().split(/\s+/);
+  const practiceAnswers = tokens.map((token) => normalizeWord(token));
+  const blankIndices = tokens.map((_, i) => i);
+  const blankIndexLookup = new Map<number, number>(blankIndices.map((i) => [i, i]));
+  return { tokens, blankIndices, blankIndexLookup, practiceAnswers };
 }
 
 export function buildFullVerseText(verse: Verse, translationKey: TranslationKey = "niv"): string {

@@ -14,6 +14,7 @@ import {
   HEART_CHECK_OPTIONS,
   PRACTICE_LEVELS,
   buildFullVerseText,
+  buildFullWordPracticeSet,
   buildPracticeSet,
   getPracticeLevelMeta,
   getThemeOption,
@@ -117,6 +118,7 @@ export default function PlayPage() {
   const [answerRevealed, setAnswerRevealed] = useState(false);
   const [startTime, setStartTime] = useState(0);
   const [hintUsed, setHintUsed] = useState(false);
+  const [fullWordTokens, setFullWordTokens] = useState<string[] | null>(null);
 
   /* ---- reflection state ---- */
   const [reflectionText, setReflectionText] = useState("");
@@ -221,16 +223,27 @@ export default function PlayPage() {
       if (!verse) return;
       setSelectedLevel(level);
 
-      const t = getVerseTranslation(verse, translationKey);
-      const { blankIndices: bi, blankIndexLookup: lookup, practiceAnswers: pa } =
-        buildPracticeSet(verse, level, translationKey);
+      if (level === "expert") {
+        const { tokens, blankIndices: bi, blankIndexLookup: lookup, practiceAnswers: pa } =
+          buildFullWordPracticeSet(verse, translationKey);
+        setFullWordTokens(tokens);
+        setBlankIndices(bi);
+        setBlankIndexLookup(lookup);
+        setPracticeAnswers(pa);
+        setPlacements(new Array(bi.length).fill(""));
+        setTilePool(shuffle([...pa]));
+      } else {
+        setFullWordTokens(null);
+        const t = getVerseTranslation(verse, translationKey);
+        const { blankIndices: bi, blankIndexLookup: lookup, practiceAnswers: pa } =
+          buildPracticeSet(verse, level, translationKey);
+        setBlankIndices(bi);
+        setBlankIndexLookup(lookup);
+        setPracticeAnswers(pa);
+        setPlacements(new Array(bi.length).fill(""));
+        setTilePool(shuffle([...pa, ...t.decoys.map(normalizeWord)]));
+      }
 
-      setBlankIndices(bi);
-      setBlankIndexLookup(lookup);
-      setPracticeAnswers(pa);
-      setPlacements(new Array(bi.length).fill(""));
-      const decoys = level === "expert" ? [] : t.decoys.map(normalizeWord);
-      setTilePool(shuffle([...pa, ...decoys]));
       setSelectedTile(null);
       setAttemptIndex(1);
       setPracticeResult(null);
@@ -434,7 +447,6 @@ export default function PlayPage() {
 
   const handleRetry = useCallback(() => {
     if (!verse) return;
-    const t = getVerseTranslation(verse, translationKey);
     setPlacements(new Array(blankIndices.length).fill(""));
     setSelectedTile(null);
     setPracticeResult(null);
@@ -442,9 +454,13 @@ export default function PlayPage() {
     setHintUsed(false);
     setAttemptIndex((prev) => prev + 1);
     setStartTime(Date.now());
-    const decoys = selectedLevel === "expert" ? [] : t.decoys.map(normalizeWord);
-    setTilePool(shuffle([...practiceAnswers, ...decoys]));
-  }, [verse, translationKey, blankIndices.length, practiceAnswers, selectedLevel]);
+    if (fullWordTokens) {
+      setTilePool(shuffle([...practiceAnswers]));
+    } else {
+      const t = getVerseTranslation(verse, translationKey);
+      setTilePool(shuffle([...practiceAnswers, ...t.decoys.map(normalizeWord)]));
+    }
+  }, [verse, translationKey, blankIndices.length, practiceAnswers, fullWordTokens]);
 
   const handleShowAnswer = useCallback(() => {
     if (!verse || practiceResult) return;
@@ -703,44 +719,73 @@ export default function PlayPage() {
 
           {/* verse with blanks */}
           <div className="verse-area" role="group" aria-label="Verse with blanks to fill" style={{ lineHeight: 2.2, fontSize: "1.25rem" }}>
-            {t.parts.map((part, answerIndex) => {
-              const slotIndex = blankIndexLookup.get(answerIndex);
-              const isBlank = slotIndex !== undefined;
-              const answer = t.answers[answerIndex];
-
-              return (
-                <span key={answerIndex}>
-                  {part}
-                  {answerIndex < t.answers.length && (
-                    isBlank ? (
-                      <button
-                        className={classNames(
-                          "blank",
-                          placements[slotIndex] && "filled",
-                          !placements[slotIndex] && selectedTile !== null && "awaiting",
-                          !placements[slotIndex] && dragOverSlot === slotIndex && "drag-over",
-                          practiceResult &&
-                            (normalizeWord(placements[slotIndex]) === practiceAnswers[slotIndex]
-                              ? "correct"
-                              : "wrong"),
-                        )}
-                        onClick={() => handleBlankClick(slotIndex)}
-                        onDragOver={(e) => !placements[slotIndex] && handleDragOver(e, slotIndex)}
-                        onDragLeave={handleDragLeave}
-                        onDrop={(e) => !placements[slotIndex] && handleDrop(e, slotIndex)}
-                        disabled={!!practiceResult}
-                        aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${displayWord(placements[slotIndex])}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
-                        style={{ minWidth: 100, minHeight: 48 }}
-                      >
-                        {placements[slotIndex] ? displayWord(placements[slotIndex]) : "\u00A0"}
-                      </button>
-                    ) : (
-                      <span className="revealed-word">{displayWord(answer)}</span>
-                    )
-                  )}
+            {fullWordTokens ? (
+              fullWordTokens.map((_, tokenIndex) => (
+                <span key={tokenIndex}>
+                  <button
+                    className={classNames(
+                      "blank",
+                      placements[tokenIndex] && "filled",
+                      !placements[tokenIndex] && selectedTile !== null && "awaiting",
+                      !placements[tokenIndex] && dragOverSlot === tokenIndex && "drag-over",
+                      practiceResult &&
+                        (normalizeWord(placements[tokenIndex]) === practiceAnswers[tokenIndex]
+                          ? "correct"
+                          : "wrong"),
+                    )}
+                    onClick={() => handleBlankClick(tokenIndex)}
+                    onDragOver={(e) => !placements[tokenIndex] && handleDragOver(e, tokenIndex)}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => !placements[tokenIndex] && handleDrop(e, tokenIndex)}
+                    disabled={!!practiceResult}
+                    aria-label={placements[tokenIndex] ? `Word ${tokenIndex + 1}: ${displayWord(placements[tokenIndex])}. Tap to remove.` : `Word ${tokenIndex + 1}. Tap a word tile to place it here.`}
+                    style={{ minWidth: 60, minHeight: 48 }}
+                  >
+                    {placements[tokenIndex] ? displayWord(placements[tokenIndex]) : "\u00A0"}
+                  </button>
+                  {" "}
                 </span>
-              );
-            })}
+              ))
+            ) : (
+              t.parts.map((part, answerIndex) => {
+                const slotIndex = blankIndexLookup.get(answerIndex);
+                const isBlank = slotIndex !== undefined;
+                const answer = t.answers[answerIndex];
+
+                return (
+                  <span key={answerIndex}>
+                    {part}
+                    {answerIndex < t.answers.length && (
+                      isBlank ? (
+                        <button
+                          className={classNames(
+                            "blank",
+                            placements[slotIndex] && "filled",
+                            !placements[slotIndex] && selectedTile !== null && "awaiting",
+                            !placements[slotIndex] && dragOverSlot === slotIndex && "drag-over",
+                            practiceResult &&
+                              (normalizeWord(placements[slotIndex]) === practiceAnswers[slotIndex]
+                                ? "correct"
+                                : "wrong"),
+                          )}
+                          onClick={() => handleBlankClick(slotIndex)}
+                          onDragOver={(e) => !placements[slotIndex] && handleDragOver(e, slotIndex)}
+                          onDragLeave={handleDragLeave}
+                          onDrop={(e) => !placements[slotIndex] && handleDrop(e, slotIndex)}
+                          disabled={!!practiceResult}
+                          aria-label={placements[slotIndex] ? `Blank ${slotIndex + 1}: ${displayWord(placements[slotIndex])}. Tap to remove.` : `Blank ${slotIndex + 1}. Tap a word tile to place it here.`}
+                          style={{ minWidth: 100, minHeight: 48 }}
+                        >
+                          {placements[slotIndex] ? displayWord(placements[slotIndex]) : "\u00A0"}
+                        </button>
+                      ) : (
+                        <span className="revealed-word">{displayWord(answer)}</span>
+                      )
+                    )}
+                  </span>
+                );
+              })
+            )}
           </div>
 
           {/* tile pool */}
