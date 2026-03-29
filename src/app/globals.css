@@ -1754,3 +1754,386 @@ html[data-theme="dark"] .browse-sort {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23a4b2cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
+/* ================================================================== */
+/*  Plans                                                              */
+/* ================================================================== */
+
+.plan-grid {
+  display: grid;
+  gap: 1rem;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.plan-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.plan-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+}
+.plan-card-header:hover {
+  background: var(--surface-soft, rgba(0,0,0,0.02));
+}
+
+.plan-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.plan-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.plan-subtitle {
+  font-size: 0.88rem;
+  margin: 0.2rem 0 0;
+  line-height: 1.4;
+}
+
+.plan-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.45rem;
+}
+
+.plan-count {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.plan-progress-badge {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(49,95,114,0.1);
+  color: var(--brand);
+  font-weight: 600;
+}
+.plan-progress-badge.complete {
+  background: rgba(61,122,94,0.12);
+  color: var(--ok);
+}
+
+.plan-chevron {
+  font-size: 1rem;
+  color: var(--muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+}
+.plan-chevron.open {
+  transform: rotate(180deg);
+}
+
+.plan-progress-bar {
+  height: 3px;
+  background: var(--border);
+  margin: 0 1.25rem;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.plan-progress-fill {
+  height: 100%;
+  background: var(--brand);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.plan-detail {
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+
+.plan-description {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 1.25rem;
+}
+
+.plan-verse-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plan-verse-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+  background: var(--surface-soft, rgba(0,0,0,0.02));
+}
+.plan-verse-item.memorized {
+  opacity: 0.7;
+}
+
+.plan-verse-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.plan-verse-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.plan-verse-ref {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.plan-verse-check {
+  color: var(--ok);
+  margin-left: 0.25rem;
+}
+
+.plan-verse-preview {
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan-start-btn {
+  display: block;
+  margin: 1.25rem auto 0;
+  width: fit-content;
+}
+
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ================================================================== */
+/*  Context cards                                                      */
+/* ================================================================== */
+
+.context-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-soft, rgba(0,0,0,0.02));
+  overflow: hidden;
+}
+
+.context-card-summary {
+  cursor: pointer;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--brand);
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.context-card-summary::-webkit-details-marker {
+  display: none;
+}
+.context-card-summary::before {
+  content: "▸";
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+.context-card[open] .context-card-summary::before {
+  transform: rotate(90deg);
+}
+
+.context-card-body {
+  padding: 0 1rem 1rem;
+}
+
+.context-passage {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+
+.context-terms {
+  border-top: 1px solid var(--border);
+  padding-top: 0.65rem;
+}
+
+.context-terms-heading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+
+.context-term-list {
+  margin: 0;
+  padding: 0;
+}
+
+.context-term-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.context-term-item dt {
+  font-weight: 700;
+  color: var(--brand);
+  white-space: nowrap;
+  min-width: fit-content;
+}
+.context-term-item dt::after {
+  content: " —";
+  color: var(--muted);
+  font-weight: 400;
+}
+.context-term-item dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ================================================================== */
+/*  My Verses cards                                                    */
+/* ================================================================== */
+
+.my-verse-card {
+  padding: 1.15rem 1.25rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.my-verse-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.my-verse-ref {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.my-verse-badge {
+  color: var(--ok);
+  font-size: 0.85rem;
+  margin-left: 0.35rem;
+}
+
+.my-verse-theme {
+  font-size: 0.82rem;
+  margin: 0.1rem 0 0;
+}
+
+.my-verse-remove {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.my-verse-remove:hover {
+  color: var(--bad);
+  background: rgba(160,77,70,0.08);
+}
+
+.my-verse-preview {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ================================================================== */
+/*  Bookmark / Save button                                             */
+/* ================================================================== */
+
+.btn-bookmark {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 400;
+  transition: all 0.15s;
+}
+.btn-bookmark[aria-pressed="true"] {
+  background: rgba(201,154,63,0.1);
+  border-color: rgba(201,154,63,0.5);
+  color: var(--accent);
+  font-weight: 600;
+}
+.btn-bookmark:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ================================================================== */
+/*  Dark mode adjustments for new features                             */
+/* ================================================================== */
+
+html[data-theme="dark"] .plan-card-header:hover {
+  background: rgba(255,255,255,0.03);
+}
+html[data-theme="dark"] .plan-verse-item {
+  background: rgba(255,255,255,0.04);
+}
+html[data-theme="dark"] .context-card {
+  background: rgba(255,255,255,0.03);
+}
+html[data-theme="dark"] .my-verse-remove:hover {
+  background: rgba(160,77,70,0.15);
+}
+html[data-theme="dark"] .btn-bookmark {
+  border-color: rgba(255,255,255,0.15);
+}
+html[data-theme="dark"] .btn-bookmark[aria-pressed="true"] {
+  background: rgba(201,154,63,0.12);
+  border-color: rgba(201,154,63,0.4);
+}
+

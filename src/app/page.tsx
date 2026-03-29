@@ -108,6 +108,17 @@ export default function HomePage() {
           <p className="muted">Finish with a short application prompt so the passage moves from memory into obedience, trust, or rest.</p>
         </article>
       </section>
+
+      {/* ---- Plans shortcut ---- */}
+      <section style={{ textAlign: "center" }}>
+        <h2 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(1.1rem, 2vw, 1.35rem)", marginBottom: "0.35rem" }}>
+          Follow a plan
+        </h2>
+        <p className="muted" style={{ maxWidth: 440, margin: "0 auto 0.85rem" }}>
+          Curated paths through Scripture — pick one and memorize with purpose.
+        </p>
+        <Link href="/plans" className="btn">Browse plans</Link>
+      </section>
     </main>
   );
 }
