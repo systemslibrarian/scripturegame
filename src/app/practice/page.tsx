@@ -19,6 +19,7 @@ import {
 } from "@/lib/journey";
 import { KIDS_VERSES } from "@/lib/kids-verses";
 import { fetchVerses } from "@/lib/verses-fetch";
+import { VERSE_CONTEXTS } from "@/lib/verse-context";
 import { useAudience } from "@/lib/audience-context";
 import { useTranslation } from "@/lib/translation-context";
 import type { SkillLevel, Verse } from "@/types/domain";
@@ -366,12 +367,40 @@ export default function PracticePage() {
 
         {/* full verse text */}
         {!practiceStarted && (
+          <>
           <p className="journey-devotional" style={{ fontFamily: "var(--scripture-font)", fontSize: "clamp(1.2rem, 2.4vw, 1.55rem)", lineHeight: 2, textAlign: "center", margin: "1rem 0" }}>
             &ldquo;{buildFullVerseText(verse, translationKey)}&rdquo;
             <span style={{ display: "block", fontWeight: 600, fontSize: "0.9rem", marginTop: "0.5rem", color: "var(--muted)" }}>
               ({translationKey.toUpperCase()})
             </span>
           </p>
+
+          {/* Context card */}
+          {VERSE_CONTEXTS[verse.id] && (() => {
+            const ctx = VERSE_CONTEXTS[verse.id];
+            return (
+              <details className="context-card">
+                <summary className="context-card-summary">Passage context &amp; key terms</summary>
+                <div className="context-card-body">
+                  <p className="context-passage">{ctx.passageContext}</p>
+                  {ctx.keyTerms && ctx.keyTerms.length > 0 && (
+                    <div className="context-terms">
+                      <p className="context-terms-heading">Key terms</p>
+                      <dl className="context-term-list">
+                        {ctx.keyTerms.map((kt) => (
+                          <div key={kt.term} className="context-term-item">
+                            <dt>{kt.term}</dt>
+                            <dd>{kt.definition}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  )}
+                </div>
+              </details>
+            );
+          })()}
+          </>
         )}
 
         {/* ---- depth selector (before practice starts) ---- */}

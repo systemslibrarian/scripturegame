@@ -23,6 +23,7 @@ import {
 } from "@/lib/journey";
 import { KIDS_VERSES, KIDS_THEME_OPTIONS } from "@/lib/kids-verses";
 import { fetchVerses } from "@/lib/verses-fetch";
+import { VERSE_CONTEXTS } from "@/lib/verse-context";
 import { useAudience } from "@/lib/audience-context";
 import { useTranslation } from "@/lib/translation-context";
 import type { SkillLevel, Verse } from "@/types/domain";
@@ -666,6 +667,32 @@ export default function PlayPage() {
                 <p style={{ lineHeight: 1.65, fontSize: "0.97rem", color: "var(--ink)" }}>{verse.devotional}</p>
               </div>
             )}
+
+            {/* Context card */}
+            {!isKids && VERSE_CONTEXTS[verse.id] && (() => {
+              const ctx = VERSE_CONTEXTS[verse.id];
+              return (
+                <details className="context-card" style={{ marginTop: "1rem" }}>
+                  <summary className="context-card-summary">Passage context &amp; key terms</summary>
+                  <div className="context-card-body">
+                    <p className="context-passage">{ctx.passageContext}</p>
+                    {ctx.keyTerms && ctx.keyTerms.length > 0 && (
+                      <div className="context-terms">
+                        <p className="context-terms-heading">Key terms</p>
+                        <dl className="context-term-list">
+                          {ctx.keyTerms.map((kt) => (
+                            <div key={kt.term} className="context-term-item">
+                              <dt>{kt.term}</dt>
+                              <dd>{kt.definition}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              );
+            })()}
           </div>
 
           <div style={{ marginTop: "0.75rem", borderTop: "1px solid var(--border)", paddingTop: "0.75rem" }}>
