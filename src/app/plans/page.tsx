@@ -196,7 +196,7 @@ export default function PlansPage() {
                           </div>
                           {verse && (
                             <Link
-                              href={`/play?verse=${id}&theme=${verse.themeId}`}
+                              href={`/play?verse=${id}&theme=${verse.themeId}&plan=${plan.id}`}
                               className="btn btn-sm plan-verse-action"
                             >
                               {isMem ? "Review" : "Practice"}
@@ -214,7 +214,7 @@ export default function PlansPage() {
                     if (!nextVerse) return null;
                     return (
                       <Link
-                        href={`/play?verse=${nextId}&theme=${nextVerse.themeId}`}
+                        href={`/play?verse=${nextId}&theme=${nextVerse.themeId}&plan=${plan.id}`}
                         className="btn plan-start-btn"
                       >
                         {progress.done > 0 ? "Continue this plan" : "Start this plan"}

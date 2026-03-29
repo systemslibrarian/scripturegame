@@ -24,6 +24,7 @@ import {
 import { KIDS_VERSES, KIDS_THEME_OPTIONS } from "@/lib/kids-verses";
 import { fetchVerses } from "@/lib/verses-fetch";
 import { VERSE_CONTEXTS } from "@/lib/verse-context";
+import { ALL_PLANS } from "@/lib/plans";
 import { useAudience } from "@/lib/audience-context";
 import { useTranslation } from "@/lib/translation-context";
 import type { SkillLevel, Verse } from "@/types/domain";
@@ -137,6 +138,9 @@ export default function PlayPage() {
   /* ---- translation preference (shared context) ---- */
   const { translationKey } = useTranslation();
 
+  /* ---- plan tracking ---- */
+  const [activePlanId, setActivePlanId] = useState<string | null>(null);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   /* ---- fetch verses ---- */
@@ -203,7 +207,10 @@ export default function PlayPage() {
 
     const verseId = params.get("verse");
     const themeParam = params.get("theme");
+    const planParam = params.get("plan");
     const startWithToday = params.get("today") === "1";
+
+    if (planParam) setActivePlanId(planParam);
 
     if (verseId) {
       autoStartedTodayRef.current = true;
@@ -585,6 +592,34 @@ export default function PlayPage() {
           })}
         </nav>
       }
+
+      {/* plan progress banner */}
+      {(() => {
+        if (!activePlanId) return null;
+        const plan = ALL_PLANS.find((p) => p.id === activePlanId);
+        if (!plan || !verse) return null;
+        const idx = plan.verseIds.indexOf(verse.id);
+        if (idx === -1) return null;
+        let memCount = 0;
+        try {
+          const raw = localStorage.getItem("sg_memorized_verses");
+          if (raw) {
+            const set = new Set(JSON.parse(raw) as string[]);
+            memCount = plan.verseIds.filter((id) => set.has(id)).length;
+          }
+        } catch { /* ignore */ }
+        const pct = Math.round((memCount / plan.verseIds.length) * 100);
+        return (
+          <div className="plan-banner">
+            <span className="plan-banner-label">
+              {plan.icon} {plan.title} — Verse {idx + 1} of {plan.verseIds.length}
+            </span>
+            <div className="plan-banner-bar" aria-label={`${pct}% of plan complete`}>
+              <div className="plan-banner-fill" style={{ width: `${pct}%` }} />
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ------- SAME-DAY RETURN ------- */}
       {step === "heartcheck" && completedToday && (
@@ -1051,13 +1086,67 @@ export default function PlayPage() {
           )}
 
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "2.5rem" }}>
+            {(() => {
+              if (!activePlanId || !verse) return null;
+              const plan = ALL_PLANS.find((p) => p.id === activePlanId);
+              if (!plan) return null;
+              const idx = plan.verseIds.indexOf(verse.id);
+              const nextIdx = idx + 1;
+              if (nextIdx >= plan.verseIds.length) return null;
+              const nextId = plan.verseIds[nextIdx];
+              const nextVerse = verses.find((v) => v.id === nextId);
+              if (!nextVerse) return null;
+              return (
+                <Link
+                  href={`/play?verse=${nextId}&theme=${nextVerse.themeId}&plan=${activePlanId}`}
+                  className="btn"
+                >
+                  Next: {nextVerse.reference} &rarr;
+                </Link>
+              );
+            })()}
             <button className="btn btn-ghost" onClick={startOver}>
               Start again with a new verse
             </button>
+            {activePlanId && (
+              <Link href="/plans" className="btn btn-ghost">
+                Back to plans
+              </Link>
+            )}
             <Link href="/" className="btn btn-ghost">
               Return home
             </Link>
           </div>
+
+          {/* Plan completion congratulations */}
+          {(() => {
+            if (!activePlanId || !verse) return null;
+            const plan = ALL_PLANS.find((p) => p.id === activePlanId);
+            if (!plan) return null;
+            const idx = plan.verseIds.indexOf(verse.id);
+            const isLast = idx === plan.verseIds.length - 1;
+            if (!isLast) return null;
+            let memCount = 0;
+            try {
+              const raw = localStorage.getItem("sg_memorized_verses");
+              if (raw) {
+                const set = new Set(JSON.parse(raw) as string[]);
+                memCount = plan.verseIds.filter((id) => set.has(id)).length;
+              }
+            } catch { /* ignore */ }
+            const allDone = memCount === plan.verseIds.length;
+            if (!allDone) return null;
+            return (
+              <div style={{ marginTop: "2rem", padding: "1rem 1.25rem", background: "rgba(61,122,94,0.08)", borderRadius: "var(--radius)", border: "1px solid rgba(61,122,94,0.2)" }}>
+                <p style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "1.05rem", color: "var(--ok)", marginBottom: "0.25rem" }}>
+                  {plan.icon} Plan complete!
+                </p>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  You&rsquo;ve memorized every verse in <strong>{plan.title}</strong>. Well done.
+                </p>
+              </div>
+            );
+          })()}
 
           {reviewVerse && (
             <div style={{ marginTop: "2rem", padding: "1rem 1.25rem", background: "var(--surface-soft)", borderRadius: "var(--radius)", borderLeft: "3px solid var(--accent)" }}>

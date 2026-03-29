@@ -1764,6 +1764,42 @@ html[data-theme="dark"] .browse-sort {
 }
 
 /* ================================================================== */
+/*  Plan banner (inside play page)                                     */
+/* ================================================================== */
+
+.plan-banner {
+  max-width: 480px;
+  margin: 0 auto 1rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--surface-soft, rgba(0,0,0,0.02));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.plan-banner-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.plan-banner-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.plan-banner-fill {
+  height: 100%;
+  background: var(--brand);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+/* ================================================================== */
 /*  Plans                                                              */
 /* ================================================================== */
 
