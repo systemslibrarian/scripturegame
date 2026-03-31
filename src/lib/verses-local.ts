@@ -1876,6 +1876,25 @@ const BASE_VERSES: Verse[] = [
     applicationPrompt: "How does knowing God is already watching and listening change the way you approach prayer today?",
     difficulty: "beginner",
   },
+  {
+    id: "jas516",
+    reference: "James 5:16",
+    translation: "NIV",
+    parts: [
+      "Therefore confess your sins to each other and ",
+      " for each other so that you may be healed. The ",
+      " of a righteous person is powerful and ",
+      ".",
+    ],
+    answers: ["PRAY", "PRAYER", "EFFECTIVE"],
+    decoys: ["ASK", "FAITH", "MIGHTY", "STRONG"],
+    themeId: "prayer",
+    themeLabel: "Prayer",
+    devotional:
+      "Prayer is not weak. It is not wishful thinking. The prayer of a righteous person is powerful and effective. But notice the context — it comes after confession and community. Vulnerable, honest, accountable prayer moves heaven.",
+    applicationPrompt: "Is there something you need to confess to a trusted brother or sister so that healing and powerful prayer can follow?",
+    difficulty: "beginner",
+  },
 
   /* ------------------------------------------------------------------ */
   /*  PERSEVERANCE                                                      */
