@@ -991,6 +991,25 @@ const BASE_VERSES: Verse[] = [
       decoys: ["SHOWN", "REVEALED", "SPIRIT", "GRACE"],
     },
   },
+  {
+    id: "1jn316",
+    reference: "1 John 3:16",
+    translation: "NIV",
+    parts: [
+      "This is how we know what ",
+      " is: Jesus Christ laid down his ",
+      " for us. And we ought to lay down our lives for our ",
+      " and sisters.",
+    ],
+    answers: ["LOVE", "LIFE", "BROTHERS"],
+    decoys: ["GRACE", "SOUL", "FRIENDS", "NEIGHBORS", "FAITH"],
+    themeId: "love",
+    themeLabel: "God's Love",
+    devotional:
+      "Love is not defined by feelings — it is defined by sacrifice. Jesus didn't just talk about love; He demonstrated it by laying down His life. And the call doesn't stop with admiration — it extends to imitation. We are to love others with the same costly, self-giving love.",
+    applicationPrompt: "What would it look like to lay down something for someone else today — your time, your comfort, your preference?",
+    difficulty: "beginner",
+  },
 
   /* ------------------------------------------------------------------ */
   /*  IDENTITY IN CHRIST                                                */
