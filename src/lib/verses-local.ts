@@ -838,6 +838,29 @@ const BASE_VERSES: Verse[] = [
       decoys: ["TRUST", "TRUE", "DISOWN", "FORGET"],
     },
   },
+  {
+    id: "2pet158",
+    reference: "2 Peter 1:5-8",
+    translation: "NIV",
+    parts: [
+      "For this very reason, make every effort to add to your faith ",
+      "; and to goodness, ",
+      "; and to knowledge, ",
+      "; and to self-control, ",
+      "; and to perseverance, godliness; and to godliness, mutual ",
+      "; and to mutual affection, ",
+      ". For if you possess these qualities in increasing measure, they will keep you from being ineffective and ",
+      " in your knowledge of our Lord Jesus Christ.",
+    ],
+    answers: ["GOODNESS", "KNOWLEDGE", "SELF-CONTROL", "PERSEVERANCE", "AFFECTION", "LOVE", "UNPRODUCTIVE"],
+    decoys: ["PATIENCE", "WISDOM", "HOLINESS", "GRACE", "KINDNESS"],
+    themeId: "faithfulness",
+    themeLabel: "God's Faithfulness",
+    devotional:
+      "Faith is not the finish line — it is the starting block. Peter lays out a chain of growth: faith leads to goodness, goodness to knowledge, and on through self-control, perseverance, godliness, affection, and love. Each virtue builds on the last. This is not a checklist but a life trajectory — growing into the fullness of who Christ has called you to be.",
+    applicationPrompt: "Which link in this chain feels weakest in your life right now? What would it look like to grow in that one area this week?",
+    difficulty: "expert",
+  },
 
   /* ------------------------------------------------------------------ */
   /*  GOD'S LIGHT                                                       */
