@@ -123,7 +123,7 @@ const TRUST_AND_PRAYER: MemorizationPlan = {
     "Seven verses about the privilege of prayer and the practice of trust. " +
     "These words will shape how you talk to God and rely on Him.",
   icon: "🙏",
-  verseIds: ["pro35", "col42", "rom826", "matt77", "1john514", "jas15", "php46"],
+  verseIds: ["pro35", "col42", "rom826", "matt77", "1john514", "jas15", "php46", "1pet312"],
   audience: "adults",
   category: "growth",
 };

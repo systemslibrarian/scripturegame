@@ -1815,6 +1815,26 @@ const BASE_VERSES: Verse[] = [
     },
   },
 
+  {
+    id: "1pet312",
+    reference: "1 Peter 3:12",
+    translation: "NIV",
+    parts: [
+      "For the eyes of the Lord are on the ",
+      " and his ears are attentive to their ",
+      ", but the face of the Lord is against those who do ",
+      ".",
+    ],
+    answers: ["RIGHTEOUS", "PRAYER", "EVIL"],
+    decoys: ["FAITHFUL", "PRAISE", "GOOD", "WICKED", "WRONG"],
+    themeId: "prayer",
+    themeLabel: "Prayer",
+    devotional:
+      "God is not distant or distracted. His eyes are on the righteous — not glancing, but fixed. His ears are attentive — not delayed, but tuned in. Prayer is not shouting into a void; it is speaking to a Father who is already watching and already listening.",
+    applicationPrompt: "How does knowing God is already watching and listening change the way you approach prayer today?",
+    difficulty: "beginner",
+  },
+
   /* ------------------------------------------------------------------ */
   /*  PERSEVERANCE                                                      */
   /* ------------------------------------------------------------------ */
