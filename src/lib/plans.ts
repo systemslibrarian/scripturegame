@@ -141,6 +141,20 @@ const WALKING_IN_LIGHT: MemorizationPlan = {
   category: "growth",
 };
 
+const JESUS_THE_SHEPHERD: MemorizationPlan = {
+  id: "jesus-the-shepherd",
+  title: "Jesus the Shepherd",
+  subtitle: "He knows His sheep and they know Him",
+  description:
+    "Eight verses that reveal Jesus as the Good, Great, and Chief Shepherd. " +
+    "From the pastures of Psalm 23 to the promises of John 10, these passages show " +
+    "a Shepherd who seeks, carries, protects, and lays down His life for His flock.",
+  icon: "🐑",
+  verseIds: ["ps23-1", "jn101115", "jn102728", "is4011", "ezek3412", "lk1547", "1pet54", "heb1320"],
+  audience: "adults",
+  category: "comfort",
+};
+
 const THIRTY_DAY_STARTER: MemorizationPlan = {
   id: "30-day-starter",
   title: "30-Day Foundation",
@@ -223,6 +237,7 @@ export const ADULT_PLANS: MemorizationPlan[] = [
   PSALMS_OF_COMFORT,
   TRUST_AND_PRAYER,
   WALKING_IN_LIGHT,
+  JESUS_THE_SHEPHERD,
   THIRTY_DAY_STARTER,
 ];
 
