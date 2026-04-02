@@ -14,11 +14,13 @@ export function getVerseTranslation(verse: Verse, key: TranslationKey): VerseTra
   /* Fall back to the generated translations lookup */
   const entry = VERSE_TRANSLATIONS[verse.id];
   if (entry) {
+    if (key === "kjv" && entry.kjv) return entry.kjv;
     if (key === "nkjv" && entry.nkjv) return entry.nkjv;
     if (key === "esv" && entry.esv) return entry.esv;
   }
 
-  /* Ultimate fallback: NIV */
+  /* Ultimate fallback: NIV — warn so silent accuracy failures are visible */
+  console.warn(`[getVerseTranslation] No ${key.toUpperCase()} data for verse "${verse.id}"; falling back to NIV`);
   return { parts: verse.parts, answers: verse.answers, decoys: verse.decoys };
 }
 

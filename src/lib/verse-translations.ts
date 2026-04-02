@@ -5,7 +5,7 @@
 
 import type { VerseTranslation } from "@/types/domain";
 
-type TranslationLookup = Record<string, { nkjv: VerseTranslation; esv: VerseTranslation }>;
+type TranslationLookup = Record<string, { kjv?: VerseTranslation; nkjv: VerseTranslation; esv: VerseTranslation }>;
 
 export const VERSE_TRANSLATIONS: TranslationLookup = {
   "matt1128": {

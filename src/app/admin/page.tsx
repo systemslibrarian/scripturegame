@@ -34,14 +34,11 @@ export default function AdminPage() {
         return;
       }
 
-      let authHeader: string | undefined;
+      let sessionToken: string | undefined;
       try {
         const supabase = getSupabaseBrowserClient();
         const { data } = await supabase.auth.getSession();
-        const token = data.session?.access_token;
-        if (token) {
-          authHeader = `Bearer ${token}`;
-        }
+        sessionToken = data.session?.access_token;
       } catch {
         // Local fallback mode can still use x-admin-token.
       }
@@ -51,7 +48,7 @@ export default function AdminPage() {
         headers: {
           "Content-Type": "application/json",
           ...(token ? { "x-admin-token": token } : {}),
-          ...(authHeader ? { Authorization: authHeader } : {}),
+          ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}),
         },
         body: JSON.stringify(body),
       });
