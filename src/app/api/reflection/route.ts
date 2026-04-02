@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (!hasSupabase) {
-    return NextResponse.json({ saved: true, mode: "local" });
+    return NextResponse.json({ saved: false, mode: "local", note: "Supabase is not configured; reflection was not persisted." });
   }
 
   try {
@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest) {
   }
 
   if (!hasSupabase) {
-    return NextResponse.json({ deleted: true, mode: "local" });
+    return NextResponse.json({ deleted: false, mode: "local", note: "Supabase is not configured; nothing to delete." });
   }
 
   const user = await authenticatedUserFromRequest(request);

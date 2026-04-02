@@ -68,15 +68,10 @@ function displayWord(word: string): string {
 }
 
 async function getUserId(): Promise<string> {
-  try {
-    const response = await fetch("/api/profile");
-    if (response.ok) {
-      const data = await response.json();
-      if (data.userId) return data.userId as string;
-    }
-  } catch {
-    /* fall through */
-  }
+  /* Use stored user ID from auth if available */
+  const stored = localStorage.getItem("sg_user_id");
+  if (stored) return stored;
+
   const KEY = "sg_guest_id";
   let guestId = localStorage.getItem(KEY);
   if (!guestId) {
@@ -84,6 +79,11 @@ async function getUserId(): Promise<string> {
     localStorage.setItem(KEY, guestId);
   }
   return guestId;
+}
+
+function authHeaders(): Record<string, string> {
+  const token = localStorage.getItem("sg_access_token");
+  return token ? { "Content-Type": "application/json", Authorization: `Bearer ${token}` } : { "Content-Type": "application/json" };
 }
 
 /* ------------------------------------------------------------------ */
@@ -429,7 +429,7 @@ export default function PlayPage() {
       const userId = await getUserId();
       const response = await fetch("/api/attempt", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify({
           userId,
           verseId: verse.id,

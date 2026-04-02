@@ -33,7 +33,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const userId = localStorage.getItem("sg_user_id") ?? "guest";
-    const token = localStorage.getItem("sb_access_token");
+    const token = localStorage.getItem("sg_access_token");
     const headers: Record<string, string> = {};
     if (token) headers["Authorization"] = `Bearer ${token}`;
 
