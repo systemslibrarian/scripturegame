@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { hasSupabase } from "@/lib/env";
+import { applyRateLimit, clientAddress } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
@@ -9,6 +10,18 @@ export async function GET(request: NextRequest) {
   const userId = request.nextUrl.searchParams.get("userId");
   if (!userId) {
     return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+  }
+
+  const limit = applyRateLimit(
+    `profile:${clientAddress(request.headers)}`,
+    Number(process.env.RATE_LIMIT_PROFILE_PER_MIN ?? 60),
+    60_000,
+  );
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "Too many profile requests.", retryAfter: limit.retryAfterSeconds },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
+    );
   }
 
   if (!hasSupabase) {
