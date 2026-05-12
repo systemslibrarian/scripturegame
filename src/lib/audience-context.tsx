@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 export type AudienceMode = "adults" | "kids";
@@ -17,14 +17,15 @@ const AudienceContext = createContext<AudienceContextValue>({
 
 const STORAGE_KEY = "sg_audience";
 
-function readSavedAudience(): AudienceMode {
-  if (typeof window === "undefined") return "adults";
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved === "kids" ? "kids" : "adults";
-}
-
 export function AudienceProvider({ children }: { children: ReactNode }) {
-  const [audienceMode, setAudienceMode] = useState<AudienceMode>(readSavedAudience);
+  /* Start with the default so SSR and the first client render agree, then
+     hydrate from localStorage in an effect to avoid a hydration mismatch. */
+  const [audienceMode, setAudienceMode] = useState<AudienceMode>("adults");
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "kids") setAudienceMode("kids");
+  }, []);
 
   const switchAudience = useCallback((mode: AudienceMode) => {
     setAudienceMode(mode);

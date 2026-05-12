@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import type { TranslationKey } from "@/types/domain";
@@ -19,14 +19,17 @@ const STORAGE_KEY = "sg_translation";
 
 const VALID_KEYS = new Set<TranslationKey>(["niv", "kjv", "nkjv", "esv"]);
 
-function readSavedTranslation(): TranslationKey {
-  if (typeof window === "undefined") return "niv";
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return VALID_KEYS.has(saved as TranslationKey) ? (saved as TranslationKey) : "niv";
-}
-
 export function TranslationProvider({ children }: { children: ReactNode }) {
-  const [translationKey, setTranslationKey] = useState<TranslationKey>(readSavedTranslation);
+  /* Start with the default so SSR and the first client render agree, then
+     hydrate from localStorage in an effect to avoid a hydration mismatch. */
+  const [translationKey, setTranslationKey] = useState<TranslationKey>("niv");
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && VALID_KEYS.has(saved as TranslationKey)) {
+      setTranslationKey(saved as TranslationKey);
+    }
+  }, []);
 
   const switchTranslation = useCallback((key: TranslationKey) => {
     setTranslationKey(key);
