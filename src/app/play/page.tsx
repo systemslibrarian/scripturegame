@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
 import {
   canPlaceWord,
@@ -91,7 +92,21 @@ function authHeaders(): Record<string, string> {
 /* ------------------------------------------------------------------ */
 
 export default function PlayPage() {
-  const autoStartedTodayRef = useRef(false);
+  return (
+    <Suspense fallback={
+      <main className="shell" style={{ textAlign: "center", paddingTop: "4rem" }}>
+        <p className="soft-label" role="status" aria-live="polite">Loading…</p>
+      </main>
+    }>
+      <PlayPageInner />
+    </Suspense>
+  );
+}
+
+function PlayPageInner() {
+  const searchParams = useSearchParams();
+  const handledVerseIdRef = useRef<string | null>(null);
+  const handledTodayRef = useRef(false);
 
   /* ---- data state ---- */
   const [verses, setVerses] = useState<Verse[]>([]);
@@ -198,33 +213,42 @@ export default function PlayPage() {
 
   useEffect(() => {
     if (loading || verses.length === 0) return;
-    if (autoStartedTodayRef.current) return;
 
-    const params = typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search)
-      : null;
-    if (!params) return;
+    const verseId = searchParams.get("verse");
+    const themeParam = searchParams.get("theme");
+    const planParam = searchParams.get("plan");
+    const startWithToday = searchParams.get("today") === "1";
 
-    const verseId = params.get("verse");
-    const themeParam = params.get("theme");
-    const planParam = params.get("plan");
-    const startWithToday = params.get("today") === "1";
-
-    if (planParam) setActivePlanId(planParam);
+    setActivePlanId(planParam ?? null);
 
     if (verseId) {
-      autoStartedTodayRef.current = true;
+      if (handledVerseIdRef.current === verseId) return;
+      handledVerseIdRef.current = verseId;
+      /* Reset per-verse journey state when switching to a new verse
+         (e.g., clicking "Next" inside a plan from the complete step) */
+      setPracticeResult(null);
+      setAnswerRevealed(false);
+      setPlacements([]);
+      setTilePool([]);
+      setSelectedTile(null);
+      setHintUsed(false);
+      setReflectionText("");
+      setReflectionSaved(false);
+      setReflectionError(null);
+      setServerError(null);
+      setCompletedToday(false);
       goToReadWithVerse(verseId, themeParam);
       return;
     }
 
     if (startWithToday) {
+      if (handledTodayRef.current) return;
+      handledTodayRef.current = true;
       if (completedToday) return;
-      autoStartedTodayRef.current = true;
       goToRead(themeParam);
       return;
     }
-  }, [loading, verses, completedToday, goToRead, goToReadWithVerse]);
+  }, [loading, verses, searchParams, completedToday, goToRead, goToReadWithVerse]);
 
   const initPractice = useCallback(
     (level: SkillLevel) => {
