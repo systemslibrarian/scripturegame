@@ -24,6 +24,7 @@ export function AudienceProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration-safe sync from localStorage; running outside an effect would cause a SSR/client mismatch
     if (saved === "kids") setAudienceMode("kids");
   }, []);
 

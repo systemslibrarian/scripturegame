@@ -27,6 +27,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved && VALID_KEYS.has(saved as TranslationKey)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration-safe sync from localStorage; running outside an effect would cause a SSR/client mismatch
       setTranslationKey(saved as TranslationKey);
     }
   }, []);
