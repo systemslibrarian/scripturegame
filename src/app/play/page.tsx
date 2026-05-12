@@ -277,6 +277,14 @@ export default function PlayPage() {
     localStorage.setItem("sg_lastJourneyDate", today);
     if (verse) {
       localStorage.setItem("sg_lastJourneyVerse", verse.reference);
+      try {
+        const memorizedRaw = localStorage.getItem("sg_memorized_verses");
+        const memorized = new Set<string>(memorizedRaw ? JSON.parse(memorizedRaw) as string[] : []);
+        memorized.add(verse.id);
+        localStorage.setItem("sg_memorized_verses", JSON.stringify([...memorized]));
+      } catch {
+        /* storage full or unavailable */
+      }
       /* Spaced repetition: record practice timestamp + count */
       try {
         const srRaw = localStorage.getItem("sg_spaced_rep");
