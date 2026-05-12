@@ -75,12 +75,14 @@ export default function ProfilePage() {
       <section className="card">
         <h3 style={{ marginTop: 0 }}>Your Walk</h3>
         <dl style={{ margin: 0 }}>
-          <dt>Sessions</dt>
+          <dt>Total points</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.totalPoints}</dd>
-          <dt>Verses memorized</dt>
+          <dt>Best session</dt>
+          <dd style={{ margin: "0 0 0.4rem" }}>{profile.bestSession}</dd>
+          <dt>Verses practiced</dt>
           <dd style={{ margin: "0 0 0.4rem" }}>{profile.versesCompleted}</dd>
           <dt>Current streak</dt>
-          <dd style={{ margin: 0 }}>{profile.currentStreak} days</dd>
+          <dd style={{ margin: 0 }}>{profile.currentStreak} {profile.currentStreak === 1 ? "day" : "days"}</dd>
         </dl>
       </section>
       <section className="card" style={{ textAlign: "center" }}>
