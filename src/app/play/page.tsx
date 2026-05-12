@@ -39,10 +39,11 @@ type JourneyStep = "today" | "heartcheck" | "read" | "practice" | "apply" | "com
 type PracticeResult = { correct: number; total: number };
 
 type AttemptResponse = {
-  success: boolean;
-  score: number;
-  streak: number;
-  sessionBest: number;
+  saved: boolean;
+  mode: "local" | "supabase";
+  points: number;
+  remaining: number;
+  currentStreak?: number;
   error?: string;
 };
 
@@ -475,7 +476,7 @@ function PlayPageInner() {
 
       if (response.ok) {
         const data: AttemptResponse = await response.json();
-        if (data.streak !== undefined) setStreak(data.streak);
+        if (data.currentStreak !== undefined) setStreak(data.currentStreak);
       } else {
         const data = await response.json().catch(() => ({}));
         setServerError(data.error ?? "Server error");
