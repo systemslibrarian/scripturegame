@@ -60,10 +60,13 @@ export default function ReflectionsPage() {
     try {
       if (usingServer) {
         await fetch("/api/reflection", { method: "DELETE", headers: authHeaders(), body: JSON.stringify({ id }) });
-      } else {
-        const updated = reflections.filter((r) => r.id !== id);
-        localStorage.setItem("sg_reflections", JSON.stringify(updated));
       }
+      /* Always prune local copy so server-only deletes don't resurface via the
+         localStorage fallback on next load. */
+      try {
+        const local: Reflection[] = JSON.parse(localStorage.getItem("sg_reflections") ?? "[]");
+        localStorage.setItem("sg_reflections", JSON.stringify(local.filter((r) => r.id !== id)));
+      } catch { /* corrupt or unavailable */ }
       setReflections((prev) => prev.filter((r) => r.id !== id));
     } finally {
       setDeleting(null);
@@ -76,9 +79,8 @@ export default function ReflectionsPage() {
     try {
       if (usingServer) {
         await fetch("/api/reflection", { method: "DELETE", headers: authHeaders(), body: JSON.stringify({ id: "all" }) });
-      } else {
-        localStorage.removeItem("sg_reflections");
       }
+      localStorage.removeItem("sg_reflections");
       setReflections([]);
     } finally {
       setDeleting(null);
