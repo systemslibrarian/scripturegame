@@ -70,21 +70,25 @@ Do not hardcode these values anywhere. Do not commit `.env.local`.
 ## TRANSLATION
 
 **Primary translation: NIV (New International Version)**
-**Toggleable translations: ESV (English Standard Version), NKJV (New King James Version)**
+**Toggleable translations: ESV (English Standard Version), NKJV (New King James Version), KJV (King James Version — partial coverage)**
 
 All Scripture text is authoritative as stored in:
 - `/src/lib/verses-local.ts` (adult verses)
+- `/src/lib/verses-additional.ts` (additional adult verses)
 - `/src/lib/kids-verses.ts` (kids mode)
+- `/src/lib/verse-translations.ts` (generated alternate-translation overrides)
 
 Each translation has its own exact wording and must be stored and served
 separately. Do not mix translation text or assume one translation's wording
 matches another.
 
 **Rules:**
-- NIV is the default — do not substitute ESV or NKJV wording unless the user
+- NIV is the default — do not substitute ESV/NKJV/KJV wording unless the user
   has explicitly toggled to that translation
 - Answer validation must compare against the correct translation's stored text,
   not a generic or blended version
+- KJV coverage is incomplete; `getVerseTranslation` in `journey.ts` logs a
+  console warning and falls back to NIV when a translation isn't available
 - If adding verse content for a new translation, run `validate-verses.mjs`
   before committing
 
