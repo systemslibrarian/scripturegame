@@ -4,6 +4,7 @@ import { Crimson_Text } from "next/font/google";
 import { BottomNav } from "@/components/bottom-nav";
 import { SiteHeader } from "@/components/site-header";
 import { AudienceProvider } from "@/lib/audience-context";
+import { AuthSync } from "@/lib/auth-sync";
 import { getAppUrl } from "@/lib/env";
 import { ThemeProvider } from "@/lib/theme-context";
 import { TranslationProvider } from "@/lib/translation-context";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <TranslationProvider>
             <AudienceProvider>
+            <AuthSync />
             <a className="skip-link" href="#main-content">
               Skip to content
             </a>
